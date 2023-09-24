@@ -1,15 +1,14 @@
 from typing import Optional
 import polars as pl
 
-from itertools import combinations
-from operator import add
+from .position_builder import position_profit
+from .utils import cols
 
 
 class Strategy:
     def __init__(self, call: Optional[pl.DataFrame] = None, put: Optional[pl.DataFrame] = None,
                  call_put: Optional[pl.DataFrame] = None) -> None:
         """
-
         :param call: polars.DataFrame with (ua:str, ua_sell_price:int, ua_buy_price:int, symbol:str, strike_price:int,
                 t:int, bs:int, buy_price:int, sell_price:int) columns. Where ua: Underlying Asset, bs : Black-Scholes
                 price, t: Days to expiration date
@@ -29,18 +28,35 @@ class Strategy:
                  max_pot_profit:int, pct_mpp:float, pct_monthly_cp:float, current_profit:int, pct_cp:float,
                  pct_monthly_cp:float) columns.
         """
-        df = self.call[(self.call.buy_price > 0) & (self.call.t > 0)].copy()
+        df = self.call.filter((pl.col("buy_price") > 0) & (pl.col("t") > 0))
 
-        df = df.assign(max_pot_profit=df.strike_price - df.ua_sell_price + df.buy_price,
-                       max_pot_loss=df.buy_price - df.ua_sell_price,
-                       break_even=df.ua_sell_price - df.buy_price,
-                       )
-        df["current_profit"] = df.apply(
-            lambda x: self.short_call(st=x["ua_sell_price"], k=x["strike_price"], premium=x["buy_price"]), axis=1)
-        df = df.assign(pct_break_even=(df.break_even / df.ua_sell_price - 1) * 100,
-                       pct_mpp=df.max_pot_profit / df.break_even * 100,
-                       pct_cp=df.current_profit / df.break_even * 100).round(1)
-        df = df.assign(pct_monthly_mpp=df.pct_mpp / df.t * 30,
-                       pct_monthly_cp=df.pct_cp / df.t * 30,
-                       pct_status=(df.strike_price / df.ua_final - 1) * 100).round(1)
-        return df[df.columns.intersection(set(covered_call_["rep"]))].rename(columns=covered_call_["dict"])
+        df = df.with_columns(
+            [
+                (pl.col("strike_price") - pl.col("ua_sell_price") + pl.col("buy_price")).alias("max_pot_profit"),
+                (pl.col("buy_price") - pl.col("ua_sell_price")).alias("max_pot_loss"),
+                (pl.col("ua_sell_price") - pl.col("buy_price")).alias("break_even")
+            ]
+        )
+        df = df.with_columns(
+            (
+                pl.struct(["ua_sell_price", "strike_price", "buy_price"]).map_batches(
+                    lambda x: position_profit.short_call(st=x.struct.field("ua_sell_price"),
+                                                         k=x.struct.field("strike_price"),
+                                                         premium=x.struct.field("buy_price")))
+            ).alias("current_profit")
+        )
+        df = df.with_columns(
+            [
+                ((pl.col("break_even") / pl.col("ua_sell_price") - 1) * 100).alias("pct_break_even"),
+                (pl.col("max_pot_profit") / pl.col("break_even") * 100).alias("pct_mpp"),
+                (pl.col("current_profit") / pl.col("break_even") * 100).alias("pct_cp")
+            ]
+        )
+        df = df.with_columns(
+            [
+                (pl.col("pct_mpp") / pl.col("t") * 30).alias("pct_monthly_mpp"),
+                (pl.col("pct_cp") / pl.col("t") * 30).alias("pct_monthly_cp"),
+                ((pl.col("strike_price") / pl.col("ua_final") - 1) * 100).alias("pct_status")
+            ]
+        )
+        return df.select(cols.covered_call.rep).rename(cols.covered_call.rename)
