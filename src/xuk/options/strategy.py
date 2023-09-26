@@ -4,6 +4,7 @@ from typing import Optional
 from operator import add
 import polars as pl
 import numpy as np
+import pandas as pd
 
 from .position_builder import position_profit
 from .utils import cols
@@ -108,7 +109,7 @@ class Strategy:
         بیشینه سود برابر است با تفاوتِ بینِ دو قیمتِ اعمال منهایِ پرمیوم پرداختی
         بیشینه ضرر هم برابر است با پرمیوم پرداختی
         """
-        stg = namedtuple("BullCallSpread", "sell_hsp buy_lsp")
+        stg = namedtuple("BullCallSpread", "sell buy")
         df = self.call.filter((pl.col("buy_price") > 0) & (pl.col("sell_price") > 0))
         df_pairs = df.group_by(["ua", "t"]).agg(pl.col("buy_price").count().alias("count"))
         df = df.join(df_pairs.filter(pl.col("count") > 1), on=["ua", "t"], how="inner")
@@ -171,4 +172,268 @@ class Strategy:
                     "current_profit": current_profit,
                 }
             )
-        return df
+        return records
+
+
+    def bear_call_spread(self):
+        """
+        فروش اختیار خرید با قیمتِ اعمالِ پایین-تر و خرید اختیارِ خریدِ با قیمتِ اعمالِ بالا-تر و تاریخِ اعمالِ همسان
+        بیشینه سود برابر است باپرمیوم دریافتی
+        بیشینه ضرر هم برابر است با تفاوتِ بین دو قیمتِ اعمال و پرمیومِ دریافتی
+        :param df: with (ua, symbol, t, strike_price, ua_final, sell_price, buy_price) columns. ua: Underlying Asset
+        :return:max_pot_loss: max_pot_loss
+                max_pot_profit: max_pot_profit
+                current_profit: current_profit
+        """
+        stg = namedtuple("BearCallSpread", "sell buy")
+        # فیلتر نمادهایی که در هر دو سمت سفارش دارند
+        call = self.call[(self.call.buy_price > 0) & (self.call.sell_price > 0)]
+        groups = call.groupby(by=["ua", "t"])
+        df = pd.DataFrame()
+        for name, group in groups:
+            group.reset_index(inplace=True)
+            group = group.sort_values(by=["strike_price"], ascending=True)
+            if len(group) > 1:
+                combo_option = list(
+                    stg(sell=s, buy=b) for s, b in combinations(group.option, 2)
+                )
+                combo_strike_price = list(
+                    stg(sell=s, buy=b) for s, b in combinations(group.strike_price, 2)
+                )
+                combo_ob_price = list(
+                    stg(sell=s, buy=b)
+                    for s, b in combinations(
+                        group[["sell_price", "buy_price"]].itertuples(index=False), 2
+                    )
+                )
+                combo_bs = list(
+                    stg(sell=s, buy=b) for s, b in combinations(group.bs, 2)
+                )
+                max_pot_profit = [
+                    ps.buy_price - pb.sell_price for ps, pb in combo_ob_price
+                ]
+                max_pot_loss = list(
+                    map(add, [ss - sb for ss, sb in combo_strike_price], max_pot_profit)
+                )
+                current_profit = []
+                for i in range(len(combo_strike_price)):
+                    if all(
+                            s >= group.ua_final.values[0] for s in combo_strike_price[i]
+                    ):
+                        current_profit.append(max_pot_profit[i])
+                    elif all(
+                            s <= group.ua_final.values[0] for s in combo_strike_price[i]
+                    ):
+                        current_profit.append(max_pot_loss[i])
+                    else:
+                        current_profit.append(
+                            -group.ua_final.values[0]
+                            + combo_strike_price[i].sell
+                            + max_pot_profit[i]
+                        )
+
+                df_group = pd.DataFrame(
+                    {
+                        "option": combo_option,
+                        "strike_price": combo_strike_price,
+                        "t": group.t.values[0],
+                        "bs": combo_bs,
+                        "ua": group.ua.values[0],
+                        "ua_final": group.ua_final.values[0],
+                        "ob_price": combo_ob_price,
+                        "max_pot_loss": max_pot_loss,
+                        "max_pot_profit": max_pot_profit,
+                        "current_profit": current_profit,
+                    }
+                )
+                df_group["position"] = df_group.apply(lambda
+                                                          x: f'buy={x["option"].buy}, buy_at={x["ob_price"].buy[0]}, sell={x["option"].sell}, sell_at={x["ob_price"].sell[1]}',
+                                                      axis=1)
+                df_group["strategy"] = "BearCallSpread"
+                df_group = df_group.assign(pct_cp=df_group.current_profit / abs(df_group.max_pot_loss) * 100).round(2)
+                df_group = df_group.assign(pct_monthly_cp=df_group.pct_cp / df_group.t).round(2)
+                df_group["break_even"] = df_group.apply(lambda x: x["strike_price"].sell + x["max_pot_profit"], axis=1)
+                df_group = df_group[self.rep_columns(df_group.columns)]
+                df = pd.concat([df, df_group])
+        if self.pct_monthly_cp:
+            return df[df.pct_monthly_cp > self.pct_monthly_cp]
+        else:
+            return df
+
+    ##-------------------------##
+
+    #####################
+    def bull_put_spread(self, df):
+        stg = namedtuple("Strategy", "sell buy")
+        groups = df.groupby(by=["ticker", "t"])
+        df_ = pd.DataFrame()
+        for name, group in groups:
+            group.reset_index(inplace=True)
+            group = group.sort_values(by=["strike_price"], ascending=False)
+            if len(group) > 1:
+                combo_o_ticker = list(
+                    stg(sell=s, buy=b) for s, b in combinations(group.o_ticker, 2)
+                )
+                combo_strike_price = list(
+                    stg(sell=s, buy=b) for s, b in combinations(group.strike_price, 2)
+                )
+                combo_o_adj_final = list(
+                    stg(sell=s, buy=b) for s, b in combinations(group.o_adj_final, 2)
+                )
+                combo_bs = list(
+                    stg(sell=s, buy=b) for s, b in combinations(group.bs, 2)
+                )
+                max_pot_profit = [ps - pb for ps, pb in combo_o_adj_final]
+                max_pot_loss = list(
+                    map(
+                        add, [-ss + sb for ss, sb in combo_strike_price], max_pot_profit
+                    )
+                )
+                current_profit = []
+                for i in range(len(combo_strike_price)):
+                    if all(
+                            s <= group.adj_final.values[0] for s in combo_strike_price[i]
+                    ):
+                        current_profit.append(max_pot_profit[i])
+                    elif all(
+                            s >= group.adj_final.values[0] for s in combo_strike_price[i]
+                    ):
+                        current_profit.append(max_pot_loss[i])
+                    else:
+                        current_profit.append(
+                            group.adj_final.values[0]
+                            - combo_strike_price[i].sell
+                            + max_pot_profit[i]
+                        )
+
+                df_group = pd.DataFrame(
+                    {
+                        "o_ticker": combo_o_ticker,
+                        "strike_price": combo_strike_price,
+                        "t": group.t.values[0],
+                        "bs": combo_bs,
+                        "adj_final": group.adj_final.values[0],
+                        "o_adj_final": combo_o_adj_final,
+                        "max_pot_loss": max_pot_loss,
+                        "max_pot_profit": max_pot_profit,
+                        "current_profit": current_profit,
+                    }
+                )
+                df_ = pd.concat([df_, df_group])
+        return df_
+
+    def bear_put_spread(self, df):
+        stg = namedtuple("Strategy", "buy sell")
+        groups = df.groupby(by=["ticker", "t"])
+        df_ = pd.DataFrame()
+        for name, group in groups:
+            group.reset_index(inplace=True)
+            group = group.sort_values(by=["strike_price"], ascending=True)
+            if len(group) > 1:
+                combo_o_ticker = list(
+                    stg(buy=b, sell=s) for b, s in combinations(group.o_ticker, 2)
+                )
+                combo_strike_price = list(
+                    stg(buy=b, sell=s) for b, s in combinations(group.strike_price, 2)
+                )
+                combo_o_adj_final = list(
+                    stg(buy=b, sell=s) for b, s in combinations(group.o_adj_final, 2)
+                )
+                combo_bs = list(
+                    stg(buy=b, sell=s) for b, s in combinations(group.bs, 2)
+                )
+                max_pot_loss = [ps - pb for pb, ps in combo_o_adj_final]
+                max_pot_profit = list(
+                    map(add, [sb - ss for sb, ss in combo_strike_price], max_pot_loss)
+                )
+                current_profit = []
+                for i in range(len(combo_strike_price)):
+                    if all(
+                            s >= group.adj_final.values[0] for s in combo_strike_price[i]
+                    ):
+                        current_profit.append(max_pot_profit[i])
+                    elif all(
+                            s <= group.adj_final.values[0] for s in combo_strike_price[i]
+                    ):
+                        current_profit.append(max_pot_loss[i])
+                    else:
+                        current_profit.append(
+                            -group.adj_final.values[0]
+                            + combo_strike_price[i].sell
+                            + max_pot_profit[i]
+                        )
+
+                df_group = pd.DataFrame(
+                    {
+                        "o_ticker": combo_o_ticker,
+                        "strike_price": combo_strike_price,
+                        "t": group.t.values[0],
+                        "bs": combo_bs,
+                        "adj_final": group.adj_final.values[0],
+                        "o_adj_final": combo_o_adj_final,
+                        "max_pot_loss": max_pot_loss,
+                        "max_pot_profit": max_pot_profit,
+                        "current_profit": current_profit,
+                    }
+                )
+                df_ = pd.concat([df_, df_group])
+        return df_
+
+    def call_back_spread(self, df, times):
+        stg = namedtuple("Strategy", "buy sell")
+        groups = df.groupby(by=["ticker", "t"])
+        df_ = pd.DataFrame()
+        for name, group in groups:
+            group.reset_index(inplace=True)
+            group = group.sort_values(by=["strike_price"], ascending=False)
+            if len(group) > 1:
+                combo_o_ticker = list(
+                    stg(buy=b, sell=s) for b, s in combinations(group.o_ticker, 2)
+                )
+                combo_strike_price = list(
+                    stg(buy=b, sell=s) for b, s in combinations(group.strike_price, 2)
+                )
+                combo_o_adj_final = list(
+                    stg(buy=b, sell=s) for b, s in combinations(group.o_adj_final, 2)
+                )
+                combo_bs = list(
+                    stg(buy=b, sell=s) for b, s in combinations(group.bs, 2)
+                )
+                premium = [-pb * times + ps for pb, ps in combo_o_adj_final]
+                max_pot_loss = list(
+                    map(add, [-sb + ss for sb, ss in combo_strike_price], premium)
+                )
+                current_profit = []
+                for i in range(len(combo_strike_price)):
+                    if all(
+                            s >= group.adj_final.values[0] for s in combo_strike_price[i]
+                    ):
+                        current_profit.append(premium[i])
+                    elif combo_strike_price[i].buy >= group.adj_final.values[0]:
+                        current_profit.append(
+                            -group.adj_final.values[0]
+                            + combo_strike_price[i].sell
+                            + premium[i]
+                        )
+                    else:
+                        current_profit.append(
+                            (-group.adj_final.values[0] + combo_strike_price[i].sell)
+                            + (group.adj_final.values[0] - combo_strike_price[i].buy)
+                            * times
+                            + premium[i]
+                        )
+
+                df_group = pd.DataFrame(
+                    {
+                        "o_ticker": combo_o_ticker,
+                        "strike_price": combo_strike_price,
+                        "t": group.t.values[0],
+                        "bs": combo_bs,
+                        "adj_final": group.adj_final.values[0],
+                        "o_adj_final": combo_o_adj_final,
+                        "max_pot_loss": max_pot_loss,
+                        "current_profit": current_profit,
+                    }
+                )
+                df_ = pd.concat([df_, df_group])
+        return df_
