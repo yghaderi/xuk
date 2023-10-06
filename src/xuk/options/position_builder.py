@@ -111,7 +111,10 @@ class PositionBuilder:
         self.sua = short_ua
         self.st_range = range(st_range.get("min"), st_range.get("max"), st_range.get("step"))
 
-    def simulate_profit(self):
+    def simulate_profit(self) -> List[int]:
+        """The simulation of profit for all given position within the specified range.
+        :return: List[int]
+        """
         sim_profit = []
         for i in self.st_range:
             profit = 0

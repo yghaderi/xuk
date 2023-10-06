@@ -6,11 +6,8 @@
 Welcome to xuk's documentation!
 ===============================
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+.. include:: modules.rst
 
-   modules
 
 Indices and tables
 ==================

@@ -1,5 +1,5 @@
-src.xuk package
-===============
+xuk package
+===========
 
 Subpackages
 -----------
@@ -7,7 +7,7 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   src.xuk.options
+   xuk.options
 
 Module contents
 ---------------

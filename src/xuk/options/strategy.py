@@ -22,12 +22,11 @@ class Strategy:
         self.put = put if put.is_empty() else put.filter(pl.col("t") > 0)
         self.call_put = call_put
 
-    def covered_call(self):
+    def covered_call(self) -> pl.DataFrame:
         """Is the purchase of a share of stock coupled with a sale of a call option on that stock.
-        :return: polars.DataFrame contain (writing:int, writing_at_int, buy_ua:int, buy_ua_at:int,strike_price:int,
-                 t:int, bs:int, pct_status:float, break_even:int, pct_break_even:float, max_pot_loss:int,
-                 max_pot_profit:int, pct_mpp:float, pct_monthly_cp:float, current_profit:int, pct_cp:float,
-                 pct_monthly_cp:float) columns.
+        :return: pl.DataFrame contain (writing, writing_at, buy_ua, buy_ua_at,strike_price,t, pct_status,
+        break_even, pct_break_even, max_pot_loss, max_pot_profit, pct_mpp, pct_monthly_cp, current_profit, pct_cp,
+        pct_monthly_cp) columns.
         """
         df = self.call.filter(pl.col("buy_price") > 0)
 
@@ -57,7 +56,7 @@ class Strategy:
         )
         return df.select(cols.covered_call.rep).rename(cols.covered_call.rename)
 
-    def married_put(self):
+    def married_put(self) -> pl.DataFrame:
         df = self.call.filter(pl.col("sell_price") > 0)
 
         df = df.with_columns(
