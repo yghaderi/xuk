@@ -82,13 +82,13 @@ class PositionBuilder:
                  short_put: List[OptionParam], long_ua: List[UAParam], short_ua: List[UAParam], st_range: StParam):
         """
         strike price = k
-        :param long_call: list of dict long call position params e.g. [{"k":22_000, "premium":2_000, "qty":2}, ...]
-        :param short_call:list of dict short call position params e.g. [{"k":22_000, "premium":2_000, "qty":2}, ...]
-        :param long_put:list of dict long put position params e.g. [{"k":22_000, "premium":2_000, "qty":3}, ...]
-        :param short_put:list of dict short put position params e.g. [{"k":22_000, "premium":2_000, "qty":2}, ...]
-        :param long_ua:list of dict long underlying asset position params e.g. [{"splot_price":18_000, "qty":1}, ...]
-        :param short_ua: list of dict short underlying asset position params e.g. [{"splot_price":18_000, "qty":1}, ...]
-        :param st_range: min, max, and step to create range of price of assets at maturity,
+        :param long_call: List[OptionParam] long call position params e.g. [{"k":22_000, "premium":2_000, "qty":2}, ...]
+        :param short_call: List[OptionParam] short call position params e.g. [{"k":22_000, "premium":2_000, "qty":2}, ...]
+        :param long_put: List[OptionParam] long put position params e.g. [{"k":22_000, "premium":2_000, "qty":3}, ...]
+        :param short_put: List[OptionParam] short put position params e.g. [{"k":22_000, "premium":2_000, "qty":2}, ...]
+        :param long_ua: List[UAParam] long underlying asset position params e.g. [{"splot_price":18_000, "qty":1}, ...]
+        :param short_ua: List[UAParam] short underlying asset position params e.g. [{"splot_price":18_000, "qty":1}, ...]
+        :param st_range: StParam to create range of price of assets at maturity,
                 e.g. {"min":2000, "max":5000,"step":10}
 
         >>>positions = {"long_call":[],

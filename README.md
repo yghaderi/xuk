@@ -1,6 +1,6 @@
 # metafid
 ## xuk
-<div dir="rtl">خوک برای مدل-سازیِ ابزاریِ مالی توسعه داده می‌شود. </div>
+<div dir="rtl">خوک برای مدل-سازیِ ابزاریِ مالی توسعه داده می‌شه. </div>
 
 ![PyPI - Version](https://img.shields.io/pypi/v/xuk)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/xuk)
