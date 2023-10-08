@@ -1,15 +1,20 @@
 [tool.poetry]
 name = "xuk"
-version = "0.1.1"
+version = "0.1.2"
 description = ""
 authors = ["Yaghoub Ghadri <y.ghaderi@outlook.com>"]
 readme = "README.md"
 repository = "https://github.com/yghaderi/xuk"
 
-packages = [
-    {include="xuk", from="src"},
-    {include="xuk/options", from="src"},
-]
+#packages = [
+#    {include="xuk", from="src"},
+#    {include="xuk/options", from="src"},
+#]
+
+[tool.coverage.run]
+source = ["xuk"]
+branch = true
+
 [tool.poetry.dependencies]
 python = "^3.11"
 polars = "^0.19.3"
