@@ -296,6 +296,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.strategy.Strategy"><code class="docutils literal notranslate"><span class="pre">Strategy</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.strategy.Strategy.covered_call"><code class="docutils literal notranslate"><span class="pre">Strategy.covered_call()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.strategy.Strategy.married_put"><code class="docutils literal notranslate"><span class="pre">Strategy.married_put()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.strategy.Strategy.bull_call_spread"><code class="docutils literal notranslate"><span class="pre">Strategy.bull_call_spread()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -375,6 +376,33 @@ price, t: Days to expiration date</p></li>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.strategy.Strategy.bull_call_spread">
+<span class="sig-name descname"><span class="pre">bull_call_spread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/options/strategy.html#Strategy.bull_call_spread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.strategy.Strategy.bull_call_spread" title="Permalink to this definition">#</a></dt>
+<dd><p>A bull call spread is an options trading strategy that’s used when an investor is moderately bullish on the underlying asset (e.g., a stock, index, or commodity) and wants to profit from an anticipated upward price movement while also limiting their potential downside risk. It involves buying one call option and simultaneously selling another call option with the same expiration date but at a higher strike price. This strategy is also known as a “debit call spread” because it typically requires an upfront payment (debit) to establish the position.</p>
+<p>Here are the key components and characteristics of a bull call spread:</p>
+<ol class="arabic simple">
+<li><p><strong>Components</strong>:
+- <strong>Buy a Call Option</strong>: You start by buying a call option with a lower strike price (the strike price at which you have the right to buy the underlying asset).
+- <strong>Sell a Call Option</strong>: Simultaneously, you sell a call option with a higher strike price than the one you bought. This is often referred to as the “short call” or “written call.”</p></li>
+<li><p><strong>Expiration Date</strong>: Both the long and short call options should have the same expiration date.</p></li>
+<li><p><strong>Strike Prices</strong>:
+- The strike price of the long call option is typically below the current market price of the underlying asset.
+- The strike price of the short call option is higher than the strike price of the long call.</p></li>
+<li><p><strong>Profit Potential</strong>: A bull call spread profits from a rising price of the underlying asset. The maximum profit is limited and occurs when the price of the underlying asset is above the higher strike price at expiration.</p></li>
+<li><p><strong>Risk and Losses</strong>: The maximum loss for a bull call spread is limited to the initial cost (debit) of establishing the position. This loss occurs if the price of the underlying asset is below the lower strike price at expiration.</p></li>
+<li><p><strong>Breakeven Point</strong>: The breakeven point for this strategy is the sum of the lower strike price and the net premium paid for the spread. In other words, it’s the point at which your gains equal your initial cost.</p></li>
+<li><p><strong>Risk-Reward Ratio</strong>: A bull call spread provides a limited potential profit and a limited potential loss. The risk-reward ratio is typically skewed in favor of limited profit potential.</p></li>
+<li><p><strong>Time Decay</strong>: Time decay (theta) can impact the value of both the long and short call options. Generally, the impact of time decay is smaller on the long call than on the short call. This can affect the profitability of the strategy.</p></li>
+</ol>
+<p>In summary, a bull call spread is a strategy that allows investors to benefit from a moderate bullish view on an underlying asset while controlling their risk. It’s a defined-risk strategy with limited profit potential and is often used when an investor expects a moderate price increase but wants to reduce the cost of buying a call option outright. Traders should carefully consider the strike prices, expiration date, and market conditions when implementing this strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>polars.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -421,6 +449,7 @@ price, t: Days to expiration date</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.strategy.Strategy"><code class="docutils literal notranslate"><span class="pre">Strategy</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.strategy.Strategy.covered_call"><code class="docutils literal notranslate"><span class="pre">Strategy.covered_call()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.strategy.Strategy.married_put"><code class="docutils literal notranslate"><span class="pre">Strategy.married_put()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.strategy.Strategy.bull_call_spread"><code class="docutils literal notranslate"><span class="pre">Strategy.bull_call_spread()</span></code></a></li>
 </ul>
 </li>
 </ul>

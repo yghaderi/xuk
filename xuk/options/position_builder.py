@@ -42,14 +42,14 @@ class PositionBuilder:
     """
 
     def __init__(
-            self,
-            long_call: List[OptionParam],
-            short_call: List[OptionParam],
-            long_put: List[OptionParam],
-            short_put: List[OptionParam],
-            long_ua: List[UAParam],
-            short_ua: List[UAParam],
-            st_range: StParam,
+        self,
+        long_call: List[OptionParam],
+        short_call: List[OptionParam],
+        long_put: List[OptionParam],
+        short_put: List[OptionParam],
+        long_ua: List[UAParam],
+        short_ua: List[UAParam],
+        st_range: StParam,
     ) -> None:
         self.lc = long_call
         self.sc = short_call

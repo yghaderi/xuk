@@ -244,12 +244,15 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <h1>Source code for xuk.options.strategy</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">add</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 <span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">xuk.options.position_profit</span> <span class="kn">import</span> <span class="n">OptionPositionProfit</span>
-<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">cols</span>
+<span class="kn">from</span> <span class="nn">xuk.options.utils</span> <span class="kn">import</span> <span class="n">cols</span>
 
 
 <div class="viewcode-block" id="Strategy"><a class="viewcode-back" href="../../../autoapi/xuk/options/strategy/index.html#xuk.options.Strategy">[docs]</a><span class="k">class</span> <span class="nc">Strategy</span><span class="p">:</span>
@@ -365,7 +368,106 @@ document.write(`
             <span class="n">pct_status</span><span class="o">=</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;strike_price&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;ua_final&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cols</span><span class="o">.</span><span class="n">married_put</span><span class="o">.</span><span class="n">rep</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">cols</span><span class="o">.</span><span class="n">married_put</span><span class="o">.</span><span class="n">rename</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cols</span><span class="o">.</span><span class="n">married_put</span><span class="o">.</span><span class="n">rep</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">cols</span><span class="o">.</span><span class="n">married_put</span><span class="o">.</span><span class="n">rename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Strategy.bull_call_spread"><a class="viewcode-back" href="../../../autoapi/xuk/options/strategy/index.html#xuk.options.Strategy.bull_call_spread">[docs]</a>    <span class="k">def</span> <span class="nf">bull_call_spread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A bull call spread is an options trading strategy that&#39;s used when an investor is moderately bullish on the underlying asset (e.g., a stock, index, or commodity) and wants to profit from an anticipated upward price movement while also limiting their potential downside risk. It involves buying one call option and simultaneously selling another call option with the same expiration date but at a higher strike price. This strategy is also known as a &quot;debit call spread&quot; because it typically requires an upfront payment (debit) to establish the position.</span>
+
+<span class="sd">        Here are the key components and characteristics of a bull call spread:</span>
+
+<span class="sd">        1. **Components**:</span>
+<span class="sd">           - **Buy a Call Option**: You start by buying a call option with a lower strike price (the strike price at which you have the right to buy the underlying asset).</span>
+<span class="sd">           - **Sell a Call Option**: Simultaneously, you sell a call option with a higher strike price than the one you bought. This is often referred to as the &quot;short call&quot; or &quot;written call.&quot;</span>
+
+<span class="sd">        2. **Expiration Date**: Both the long and short call options should have the same expiration date.</span>
+
+<span class="sd">        3. **Strike Prices**:</span>
+<span class="sd">           - The strike price of the long call option is typically below the current market price of the underlying asset.</span>
+<span class="sd">           - The strike price of the short call option is higher than the strike price of the long call.</span>
+
+<span class="sd">        4. **Profit Potential**: A bull call spread profits from a rising price of the underlying asset. The maximum profit is limited and occurs when the price of the underlying asset is above the higher strike price at expiration.</span>
+
+<span class="sd">        5. **Risk and Losses**: The maximum loss for a bull call spread is limited to the initial cost (debit) of establishing the position. This loss occurs if the price of the underlying asset is below the lower strike price at expiration.</span>
+
+<span class="sd">        6. **Breakeven Point**: The breakeven point for this strategy is the sum of the lower strike price and the net premium paid for the spread. In other words, it&#39;s the point at which your gains equal your initial cost.</span>
+
+<span class="sd">        7. **Risk-Reward Ratio**: A bull call spread provides a limited potential profit and a limited potential loss. The risk-reward ratio is typically skewed in favor of limited profit potential.</span>
+
+<span class="sd">        8. **Time Decay**: Time decay (theta) can impact the value of both the long and short call options. Generally, the impact of time decay is smaller on the long call than on the short call. This can affect the profitability of the strategy.</span>
+
+<span class="sd">        In summary, a bull call spread is a strategy that allows investors to benefit from a moderate bullish view on an underlying asset while controlling their risk. It&#39;s a defined-risk strategy with limited profit potential and is often used when an investor expects a moderate price increase but wants to reduce the cost of buying a call option outright. Traders should carefully consider the strike prices, expiration date, and market conditions when implementing this strategy.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        polars.DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Strategy_</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Strategy&quot;</span><span class="p">,</span> <span class="s2">&quot;sell buy&quot;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;buy_price&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;sell_price&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;quote&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">df_pairs</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">group_by</span><span class="p">([</span><span class="s2">&quot;ua&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;buy_price&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df_pairs</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">),</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ua&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>
+        <span class="n">groups</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">group_by</span><span class="p">([</span><span class="s2">&quot;ua&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">])</span>
+
+        <span class="n">df_</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sort</span><span class="p">([</span><span class="s2">&quot;strike_price&quot;</span><span class="p">],</span> <span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">combo_option</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="n">Strategy_</span><span class="p">(</span><span class="n">sell</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">buy</span><span class="o">=</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;symbol_far&quot;</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">combo_strike_price</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="n">Strategy_</span><span class="p">(</span><span class="n">sell</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">buy</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;strike_price&quot;</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">combo_orderbook_price</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="n">Strategy_</span><span class="p">(</span><span class="n">sell</span><span class="o">=</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">buy</span><span class="o">=</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s2">&quot;buy_price&quot;</span><span class="p">,</span> <span class="s2">&quot;sell_price&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">rows</span><span class="p">(),</span> <span class="mi">2</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">max_pot_loss</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">sell</span> <span class="o">-</span> <span class="n">i</span><span class="o">.</span><span class="n">buy</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">combo_orderbook_price</span><span class="p">]</span>
+            <span class="n">max_pot_profit</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">map</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">sell</span> <span class="o">-</span> <span class="n">i</span><span class="o">.</span><span class="n">buy</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">combo_strike_price</span><span class="p">],</span> <span class="n">max_pot_loss</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="n">current_profit</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">combo_strike_price</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_strike_price</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                    <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_pot_profit</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_strike_price</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                    <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_pot_loss</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="o">-</span> <span class="n">combo_strike_price</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">buy</span>
+                        <span class="o">+</span> <span class="n">max_pot_loss</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="p">)</span>
+
+            <span class="n">df_</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">df_</span><span class="p">,</span>
+                    <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                        <span class="p">{</span>
+                            <span class="s2">&quot;symbol&quot;</span><span class="p">:</span> <span class="n">combo_option</span><span class="p">,</span>
+                            <span class="s2">&quot;strike_price&quot;</span><span class="p">:</span> <span class="n">combo_strike_price</span><span class="p">,</span>
+                            <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                            <span class="s2">&quot;ua&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                            <span class="s2">&quot;ua_final&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                            <span class="s2">&quot;orderbook_price&quot;</span><span class="p">:</span> <span class="n">combo_orderbook_price</span><span class="p">,</span>
+                            <span class="s2">&quot;max_pot_loss&quot;</span><span class="p">:</span> <span class="n">max_pot_loss</span><span class="p">,</span>
+                            <span class="s2">&quot;max_pot_profit&quot;</span><span class="p">:</span> <span class="n">max_pot_profit</span><span class="p">,</span>
+                            <span class="s2">&quot;current_profit&quot;</span><span class="p">:</span> <span class="n">current_profit</span><span class="p">,</span>
+                        <span class="p">}</span>
+                    <span class="p">),</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df_</span></div></div>
 </pre></div>
 
                 </article>
