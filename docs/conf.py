@@ -8,12 +8,12 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("../../xuk"))
+sys.path.insert(0, os.path.abspath("../xuk"))
 
 project = 'xuk'
 copyright = '2023, Metafid'
 author = 'Yaghoub Ghaderi'
-release = '0.1.0'
+release = '0.1.1'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -30,12 +30,13 @@ templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 autoapi_type = 'python'
-autoapi_dirs = ['../../xuk']
-autoapi_ignore = ['*/*/xuk/options/utils/*']
+autoapi_dirs = ['../xuk']
+autoapi_ignore = ['*/xuk/options/utils/*']
 
 autoclass_content = "both"
 
 source_suffix = '.rst'
+master_doc = 'index'
 add_module_names = False
 
 # -- Options for HTML output -------------------------------------------------
