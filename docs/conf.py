@@ -36,7 +36,6 @@ autoapi_ignore = ['*/xuk/options/utils/*']
 autoclass_content = "both"
 
 source_suffix = '.rst'
-master_doc = 'index'
 add_module_names = False
 
 # -- Options for HTML output -------------------------------------------------
