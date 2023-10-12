@@ -27,10 +27,10 @@ class Strategy:
     """
 
     def __init__(
-            self,
-            call: Optional[pl.DataFrame] = pl.DataFrame(),
-            put: Optional[pl.DataFrame] = pl.DataFrame(),
-            call_put: Optional[pl.DataFrame] = pl.DataFrame(),
+        self,
+        call: Optional[pl.DataFrame] = pl.DataFrame(),
+        put: Optional[pl.DataFrame] = pl.DataFrame(),
+        call_put: Optional[pl.DataFrame] = pl.DataFrame(),
     ) -> None:
         self.call = call if call.is_empty() else call.filter(pl.col("t") > 0)
         self.put = put if put.is_empty() else put.filter(pl.col("t") > 0)
@@ -50,8 +50,8 @@ class Strategy:
 
         df = df.with_columns(
             max_pot_profit=pl.col("strike_price")
-                           - pl.col("ua_sell_price")
-                           + pl.col("buy_price"),
+            - pl.col("ua_sell_price")
+            + pl.col("buy_price"),
             max_pot_loss=pl.col("buy_price") - pl.col("ua_sell_price"),
             break_even=pl.col("ua_sell_price") - pl.col("buy_price"),
         )
@@ -94,8 +94,8 @@ class Strategy:
         df = df.with_columns(
             max_pot_profit=pl.lit(np.inf),
             max_pot_loss=pl.col("strike_price")
-                         - pl.col("ua_sell_price")
-                         - pl.col("sell_price"),
+            - pl.col("ua_sell_price")
+            - pl.col("sell_price"),
             break_even=pl.col("ua_sell_price") - pl.col("sell_price"),
         )
 
@@ -144,7 +144,7 @@ class Strategy:
 
         5. **Risk and Losses**: The maximum loss for a bull call spread is limited to the initial cost (debit) of establishing the position. This loss occurs if the price of the underlying asset is below the lower strike price at expiration.
 
-        6. **Breakeven Point**: The breakeven point for this strategy is the sum of the lower strike price and the net premium paid for the spread. In other words, it's the point at which your gains equal your initial cost.
+        6. **Break-even Point**: The break-even point for this strategy is the sum of the lower strike price and the net premium paid for the spread. In other words, it's the point at which your gains equal your initial cost.
 
         7. **Risk-Reward Ratio**: A bull call spread provides a limited potential profit and a limited potential loss. The risk-reward ratio is typically skewed in favor of limited profit potential.
 
@@ -226,4 +226,100 @@ class Strategy:
             writing_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
             buy_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
         ).drop(["symbol", "strike_price", "orderbook_price"])
-        return df_.select(cols.married_put.rep)
+        return df_.select(cols.bull_call_spread.rep)
+
+    def bear_call_spread(self):
+        """
+        A bear call spread is an options trading strategy that involves two call options with the same expiration date but different strike prices. This strategy is used by investors who are moderately bearish on the underlying asset's price and want to profit from a potential decrease in the asset's price. Here's how a bear call spread works:
+
+        1. **Select the Underlying Asset:** You start by choosing an underlying asset, such as a stock, index, or commodity.
+
+        2. **Sell a Call Option:** You sell (write) a call option with a strike price that's closer to the current market price of the underlying asset. This is called the "short call" or "short leg" of the spread. By selling this option, you collect a premium.
+
+        3. **Buy a Call Option:** Simultaneously, you buy a call option with a higher strike price than the one you sold. This is called the "long call" or "long leg" of the spread. This purchase also involves paying a premium.
+
+        4. **Limited Risk:** The primary advantage of the bear call spread is that it has limited risk. The premium received from selling the short call partially offsets the premium paid for the long call. Your maximum loss is capped at the difference between the strike prices minus the net premium received.
+
+        5. **Profit Potential:** Your maximum profit is limited to the net premium you receive when you enter the trade. This profit occurs if the underlying asset's price remains below the strike price of the short call at expiration.
+
+        6. **Break-even Point:** The strategy's break-even point is the strike price of the short call plus the net premium received. As long as the underlying asset's price remains below this point, you won't incur a loss.
+
+        7. **Expiration:** The strategy typically involves holding both the short and long call options until expiration. If the underlying asset's price is below the short call's strike price at expiration, the short call expires worthless, and you keep the premium. The long call can also expire worthless or be sold for any remaining value.
+
+        A bear call spread can be a useful strategy when you expect a moderate downward price movement in the underlying asset. It allows you to profit from the premium received by selling the short call while limiting your potential losses. However, keep in mind that options trading carries risks and should only be undertaken if you understand the strategy and the potential outcomes.
+
+        Returns
+        -------
+        polars.DataFrame
+        """
+        Strategy_ = namedtuple("Strategy", "sell buy")
+        df = self.call.filter(
+            (pl.col("buy_price") > 0)
+            & (pl.col("sell_price") > 0)
+            & (pl.col("quote") == 1)
+        )
+        df_pairs = df.group_by(["ua", "t"]).agg(
+            pl.col("buy_price").count().alias("count")
+        )
+        df = df.join(df_pairs.filter(pl.col("count") > 1), on=["ua", "t"], how="inner")
+        groups = df.group_by(["ua", "t"])
+
+        df_ = pl.DataFrame()
+        for name, data in groups:
+            data = data.sort(["strike_price"], descending=False)
+            combo_option = list(
+                Strategy_(sell=s, buy=b) for s, b in combinations(data["symbol_far"], 2)
+            )
+            combo_strike_price = list(
+                Strategy_(sell=s, buy=b)
+                for s, b in combinations(data["strike_price"], 2)
+            )
+            combo_orderbook_price = list(
+                Strategy_(sell=s[0], buy=b[1])
+                for s, b in combinations(
+                    data.select(["buy_price", "sell_price"]).rows(), 2
+                )
+            )
+            max_pot_profit = [i.buy - i.sell for i in combo_orderbook_price]
+            max_pot_loss = list(
+                map(add, [i.sell - i.buy for i in combo_strike_price], max_pot_profit)
+            )
+
+            current_profit = []
+            for i in range(len(combo_strike_price)):
+                if all(s >= data["ua_final"][0] for s in combo_strike_price[i]):
+                    current_profit.append(max_pot_profit[i])
+                elif all(s <= data["ua_final"][0] for s in combo_strike_price[i]):
+                    current_profit.append(max_pot_loss[i])
+                else:
+                    current_profit.append(
+                        data["ua_final"][0]
+                        - combo_strike_price[i].sell
+                        + max_pot_loss[i]
+                    )
+
+            df_ = pl.concat(
+                [
+                    df_,
+                    pl.DataFrame(
+                        {
+                            "symbol": combo_option,
+                            "strike_price": combo_strike_price,
+                            "t": data["t"][0],
+                            "ua": data["ua"][0],
+                            "ua_final": data["ua_final"][0],
+                            "orderbook_price": combo_orderbook_price,
+                            "max_pot_loss": max_pot_loss,
+                            "max_pot_profit": max_pot_profit,
+                            "current_profit": current_profit,
+                        }
+                    ),
+                ]
+            )
+        df_ = df_.with_columns(
+            writing=pl.col("symbol").map_elements(lambda x: x[0]),
+            buy=pl.col("symbol").map_elements(lambda x: x[1]),
+            writing_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
+            buy_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
+        ).drop(["symbol", "strike_price", "orderbook_price"])
+        return df_.select(cols.bear_call_spread.rep)

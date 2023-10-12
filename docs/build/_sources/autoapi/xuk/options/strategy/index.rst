@@ -68,13 +68,36 @@ Classes
 
       5. **Risk and Losses**: The maximum loss for a bull call spread is limited to the initial cost (debit) of establishing the position. This loss occurs if the price of the underlying asset is below the lower strike price at expiration.
 
-      6. **Breakeven Point**: The breakeven point for this strategy is the sum of the lower strike price and the net premium paid for the spread. In other words, it's the point at which your gains equal your initial cost.
+      6. **Break-even Point**: The break-even point for this strategy is the sum of the lower strike price and the net premium paid for the spread. In other words, it's the point at which your gains equal your initial cost.
 
       7. **Risk-Reward Ratio**: A bull call spread provides a limited potential profit and a limited potential loss. The risk-reward ratio is typically skewed in favor of limited profit potential.
 
       8. **Time Decay**: Time decay (theta) can impact the value of both the long and short call options. Generally, the impact of time decay is smaller on the long call than on the short call. This can affect the profitability of the strategy.
 
       In summary, a bull call spread is a strategy that allows investors to benefit from a moderate bullish view on an underlying asset while controlling their risk. It's a defined-risk strategy with limited profit potential and is often used when an investor expects a moderate price increase but wants to reduce the cost of buying a call option outright. Traders should carefully consider the strike prices, expiration date, and market conditions when implementing this strategy.
+
+      :rtype: polars.DataFrame
+
+
+   .. py:method:: bear_call_spread()
+
+      A bear call spread is an options trading strategy that involves two call options with the same expiration date but different strike prices. This strategy is used by investors who are moderately bearish on the underlying asset's price and want to profit from a potential decrease in the asset's price. Here's how a bear call spread works:
+
+      1. **Select the Underlying Asset:** You start by choosing an underlying asset, such as a stock, index, or commodity.
+
+      2. **Sell a Call Option:** You sell (write) a call option with a strike price that's closer to the current market price of the underlying asset. This is called the "short call" or "short leg" of the spread. By selling this option, you collect a premium.
+
+      3. **Buy a Call Option:** Simultaneously, you buy a call option with a higher strike price than the one you sold. This is called the "long call" or "long leg" of the spread. This purchase also involves paying a premium.
+
+      4. **Limited Risk:** The primary advantage of the bear call spread is that it has limited risk. The premium received from selling the short call partially offsets the premium paid for the long call. Your maximum loss is capped at the difference between the strike prices minus the net premium received.
+
+      5. **Profit Potential:** Your maximum profit is limited to the net premium you receive when you enter the trade. This profit occurs if the underlying asset's price remains below the strike price of the short call at expiration.
+
+      6. **Break-even Point:** The strategy's break-even point is the strike price of the short call plus the net premium received. As long as the underlying asset's price remains below this point, you won't incur a loss.
+
+      7. **Expiration:** The strategy typically involves holding both the short and long call options until expiration. If the underlying asset's price is below the short call's strike price at expiration, the short call expires worthless, and you keep the premium. The long call can also expire worthless or be sold for any remaining value.
+
+      A bear call spread can be a useful strategy when you expect a moderate downward price movement in the underlying asset. It allows you to profit from the premium received by selling the short call while limiting your potential losses. However, keep in mind that options trading carries risks and should only be undertaken if you understand the strategy and the potential outcomes.
 
       :rtype: polars.DataFrame
 

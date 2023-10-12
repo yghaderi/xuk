@@ -1,6 +1,6 @@
 from collections import namedtuple
 
-Cols = namedtuple("Cols", ["covered_call", "married_put"])
+Cols = namedtuple("Cols", ["covered_call", "married_put", "bull_call_spread", "bear_call_spread"])
 Property = namedtuple("Property", ["rename", "drop", "rep"])
 
 _covered_call = {
@@ -70,6 +70,20 @@ _bull_call_spread = {
     ],
 }
 
+_bear_call_spread = {
+    "rep": [
+        "writing",
+        "buy",
+        "writing_at",
+        "buy_at",
+        "ua",
+        "ua_final",
+        "max_pot_loss",
+        "max_pot_profit",
+        "current_profit",
+    ],
+}
+
 covered_call = Property(
     rename=_covered_call.get("rename"),
     drop=_covered_call.get("drop"),
@@ -81,4 +95,16 @@ married_put = Property(
     rep=_married_put.get("rep"),
 )
 
-cols = Cols(covered_call=covered_call, married_put=married_put)
+bull_call_spread = Property(
+    rename=_bull_call_spread.get("rename"),
+    drop=_bull_call_spread.get("drop"),
+    rep=_bull_call_spread.get("rep"),
+)
+
+bear_call_spread = Property(
+    rename=_bear_call_spread.get("rename"),
+    drop=_bear_call_spread.get("drop"),
+    rep=_bear_call_spread.get("rep"),
+)
+
+cols = Cols(covered_call=covered_call, married_put=married_put, bull_call_spread = bull_call_spread, bear_call_spread = bear_call_spread)
