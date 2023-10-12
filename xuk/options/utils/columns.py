@@ -56,6 +56,20 @@ _married_put = {
     ],
 }
 
+_bull_call_spread = {
+    "rep": [
+        "writing",
+        "buy",
+        "writing_at",
+        "buy_at",
+        "ua",
+        "ua_final",
+        "max_pot_loss",
+        "max_pot_profit",
+        "current_profit",
+    ],
+}
+
 covered_call = Property(
     rename=_covered_call.get("rename"),
     drop=_covered_call.get("drop"),

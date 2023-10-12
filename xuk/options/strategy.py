@@ -27,10 +27,10 @@ class Strategy:
     """
 
     def __init__(
-        self,
-        call: Optional[pl.DataFrame] = pl.DataFrame(),
-        put: Optional[pl.DataFrame] = pl.DataFrame(),
-        call_put: Optional[pl.DataFrame] = pl.DataFrame(),
+            self,
+            call: Optional[pl.DataFrame] = pl.DataFrame(),
+            put: Optional[pl.DataFrame] = pl.DataFrame(),
+            call_put: Optional[pl.DataFrame] = pl.DataFrame(),
     ) -> None:
         self.call = call if call.is_empty() else call.filter(pl.col("t") > 0)
         self.put = put if put.is_empty() else put.filter(pl.col("t") > 0)
@@ -50,8 +50,8 @@ class Strategy:
 
         df = df.with_columns(
             max_pot_profit=pl.col("strike_price")
-            - pl.col("ua_sell_price")
-            + pl.col("buy_price"),
+                           - pl.col("ua_sell_price")
+                           + pl.col("buy_price"),
             max_pot_loss=pl.col("buy_price") - pl.col("ua_sell_price"),
             break_even=pl.col("ua_sell_price") - pl.col("buy_price"),
         )
@@ -94,8 +94,8 @@ class Strategy:
         df = df.with_columns(
             max_pot_profit=pl.lit(np.inf),
             max_pot_loss=pl.col("strike_price")
-            - pl.col("ua_sell_price")
-            - pl.col("sell_price"),
+                         - pl.col("ua_sell_price")
+                         - pl.col("sell_price"),
             break_even=pl.col("ua_sell_price") - pl.col("sell_price"),
         )
 
@@ -220,5 +220,10 @@ class Strategy:
                     ),
                 ]
             )
-
-        return df_
+        df_ = df_.with_columns(
+            writing=pl.col("symbol").map_elements(lambda x: x[0]),
+            buy=pl.col("symbol").map_elements(lambda x: x[1]),
+            writing_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
+            buy_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
+        ).drop(["symbol", "strike_price", "orderbook_price"])
+        return df_.select(cols.married_put.rep)
