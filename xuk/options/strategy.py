@@ -27,7 +27,7 @@ class Strategy:
 
     Examples
     --------
-    Import packages
+    Import libraries
 
     >>> from oxtapus.ise import TSETMC
     >>> from xuk.options import Strategy
@@ -423,7 +423,7 @@ class Strategy:
             writing_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
             buy_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
         ).drop(["symbol", "strike_price", "orderbook_price"])
-        return df_.select(cols.married_put.rep)
+        return df_.select(cols.bull_put_spread.rep)
 
     def bear_put_spread(self):
         Strategy_ = namedtuple("Strategy", "sell buy")
@@ -496,4 +496,4 @@ class Strategy:
             writing_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
             buy_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
         ).drop(["symbol", "strike_price", "orderbook_price"])
-        return df_.select(cols.married_put.rep)
+        return df_.select(cols.bear_put_spread.rep)

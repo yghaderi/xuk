@@ -10,6 +10,7 @@ Subpackages
    :titlesonly:
    :maxdepth: 3
 
+   fixed_incom/index.rst
    options/index.rst
 
 

@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.abspath("../xuk"))
 project = 'xuk'
 copyright = '2023, Metafid'
 author = 'Yaghoub Ghaderi'
-release = '0.1.1'
+release = '0.1.3'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -28,6 +28,8 @@ extensions = [
 ]
 
 copybutton_prompt_text = ">>> "
+
+autoapi_options = [ 'members', 'undoc-members', 'show-inheritance', 'show-module-summary', 'special-members', 'imported-members', ]
 
 mathjax3_config = {'chtml': {'displayAlign': 'left'}}
 

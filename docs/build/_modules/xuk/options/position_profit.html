@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>xuk.options.position_profit &#8212; xuk 0.1.1 documentation</title>
+    <title>xuk.options.position_profit &#8212; xuk 0.1.3 documentation</title>
   
   
   
@@ -127,7 +127,7 @@
   
   
   
-    <p class="title logo__title">xuk 0.1.1 documentation</p>
+    <p class="title logo__title">xuk 0.1.3 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -136,7 +136,11 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../autoapi/xuk/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../../autoapi/xuk/options/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../autoapi/xuk/fixed_incom/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.fixed_incom</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../autoapi/xuk/fixed_incom/ytm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.fixed_incom.ytm</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../autoapi/xuk/options/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/xuk/options/position_builder/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.position_builder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/xuk/options/position_profit/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.position_profit</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../autoapi/xuk/options/pricing/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.pricing</span></code></a></li>
@@ -248,7 +252,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <h1>Source code for xuk.options.position_profit</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="OptionPositionProfit"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.OptionPositionProfit">[docs]</a><span></span><span class="k">class</span> <span class="nc">OptionPositionProfit</span><span class="p">:</span>
+<div class="viewcode-block" id="OptionPositionProfit"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.position_profit.OptionPositionProfit">[docs]</a><span></span><span class="k">class</span> <span class="nc">OptionPositionProfit</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate option position profit.</span>
 
@@ -270,7 +274,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">premium</span> <span class="o">=</span> <span class="n">premium</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qty</span> <span class="o">=</span> <span class="n">qty</span>
 
-<div class="viewcode-block" id="OptionPositionProfit.long_call"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.OptionPositionProfit.long_call">[docs]</a>    <span class="k">def</span> <span class="nf">long_call</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="OptionPositionProfit.long_call"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.position_profit.OptionPositionProfit.long_call">[docs]</a>    <span class="k">def</span> <span class="nf">long_call</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate long call position profit.</span>
 
@@ -280,7 +284,7 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">st</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">premium</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">qty</span></div>
 
-<div class="viewcode-block" id="OptionPositionProfit.short_call"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.OptionPositionProfit.short_call">[docs]</a>    <span class="k">def</span> <span class="nf">short_call</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="OptionPositionProfit.short_call"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.position_profit.OptionPositionProfit.short_call">[docs]</a>    <span class="k">def</span> <span class="nf">short_call</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate short call position profit.</span>
 
 <span class="sd">        Returns</span>
@@ -289,7 +293,7 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">st</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">premium</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">qty</span></div>
 
-<div class="viewcode-block" id="OptionPositionProfit.long_put"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.OptionPositionProfit.long_put">[docs]</a>    <span class="k">def</span> <span class="nf">long_put</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="OptionPositionProfit.long_put"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.position_profit.OptionPositionProfit.long_put">[docs]</a>    <span class="k">def</span> <span class="nf">long_put</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate long put position profit.</span>
 
 <span class="sd">        Returns</span>
@@ -298,7 +302,7 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">st</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">premium</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">qty</span></div>
 
-<div class="viewcode-block" id="OptionPositionProfit.short_put"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.OptionPositionProfit.short_put">[docs]</a>    <span class="k">def</span> <span class="nf">short_put</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="OptionPositionProfit.short_put"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.position_profit.OptionPositionProfit.short_put">[docs]</a>    <span class="k">def</span> <span class="nf">short_put</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate short call position profit.</span>
 
 <span class="sd">        Returns</span>
@@ -308,7 +312,7 @@ document.write(`
         <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">st</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">premium</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">qty</span></div></div>
 
 
-<div class="viewcode-block" id="AssetPositionProfit"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.AssetPositionProfit">[docs]</a><span class="k">class</span> <span class="nc">AssetPositionProfit</span><span class="p">:</span>
+<div class="viewcode-block" id="AssetPositionProfit"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.position_profit.AssetPositionProfit">[docs]</a><span class="k">class</span> <span class="nc">AssetPositionProfit</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate asset position profit.</span>
 
@@ -327,7 +331,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">st</span> <span class="o">=</span> <span class="n">st</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qty</span> <span class="o">=</span> <span class="n">qty</span>
 
-<div class="viewcode-block" id="AssetPositionProfit.long"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.AssetPositionProfit.long">[docs]</a>    <span class="k">def</span> <span class="nf">long</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="AssetPositionProfit.long"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.position_profit.AssetPositionProfit.long">[docs]</a>    <span class="k">def</span> <span class="nf">long</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate long UA position profit.</span>
 
@@ -337,7 +341,7 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">st</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">price</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">qty</span></div>
 
-<div class="viewcode-block" id="AssetPositionProfit.short"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.AssetPositionProfit.short">[docs]</a>    <span class="k">def</span> <span class="nf">short</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="AssetPositionProfit.short"><a class="viewcode-back" href="../../../autoapi/xuk/options/position_profit/index.html#xuk.options.position_profit.AssetPositionProfit.short">[docs]</a>    <span class="k">def</span> <span class="nf">short</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate short UA position profit.</span>
 

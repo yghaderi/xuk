@@ -32,7 +32,7 @@ Classes
 
    .. rubric:: Examples
 
-   Import packages
+   Import libraries
 
    >>> from oxtapus.ise import TSETMC
    >>> from xuk.options import Strategy
