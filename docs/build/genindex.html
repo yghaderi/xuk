@@ -31,6 +31,7 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
@@ -40,6 +41,8 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
     <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
     <link rel="index" title="Index" href="#" />
@@ -136,6 +139,7 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="autoapi/xuk/options/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="autoapi/xuk/options/position_builder/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.position_builder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="autoapi/xuk/options/position_profit/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.position_profit</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/xuk/options/pricing/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.pricing</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="autoapi/xuk/options/strategy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.strategy</span></code></a></li>
 </ul>
 </li>
@@ -278,9 +282,15 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/xuk/options/index.html#xuk.options.Strategy.bear_call_spread">bear_call_spread() (Strategy method)</a>, <a href="autoapi/xuk/options/strategy/index.html#xuk.options.strategy.Strategy.bear_call_spread">[1]</a>
 </li>
+      <li><a href="autoapi/xuk/options/index.html#xuk.options.Strategy.bear_put_spread">bear_put_spread() (Strategy method)</a>, <a href="autoapi/xuk/options/strategy/index.html#xuk.options.strategy.Strategy.bear_put_spread">[1]</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="autoapi/xuk/options/index.html#xuk.options.Pricing.black_scholes_merton">black_scholes_merton() (Pricing method)</a>, <a href="autoapi/xuk/options/pricing/index.html#xuk.options.pricing.Pricing.black_scholes_merton">[1]</a>
+</li>
       <li><a href="autoapi/xuk/options/index.html#xuk.options.Strategy.bull_call_spread">bull_call_spread() (Strategy method)</a>, <a href="autoapi/xuk/options/strategy/index.html#xuk.options.strategy.Strategy.bull_call_spread">[1]</a>
+</li>
+      <li><a href="autoapi/xuk/options/index.html#xuk.options.Strategy.bull_put_spread">bull_put_spread() (Strategy method)</a>, <a href="autoapi/xuk/options/strategy/index.html#xuk.options.strategy.Strategy.bull_put_spread">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -336,6 +346,8 @@ document.write(`
 </li>
         <li><a href="autoapi/xuk/options/position_profit/index.html#module-xuk.options.position_profit">xuk.options.position_profit</a>
 </li>
+        <li><a href="autoapi/xuk/options/pricing/index.html#module-xuk.options.pricing">xuk.options.pricing</a>
+</li>
         <li><a href="autoapi/xuk/options/strategy/index.html#module-xuk.options.strategy">xuk.options.strategy</a>
 </li>
       </ul></li>
@@ -371,6 +383,12 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/xuk/options/position_builder/index.html#xuk.options.position_builder.OptionParam.premium">premium (OptionParam attribute)</a>
 </li>
+      <li><a href="autoapi/xuk/options/index.html#xuk.options.Pricing">Pricing (class in xuk.options)</a>
+
+      <ul>
+        <li><a href="autoapi/xuk/options/pricing/index.html#xuk.options.pricing.Pricing">(class in xuk.options.pricing)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -453,6 +471,13 @@ document.write(`
 
       <ul>
         <li><a href="autoapi/xuk/options/position_profit/index.html#module-xuk.options.position_profit">module</a>
+</li>
+      </ul></li>
+      <li>
+    xuk.options.pricing
+
+      <ul>
+        <li><a href="autoapi/xuk/options/pricing/index.html#module-xuk.options.pricing">module</a>
 </li>
       </ul></li>
       <li>

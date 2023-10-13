@@ -32,6 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
@@ -41,7 +42,11 @@
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>window.MathJax = {"chtml": {"displayAlign": "left"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/xuk/options/index';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -139,6 +144,7 @@
 <li class="toctree-l3 current active has-children"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="position_builder/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.position_builder</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="position_profit/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.position_profit</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pricing/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.pricing</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="strategy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.strategy</span></code></a></li>
 </ul>
 </li>
@@ -300,6 +306,8 @@ document.write(`
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.married_put"><code class="docutils literal notranslate"><span class="pre">Strategy.married_put()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.bull_call_spread"><code class="docutils literal notranslate"><span class="pre">Strategy.bull_call_spread()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.bear_call_spread"><code class="docutils literal notranslate"><span class="pre">Strategy.bear_call_spread()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.bull_put_spread"><code class="docutils literal notranslate"><span class="pre">Strategy.bull_put_spread()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.bear_put_spread"><code class="docutils literal notranslate"><span class="pre">Strategy.bear_put_spread()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.PositionBuilder"><code class="docutils literal notranslate"><span class="pre">PositionBuilder</span></code></a><ul class="nav section-nav flex-column">
@@ -316,6 +324,10 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.AssetPositionProfit"><code class="docutils literal notranslate"><span class="pre">AssetPositionProfit</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.AssetPositionProfit.long"><code class="docutils literal notranslate"><span class="pre">AssetPositionProfit.long()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.AssetPositionProfit.short"><code class="docutils literal notranslate"><span class="pre">AssetPositionProfit.short()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Pricing"><code class="docutils literal notranslate"><span class="pre">Pricing</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Pricing.black_scholes_merton"><code class="docutils literal notranslate"><span class="pre">Pricing.black_scholes_merton()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -341,6 +353,7 @@ document.write(`
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="position_builder/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.position_builder</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="position_profit/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.position_profit</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pricing/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.pricing</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="strategy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.strategy</span></code></a></li>
 </ul>
 </div>
@@ -363,6 +376,9 @@ document.write(`
 <tr class="row-even"><td><p><a class="reference internal" href="#xuk.options.AssetPositionProfit" title="xuk.options.AssetPositionProfit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AssetPositionProfit</span></code></a></p></td>
 <td><p>Calculate asset position profit.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xuk.options.Pricing" title="xuk.options.Pricing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Pricing</span></code></a></p></td>
+<td><p></p></td>
+</tr>
 </tbody>
 </table>
 <dl class="py class">
@@ -382,6 +398,32 @@ price, t: Days to expiration date</p></li>
 </ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>Import packages</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">oxtapus.ise</span> <span class="kn">import</span> <span class="n">TSETMC</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xuk.options</span> <span class="kn">import</span> <span class="n">Strategy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
+</pre></div>
+</div>
+<p>Get option data and create object</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">TSETMC</span><span class="p">()</span><span class="o">.</span><span class="n">option_market_watch</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stg</span> <span class="o">=</span> <span class="n">Strategy</span><span class="p">(</span><span class="n">call</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span><span class="o">==</span><span class="s2">&quot;call&quot;</span><span class="p">),</span> <span class="n">put</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span><span class="o">==</span><span class="s2">&quot;put&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Call strategies</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stg</span><span class="o">.</span><span class="n">covered_call</span><span class="p">()</span>
+<span class="go">shape: (928, 16)</span>
+<span class="go">┌───────────┬────────────┬───┬────────────┬────────────────┐</span>
+<span class="go">│  writing  ┆ writing_at ┆ … ┆   pct_cp   ┆ pct_monthly_cp │</span>
+<span class="go">│    ---    ┆     ---    ┆   ┆     ---    ┆       ---      │</span>
+<span class="go">│    str    ┆     f64    ┆   ┆     f64    ┆       f64      │</span>
+<span class="go">╞═══════════╪════════════╪═══╪════════════╪════════════════╡</span>
+<span class="go">│ xxxx 8001 ┆   1961.0   ┆ … ┆  -0.128406 ┆    -0.226599   │</span>
+<span class="go">│     …     ┆      …     ┆ … ┆      …     ┆        …       │</span>
+<span class="go">│ zzzz 1100 ┆    600.0   ┆ … ┆ -16.666667 ┆      -4.0      │</span>
+<span class="go">└───────────┴────────────┴───┴────────────┴────────────────┘</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="xuk.options.Strategy.covered_call">
 <span class="sig-name descname"><span class="pre">covered_call</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">polars.DataFrame</span></span></span><a class="reference internal" href="../../../_modules/xuk/options/strategy.html#Strategy.covered_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.Strategy.covered_call" title="Permalink to this definition">#</a></dt>
@@ -461,6 +503,16 @@ price, t: Days to expiration date</p></li>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.Strategy.bull_put_spread">
+<span class="sig-name descname"><span class="pre">bull_put_spread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/options/strategy.html#Strategy.bull_put_spread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.Strategy.bull_put_spread" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.Strategy.bear_put_spread">
+<span class="sig-name descname"><span class="pre">bear_put_spread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/options/strategy.html#Strategy.bear_put_spread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.Strategy.bear_put_spread" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -614,6 +666,55 @@ price, t: Days to expiration date</p></li>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="xuk.options.Pricing">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Pricing</span></span><a class="reference internal" href="../../../_modules/xuk/options/pricing.html#Pricing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.Pricing" title="Permalink to this definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.Pricing.black_scholes_merton">
+<span class="sig-name descname"><span class="pre">black_scholes_merton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">call</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">put</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">div</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../../../_modules/xuk/options/pricing.html#Pricing.black_scholes_merton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.Pricing.black_scholes_merton" title="Permalink to this definition">#</a></dt>
+<dd><p>Black and Scholes and Merton formula for European option-pricing.</p>
+<p><span class="math notranslate nohighlight">\(C = N(d_1)S_T-N(d_2)K_e^{-rT}\)</span></p>
+<p>where</p>
+<div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(d_1 = \frac {ln\frac{S_T}{K}+(r+\frac {\sigma^2}{2})T}{\sigma\sqrt{T}}\)</span></div>
+<div class="line"><span class="math notranslate nohighlight">\(d_2 = d_1 - \sigma\sqrt{T}\)</span></div>
+<div class="line"><span class="math notranslate nohighlight">\(C\)</span>: call option value</div>
+<div class="line"><span class="math notranslate nohighlight">\(S_t\)</span>: underlying asset price</div>
+<div class="line"><span class="math notranslate nohighlight">\(N\)</span>: CDF of the normal distribution</div>
+<div class="line"><span class="math notranslate nohighlight">\(K\)</span>: strike-price</div>
+<div class="line"><span class="math notranslate nohighlight">\(e\)</span>: the base of the natural log function, approximately 2.71828</div>
+<div class="line"><span class="math notranslate nohighlight">\(r\)</span>: risk-free interest rate</div>
+<div class="line"><span class="math notranslate nohighlight">\(T\)</span>: time to expiration of option, in years</div>
+<div class="line"><span class="math notranslate nohighlight">\(ln\)</span>: natural logarithm function</div>
+<div class="line"><span class="math notranslate nohighlight">\(\sigma\)</span>: standard deviation of the annualized continuously compounded rate of return of the underlying asset.</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s0</strong> – current underlying asset price</p></li>
+<li><p><strong>k</strong> – strike-price</p></li>
+<li><p><strong>t</strong> – day to expiration of option, &gt; 0</p></li>
+<li><p><strong>sigma</strong> – standard deviation of the daily underlying asset return</p></li>
+<li><p><strong>type_</strong> – <ul>
+<li><p>“call”: call option</p></li>
+<li><p>”put”: put option</p></li>
+</ul>
+</p></li>
+<li><p><strong>r</strong> – risk-free interest rate</p></li>
+<li><p><strong>div</strong> – dividends before option expiration. Default: <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>option value</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 </section>
@@ -670,6 +771,8 @@ price, t: Days to expiration date</p></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.married_put"><code class="docutils literal notranslate"><span class="pre">Strategy.married_put()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.bull_call_spread"><code class="docutils literal notranslate"><span class="pre">Strategy.bull_call_spread()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.bear_call_spread"><code class="docutils literal notranslate"><span class="pre">Strategy.bear_call_spread()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.bull_put_spread"><code class="docutils literal notranslate"><span class="pre">Strategy.bull_put_spread()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.bear_put_spread"><code class="docutils literal notranslate"><span class="pre">Strategy.bear_put_spread()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.PositionBuilder"><code class="docutils literal notranslate"><span class="pre">PositionBuilder</span></code></a><ul class="nav section-nav flex-column">
@@ -686,6 +789,10 @@ price, t: Days to expiration date</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.AssetPositionProfit"><code class="docutils literal notranslate"><span class="pre">AssetPositionProfit</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.AssetPositionProfit.long"><code class="docutils literal notranslate"><span class="pre">AssetPositionProfit.long()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.AssetPositionProfit.short"><code class="docutils literal notranslate"><span class="pre">AssetPositionProfit.short()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Pricing"><code class="docutils literal notranslate"><span class="pre">Pricing</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Pricing.black_scholes_merton"><code class="docutils literal notranslate"><span class="pre">Pricing.black_scholes_merton()</span></code></a></li>
 </ul>
 </li>
 </ul>

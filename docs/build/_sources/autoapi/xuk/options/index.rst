@@ -12,6 +12,7 @@ Submodules
 
    position_builder/index.rst
    position_profit/index.rst
+   pricing/index.rst
    strategy/index.rst
 
 
@@ -27,6 +28,7 @@ Classes
    xuk.options.PositionBuilder
    xuk.options.OptionPositionProfit
    xuk.options.AssetPositionProfit
+   xuk.options.Pricing
 
 
 
@@ -43,6 +45,33 @@ Classes
                t:int, bs:int, buy_price:int, sell_price:int) columns. Where ua: Underlying Asset, bs : Black-Scholes
                price, t: Days to expiration date
    :param call_put:
+
+   .. rubric:: Examples
+
+   Import packages
+
+   >>> from oxtapus.ise import TSETMC
+   >>> from xuk.options import Strategy
+   >>> import polars as pl
+
+   Get option data and create object
+
+   >>> data = pl.from_pandas(TSETMC().option_market_watch())
+   >>> stg = Strategy(call=data.filter(pl.col("type")=="call"), put=data.filter(pl.col("type")=="put")
+
+   Call strategies
+
+   >>> stg.covered_call()
+   shape: (928, 16)
+   ┌───────────┬────────────┬───┬────────────┬────────────────┐
+   │  writing  ┆ writing_at ┆ … ┆   pct_cp   ┆ pct_monthly_cp │
+   │    ---    ┆     ---    ┆   ┆     ---    ┆       ---      │
+   │    str    ┆     f64    ┆   ┆     f64    ┆       f64      │
+   ╞═══════════╪════════════╪═══╪════════════╪════════════════╡
+   │ xxxx 8001 ┆   1961.0   ┆ … ┆  -0.128406 ┆    -0.226599   │
+   │     …     ┆      …     ┆ … ┆      …     ┆        …       │
+   │ zzzz 1100 ┆    600.0   ┆ … ┆ -16.666667 ┆      -4.0      │
+   └───────────┴────────────┴───┴────────────┴────────────────┘
 
    .. py:method:: covered_call() -> polars.DataFrame
 
@@ -114,6 +143,12 @@ Classes
       A bear call spread can be a useful strategy when you expect a moderate downward price movement in the underlying asset. It allows you to profit from the premium received by selling the short call while limiting your potential losses. However, keep in mind that options trading carries risks and should only be undertaken if you understand the strategy and the potential outcomes.
 
       :rtype: polars.DataFrame
+
+
+   .. py:method:: bull_put_spread()
+
+
+   .. py:method:: bear_put_spread()
 
 
 
@@ -218,6 +253,45 @@ Classes
 
       Calculate short UA position profit.
 
+      :rtype: int
+
+
+
+.. py:class:: Pricing
+
+
+   .. py:method:: black_scholes_merton(s0: float | str, k: float | str, t: int, sigma: float, type_: Literal[call, put], r: float, div: float | int = 0) -> int
+
+      Black and Scholes and Merton formula for European option-pricing.
+
+      :math:`C = N(d_1)S_T-N(d_2)K_e^{-rT}`
+
+      where
+
+      .. line-block::
+          :math:`d_1 = \frac {ln\frac{S_T}{K}+(r+\frac {\sigma^2}{2})T}{\sigma\sqrt{T}}`
+          :math:`d_2 = d_1 - \sigma\sqrt{T}`
+          :math:`C`: call option value
+          :math:`S_t`: underlying asset price
+          :math:`N`: CDF of the normal distribution
+          :math:`K`: strike-price
+          :math:`e`: the base of the natural log function, approximately 2.71828
+          :math:`r`: risk-free interest rate
+          :math:`T`: time to expiration of option, in years
+          :math:`ln`: natural logarithm function
+          :math:`\sigma`: standard deviation of the annualized continuously compounded rate of return of the underlying asset.
+
+      :param s0: current underlying asset price
+      :param k: strike-price
+      :param t: day to expiration of option, > 0
+      :param sigma: standard deviation of the daily underlying asset return
+      :param type\_:
+                     * "call": call option
+                     * "put": put option
+      :param r: risk-free interest rate
+      :param div: dividends before option expiration. Default: ``0``
+
+      :returns: **option value**
       :rtype: int
 
 

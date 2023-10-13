@@ -30,6 +30,33 @@ Classes
                price, t: Days to expiration date
    :param call_put:
 
+   .. rubric:: Examples
+
+   Import packages
+
+   >>> from oxtapus.ise import TSETMC
+   >>> from xuk.options import Strategy
+   >>> import polars as pl
+
+   Get option data and create object
+
+   >>> data = pl.from_pandas(TSETMC().option_market_watch())
+   >>> stg = Strategy(call=data.filter(pl.col("type")=="call"), put=data.filter(pl.col("type")=="put")
+
+   Call strategies
+
+   >>> stg.covered_call()
+   shape: (928, 16)
+   ┌───────────┬────────────┬───┬────────────┬────────────────┐
+   │  writing  ┆ writing_at ┆ … ┆   pct_cp   ┆ pct_monthly_cp │
+   │    ---    ┆     ---    ┆   ┆     ---    ┆       ---      │
+   │    str    ┆     f64    ┆   ┆     f64    ┆       f64      │
+   ╞═══════════╪════════════╪═══╪════════════╪════════════════╡
+   │ xxxx 8001 ┆   1961.0   ┆ … ┆  -0.128406 ┆    -0.226599   │
+   │     …     ┆      …     ┆ … ┆      …     ┆        …       │
+   │ zzzz 1100 ┆    600.0   ┆ … ┆ -16.666667 ┆      -4.0      │
+   └───────────┴────────────┴───┴────────────┴────────────────┘
+
    .. py:method:: covered_call() -> polars.DataFrame
 
       Is the purchase of a share of stock coupled with a sale of a call option on that stock.
@@ -100,6 +127,12 @@ Classes
       A bear call spread can be a useful strategy when you expect a moderate downward price movement in the underlying asset. It allows you to profit from the premium received by selling the short call while limiting your potential losses. However, keep in mind that options trading carries risks and should only be undertaken if you understand the strategy and the potential outcomes.
 
       :rtype: polars.DataFrame
+
+
+   .. py:method:: bull_put_spread()
+
+
+   .. py:method:: bear_put_spread()
 
 
 
