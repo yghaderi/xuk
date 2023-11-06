@@ -1,31 +1,42 @@
-from pydantic import BaseModel
+from enum import Enum
+from pydantic import validate_call
+
 import numpy as np
 from scipy.stats import norm
 
 
-class OptionType(BaseModel):
-    call: "call"
-    put: "put"
+class OptionType(str, Enum):
+    put = "put"
+    call = "call"
 
 
 class Pricing:
+    """
+    .. raw:: html
+
+        <div dir="rtl">
+            مدل‌هایِ قیمت-گذاریِ اختیارِ-معامله رو پوشش میده.
+        </div>
+    """
     def __init__(self):
         self.N = 250
         self.Y = 365
 
+    @validate_call
     def black_scholes_merton(
-        self,
-        s0: float | str,
-        k: float | str,
-        t: int,
-        sigma: float,
-        type_: OptionType,
-        r: float,
-        div: float | int = 0,
-    ) -> int:
+            self,
+            s0: float | int,
+            k: float | int,
+            t: int,
+            sigma: float,
+            type_: OptionType,
+            r: float,
+            div: float | int = 0,
+    ) -> float:
         """
         .. raw:: html
-            <div>
+
+            <div dir="rtl">
                 مدلِ قیمت-گذاریِ بلک-شولز-مرتون برای اختارِ-معامله‌هایِ اروپایی.
             </div>
 
@@ -48,25 +59,24 @@ class Pricing:
 
         Parameters
         ----------
-        s0: str
+        s0: int or float
             قیمتِ داراییِ پایه
-        k: str
+        k: int or float
             قیمتِ اعمال
-        t: str
+        t: int
             تعدادِ روزهایِ مانده تا تاریخِ اعمال
         sigma: float
             انحراف-از-معیارِ روزانه‌یِ داراییِ پایه
-        type\_ OptionType, {'call', 'put'}
-            * "call": اختیارِ خرید
-            * "put": اختیارِ فروش
-        r
+        type\_: OptionType, {'call', 'put'}
+            نوعِ اختیار
+        r: float
             نرخِ بهره‌یِ بدونِ ریسک- سالانه
-        div: int, default 0
+        div: int or float, default 0
             سودِ تقسیمیِ داراییِ پایه قبل از تاریخِ اعمال
 
         Returns
         -------
-        option value: int
+        option value: float
         """
         sigma = sigma * np.sqrt(self.N)
         t = t / self.Y

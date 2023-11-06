@@ -1,0 +1,854 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>xuk.options &#8212; xuk 0.1.4 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script src="../../../_static/documentation_options.js?v=f024b623"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=4ea706d9"></script>
+    <script>window.MathJax = {"chtml": {"displayAlign": "left"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/xuk/options/index';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="xuk.options.position_builder" href="position_builder/index.html" />
+    <link rel="prev" title="xuk.fixed_incom.ytm" href="../fixed_incom/ytm/index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">xuk 0.1.4 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../index.html">
+                        API Reference
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../index.html">
+                        API Reference
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../fixed_incom/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.fixed_incom</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../fixed_incom/ytm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.fixed_incom.ytm</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="position_builder/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.position_builder</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="position_profit/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.position_profit</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pricing/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.pricing</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="strategy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.strategy</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">API Reference</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk</span></code></a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><code...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="module-xuk.options">
+<span id="xuk-options"></span><h1><a class="reference internal" href="#module-xuk.options" title="xuk.options"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options</span></code></a><a class="headerlink" href="#module-xuk.options" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="position_builder/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.position_builder</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="position_profit/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.position_profit</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="pricing/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.pricing</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="strategy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.strategy</span></code></a></li>
+</ul>
+</div>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">#</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h3>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xuk.options.Strategy" title="xuk.options.Strategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Strategy</span></code></a></p></td>
+<td><p>It calculates the necessary parameters related to the well-known option trading strategies.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#xuk.options.PositionBuilder" title="xuk.options.PositionBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PositionBuilder</span></code></a></p></td>
+<td><p>Build any position and get simulate profit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xuk.options.OptionPositionProfit" title="xuk.options.OptionPositionProfit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OptionPositionProfit</span></code></a></p></td>
+<td><p>Calculate option position profit.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#xuk.options.AssetPositionProfit" title="xuk.options.AssetPositionProfit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AssetPositionProfit</span></code></a></p></td>
+<td><p>Calculate asset position profit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xuk.options.Pricing" title="xuk.options.Pricing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Pricing</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="xuk.options.Strategy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">call</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">pl.DataFrame()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">put</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">pl.DataFrame()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_put</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">pl.DataFrame()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/options/strategy.html#Strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.Strategy" title="Link to this definition">#</a></dt>
+<dd><p>It calculates the necessary parameters related to the well-known option trading strategies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>call</strong> – polars.DataFrame with (ua:str, ua_sell_price:int, ua_buy_price:int, symbol:str, strike_price:int,
+t:int, bs:int, buy_price:int, sell_price:int) columns. Where ua: Underlying Asset, bs : Black-Scholes
+price, t: Days to expiration date</p></li>
+<li><p><strong>put</strong> – polars.DataFrame with (ua:str, ua_sell_price:int, ua_buy_price:int, symbol:str, strike_price:int,
+t:int, bs:int, buy_price:int, sell_price:int) columns. Where ua: Underlying Asset, bs : Black-Scholes
+price, t: Days to expiration date</p></li>
+<li><p><strong>call_put</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Import libraries</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">oxtapus.ise</span> <span class="kn">import</span> <span class="n">TSETMC</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xuk.options</span> <span class="kn">import</span> <span class="n">Strategy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
+</pre></div>
+</div>
+<p>Get option data and create object</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">TSETMC</span><span class="p">()</span><span class="o">.</span><span class="n">option_market_watch</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stg</span> <span class="o">=</span> <span class="n">Strategy</span><span class="p">(</span><span class="n">call</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span><span class="o">==</span><span class="s2">&quot;call&quot;</span><span class="p">),</span> <span class="n">put</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span><span class="o">==</span><span class="s2">&quot;put&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Call strategies</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stg</span><span class="o">.</span><span class="n">covered_call</span><span class="p">()</span>
+<span class="go">shape: (928, 16)</span>
+<span class="go">┌───────────┬────────────┬───┬────────────┬────────────────┐</span>
+<span class="go">│  writing  ┆ writing_at ┆ … ┆   pct_cp   ┆ pct_monthly_cp │</span>
+<span class="go">│    ---    ┆     ---    ┆   ┆     ---    ┆       ---      │</span>
+<span class="go">│    str    ┆     f64    ┆   ┆     f64    ┆       f64      │</span>
+<span class="go">╞═══════════╪════════════╪═══╪════════════╪════════════════╡</span>
+<span class="go">│ xxxx 8001 ┆   1961.0   ┆ … ┆  -0.128406 ┆    -0.226599   │</span>
+<span class="go">│     …     ┆      …     ┆ … ┆      …     ┆        …       │</span>
+<span class="go">│ zzzz 1100 ┆    600.0   ┆ … ┆ -16.666667 ┆      -4.0      │</span>
+<span class="go">└───────────┴────────────┴───┴────────────┴────────────────┘</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.Strategy.covered_call">
+<span class="sig-name descname"><span class="pre">covered_call</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">polars.DataFrame</span></span></span><a class="reference internal" href="../../../_modules/xuk/options/strategy.html#Strategy.covered_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.Strategy.covered_call" title="Link to this definition">#</a></dt>
+<dd><p>Is the purchase of a share of stock coupled with a sale of a call option on that stock.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>polars.DataFrame contain (writing, writing_at, buy_ua, buy_ua_at,strike_price,t, pct_status,</em></p></li>
+<li><p><em>break_even, pct_break_even, max_pot_loss, max_pot_profit, pct_mpp, pct_monthly_cp, current_profit, pct_cp,</em></p></li>
+<li><p><em>pct_monthly_cp) columns.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.Strategy.married_put">
+<span class="sig-name descname"><span class="pre">married_put</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">polars.DataFrame</span></span></span><a class="reference internal" href="../../../_modules/xuk/options/strategy.html#Strategy.married_put"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.Strategy.married_put" title="Link to this definition">#</a></dt>
+<dd><p>Is the purchase of a share of stock coupled with a purchase of a put option on that stock.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>polars.DataFrame contain (writing, writing_at, buy_ua, buy_ua_at,strike_price,t, pct_status,</em></p></li>
+<li><p><em>break_even, pct_break_even, max_pot_loss, max_pot_profit, pct_mpp, pct_monthly_cp, current_profit, pct_cp,</em></p></li>
+<li><p><em>pct_monthly_cp) columns.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.Strategy.bull_call_spread">
+<span class="sig-name descname"><span class="pre">bull_call_spread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/options/strategy.html#Strategy.bull_call_spread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.Strategy.bull_call_spread" title="Link to this definition">#</a></dt>
+<dd><p>A bull call spread is an options trading strategy that’s used when an investor is moderately bullish on the underlying asset (e.g., a stock, index, or commodity) and wants to profit from an anticipated upward price movement while also limiting their potential downside risk. It involves buying one call option and simultaneously selling another call option with the same expiration date but at a higher strike price. This strategy is also known as a “debit call spread” because it typically requires an upfront payment (debit) to establish the position.</p>
+<p>Here are the key components and characteristics of a bull call spread:</p>
+<ol class="arabic simple">
+<li><p><strong>Components</strong>:
+- <strong>Buy a Call Option</strong>: You start by buying a call option with a lower strike price (the strike price at which you have the right to buy the underlying asset).
+- <strong>Sell a Call Option</strong>: Simultaneously, you sell a call option with a higher strike price than the one you bought. This is often referred to as the “short call” or “written call.”</p></li>
+<li><p><strong>Expiration Date</strong>: Both the long and short call options should have the same expiration date.</p></li>
+<li><p><strong>Strike Prices</strong>:
+- The strike price of the long call option is typically below the current market price of the underlying asset.
+- The strike price of the short call option is higher than the strike price of the long call.</p></li>
+<li><p><strong>Profit Potential</strong>: A bull call spread profits from a rising price of the underlying asset. The maximum profit is limited and occurs when the price of the underlying asset is above the higher strike price at expiration.</p></li>
+<li><p><strong>Risk and Losses</strong>: The maximum loss for a bull call spread is limited to the initial cost (debit) of establishing the position. This loss occurs if the price of the underlying asset is below the lower strike price at expiration.</p></li>
+<li><p><strong>Break-even Point</strong>: The break-even point for this strategy is the sum of the lower strike price and the net premium paid for the spread. In other words, it’s the point at which your gains equal your initial cost.</p></li>
+<li><p><strong>Risk-Reward Ratio</strong>: A bull call spread provides a limited potential profit and a limited potential loss. The risk-reward ratio is typically skewed in favor of limited profit potential.</p></li>
+<li><p><strong>Time Decay</strong>: Time decay (theta) can impact the value of both the long and short call options. Generally, the impact of time decay is smaller on the long call than on the short call. This can affect the profitability of the strategy.</p></li>
+</ol>
+<p>In summary, a bull call spread is a strategy that allows investors to benefit from a moderate bullish view on an underlying asset while controlling their risk. It’s a defined-risk strategy with limited profit potential and is often used when an investor expects a moderate price increase but wants to reduce the cost of buying a call option outright. Traders should carefully consider the strike prices, expiration date, and market conditions when implementing this strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>polars.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.Strategy.bear_call_spread">
+<span class="sig-name descname"><span class="pre">bear_call_spread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/options/strategy.html#Strategy.bear_call_spread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.Strategy.bear_call_spread" title="Link to this definition">#</a></dt>
+<dd><p>A bear call spread is an options trading strategy that involves two call options with the same expiration date but different strike prices. This strategy is used by investors who are moderately bearish on the underlying asset’s price and want to profit from a potential decrease in the asset’s price. Here’s how a bear call spread works:</p>
+<ol class="arabic simple">
+<li><p><strong>Select the Underlying Asset:</strong> You start by choosing an underlying asset, such as a stock, index, or commodity.</p></li>
+<li><p><strong>Sell a Call Option:</strong> You sell (write) a call option with a strike price that’s closer to the current market price of the underlying asset. This is called the “short call” or “short leg” of the spread. By selling this option, you collect a premium.</p></li>
+<li><p><strong>Buy a Call Option:</strong> Simultaneously, you buy a call option with a higher strike price than the one you sold. This is called the “long call” or “long leg” of the spread. This purchase also involves paying a premium.</p></li>
+<li><p><strong>Limited Risk:</strong> The primary advantage of the bear call spread is that it has limited risk. The premium received from selling the short call partially offsets the premium paid for the long call. Your maximum loss is capped at the difference between the strike prices minus the net premium received.</p></li>
+<li><p><strong>Profit Potential:</strong> Your maximum profit is limited to the net premium you receive when you enter the trade. This profit occurs if the underlying asset’s price remains below the strike price of the short call at expiration.</p></li>
+<li><p><strong>Break-even Point:</strong> The strategy’s break-even point is the strike price of the short call plus the net premium received. As long as the underlying asset’s price remains below this point, you won’t incur a loss.</p></li>
+<li><p><strong>Expiration:</strong> The strategy typically involves holding both the short and long call options until expiration. If the underlying asset’s price is below the short call’s strike price at expiration, the short call expires worthless, and you keep the premium. The long call can also expire worthless or be sold for any remaining value.</p></li>
+</ol>
+<p>A bear call spread can be a useful strategy when you expect a moderate downward price movement in the underlying asset. It allows you to profit from the premium received by selling the short call while limiting your potential losses. However, keep in mind that options trading carries risks and should only be undertaken if you understand the strategy and the potential outcomes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>polars.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.Strategy.bull_put_spread">
+<span class="sig-name descname"><span class="pre">bull_put_spread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/options/strategy.html#Strategy.bull_put_spread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.Strategy.bull_put_spread" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.Strategy.bear_put_spread">
+<span class="sig-name descname"><span class="pre">bear_put_spread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/options/strategy.html#Strategy.bear_put_spread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.Strategy.bear_put_spread" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="xuk.options.PositionBuilder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PositionBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">long_call</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="position_builder/index.html#xuk.options.position_builder.OptionParam" title="xuk.options.position_builder.OptionParam"><span class="pre">OptionParam</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short_call</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="position_builder/index.html#xuk.options.position_builder.OptionParam" title="xuk.options.position_builder.OptionParam"><span class="pre">OptionParam</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">long_put</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="position_builder/index.html#xuk.options.position_builder.OptionParam" title="xuk.options.position_builder.OptionParam"><span class="pre">OptionParam</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short_put</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="position_builder/index.html#xuk.options.position_builder.OptionParam" title="xuk.options.position_builder.OptionParam"><span class="pre">OptionParam</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">long_ua</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="position_builder/index.html#xuk.options.position_builder.UAParam" title="xuk.options.position_builder.UAParam"><span class="pre">UAParam</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short_ua</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="position_builder/index.html#xuk.options.position_builder.UAParam" title="xuk.options.position_builder.UAParam"><span class="pre">UAParam</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">st_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="position_builder/index.html#xuk.options.position_builder.StParam" title="xuk.options.position_builder.StParam"><span class="pre">StParam</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/options/position_builder.html#PositionBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.PositionBuilder" title="Link to this definition">#</a></dt>
+<dd><p>Build any position and get simulate profit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>long_call</strong> – List[OptionParam] long call position params e.g. [{‘k’:22_000, ‘premium’:2_000, ‘qty’:2}]</p></li>
+<li><p><strong>short_call</strong> – List[OptionParam] short call position params e.g. [{‘k’:22_000, ‘premium’:2_000, ‘qty’:2}]</p></li>
+<li><p><strong>long_put</strong> – List[OptionParam] long put position params e.g. [{‘k’:22_000, ‘premium’:2_000, ‘qty’:2}]</p></li>
+<li><p><strong>short_put</strong> – List[OptionParam] short put position params e.g. [{‘k’:22_000, ‘premium’:2_000, ‘qty’:2}]</p></li>
+<li><p><strong>long_ua</strong> – List[UAParam] long underlying asset position params e.g. [{‘splot_price’:18_000, ‘qty’:1}]</p></li>
+<li><p><strong>short_ua</strong> – List[UAParam] short underlying asset position params e.g. [{‘splot_price’:18_000, ‘qty’:1}]</p></li>
+<li><p><strong>st_range</strong> – <dl class="simple">
+<dt>StParam to create range of price of assets at maturity,</dt><dd><p>e.g. {‘min’:2000, ‘max’:5000,’step’:10}</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.PositionBuilder.simulate_profit">
+<span class="sig-name descname"><span class="pre">simulate_profit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/xuk/options/position_builder.html#PositionBuilder.simulate_profit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.PositionBuilder.simulate_profit" title="Link to this definition">#</a></dt>
+<dd><p>The simulation of profit for all given position within the specified range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[int]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xuk.options</span> <span class="kn">import</span> <span class="n">PositionBuilder</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">positions</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>   <span class="s2">&quot;long_call&quot;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="gp">... </span>   <span class="s2">&quot;short_call&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="gp">... </span>       <span class="p">{</span><span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="mi">22_000</span><span class="p">,</span> <span class="s2">&quot;premium&quot;</span><span class="p">:</span> <span class="mi">2_000</span><span class="p">,</span> <span class="s2">&quot;qty&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+<span class="gp">... </span>       <span class="p">{</span><span class="s2">&quot;k&quot;</span><span class="p">:</span> <span class="mi">24_000</span><span class="p">,</span> <span class="s2">&quot;premium&quot;</span><span class="p">:</span> <span class="mi">1_000</span><span class="p">,</span> <span class="s2">&quot;qty&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="gp">... </span>   <span class="p">],</span>
+<span class="gp">... </span>   <span class="s2">&quot;long_put&quot;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="gp">... </span>   <span class="s2">&quot;short_put&quot;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="gp">... </span>   <span class="s2">&quot;long_ua&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;spot_price&quot;</span><span class="p">:</span> <span class="mi">20_000</span><span class="p">,</span> <span class="s2">&quot;qty&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}],</span>
+<span class="gp">... </span>   <span class="s2">&quot;short_ua&quot;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="go">...}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pb</span> <span class="o">=</span> <span class="n">PositionBuilder</span><span class="p">(</span><span class="o">**</span><span class="n">positions</span><span class="p">,</span> <span class="n">st_range</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="mi">15_000</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">:</span> <span class="mi">30_000</span><span class="p">,</span> <span class="s2">&quot;step&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">pb</span><span class="o">.</span><span class="n">simulate_profit</span><span class="p">())</span>
+<span class="go">  [-10000, -9970, ...]</span>
+<span class="go">     &gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="xuk.options.OptionPositionProfit">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OptionPositionProfit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">st</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">premium</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/options/position_profit.html#OptionPositionProfit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.OptionPositionProfit" title="Link to this definition">#</a></dt>
+<dd><p>Calculate option position profit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>st</strong> – int, underlying asset price at time of t</p></li>
+<li><p><strong>k</strong> – int, strike price</p></li>
+<li><p><strong>premium</strong> – int, premium</p></li>
+<li><p><strong>qty</strong> – int, quantity</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.OptionPositionProfit.long_call">
+<span class="sig-name descname"><span class="pre">long_call</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../../../_modules/xuk/options/position_profit.html#OptionPositionProfit.long_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.OptionPositionProfit.long_call" title="Link to this definition">#</a></dt>
+<dd><p>Calculate long call position profit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.OptionPositionProfit.short_call">
+<span class="sig-name descname"><span class="pre">short_call</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../../../_modules/xuk/options/position_profit.html#OptionPositionProfit.short_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.OptionPositionProfit.short_call" title="Link to this definition">#</a></dt>
+<dd><p>Calculate short call position profit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.OptionPositionProfit.long_put">
+<span class="sig-name descname"><span class="pre">long_put</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../../../_modules/xuk/options/position_profit.html#OptionPositionProfit.long_put"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.OptionPositionProfit.long_put" title="Link to this definition">#</a></dt>
+<dd><p>Calculate long put position profit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.OptionPositionProfit.short_put">
+<span class="sig-name descname"><span class="pre">short_put</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../../../_modules/xuk/options/position_profit.html#OptionPositionProfit.short_put"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.OptionPositionProfit.short_put" title="Link to this definition">#</a></dt>
+<dd><p>Calculate short call position profit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="xuk.options.AssetPositionProfit">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AssetPositionProfit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">price</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">st</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/options/position_profit.html#AssetPositionProfit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.AssetPositionProfit" title="Link to this definition">#</a></dt>
+<dd><p>Calculate asset position profit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>price</strong> – int, asset price at time of 0</p></li>
+<li><p><strong>st</strong> – int, asset price at time of t</p></li>
+<li><p><strong>qty</strong> – int, quantity</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.AssetPositionProfit.long">
+<span class="sig-name descname"><span class="pre">long</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../../../_modules/xuk/options/position_profit.html#AssetPositionProfit.long"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.AssetPositionProfit.long" title="Link to this definition">#</a></dt>
+<dd><p>Calculate long UA position profit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.AssetPositionProfit.short">
+<span class="sig-name descname"><span class="pre">short</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../../../_modules/xuk/options/position_profit.html#AssetPositionProfit.short"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.AssetPositionProfit.short" title="Link to this definition">#</a></dt>
+<dd><p>Calculate short UA position profit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="xuk.options.Pricing">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Pricing</span></span><a class="reference internal" href="../../../_modules/xuk/options/pricing.html#Pricing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.Pricing" title="Link to this definition">#</a></dt>
+<dd><div dir="rtl">
+    مدل‌هایِ قیمت-گذاریِ اختیارِ-معامله رو پوشش میده.
+</div><dl class="py method">
+<dt class="sig sig-object py" id="xuk.options.Pricing.black_scholes_merton">
+<span class="sig-name descname"><span class="pre">black_scholes_merton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pricing/index.html#xuk.options.pricing.OptionType" title="xuk.options.pricing.OptionType"><span class="pre">OptionType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">div</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../../../_modules/xuk/options/pricing.html#Pricing.black_scholes_merton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.Pricing.black_scholes_merton" title="Link to this definition">#</a></dt>
+<dd><div dir="rtl">
+    مدلِ قیمت-گذاریِ بلک-شولز-مرتون برای اختارِ-معامله‌هایِ اروپایی.
+</div><p><span class="math notranslate nohighlight">\(C = N(d_1)S_T-N(d_2)K_e^{-rT}\)</span></p>
+<p>where</p>
+<div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(d_1 = \frac {ln\frac{S_T}{K}+(r+\frac {\sigma^2}{2})T}{\sigma\sqrt{T}}\)</span></div>
+<div class="line"><span class="math notranslate nohighlight">\(d_2 = d_1 - \sigma\sqrt{T}\)</span></div>
+<div class="line"><span class="math notranslate nohighlight">\(C\)</span>: call option value</div>
+<div class="line"><span class="math notranslate nohighlight">\(S_t\)</span>: underlying asset price</div>
+<div class="line"><span class="math notranslate nohighlight">\(N\)</span>: CDF of the normal distribution</div>
+<div class="line"><span class="math notranslate nohighlight">\(K\)</span>: strike-price</div>
+<div class="line"><span class="math notranslate nohighlight">\(e\)</span>: the base of the natural log function, approximately 2.71828</div>
+<div class="line"><span class="math notranslate nohighlight">\(r\)</span>: risk-free interest rate</div>
+<div class="line"><span class="math notranslate nohighlight">\(T\)</span>: time to expiration of option, in years</div>
+<div class="line"><span class="math notranslate nohighlight">\(ln\)</span>: natural logarithm function</div>
+<div class="line"><span class="math notranslate nohighlight">\(\sigma\)</span>: standard deviation of the annualized continuously compounded rate of return of the underlying asset.</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s0</strong> (<em>int</em><em> or </em><em>float</em>) – قیمتِ داراییِ پایه</p></li>
+<li><p><strong>k</strong> (<em>int</em><em> or </em><em>float</em>) – قیمتِ اعمال</p></li>
+<li><p><strong>t</strong> (<em>int</em>) – تعدادِ روزهایِ مانده تا تاریخِ اعمال</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – انحراف-از-معیارِ روزانه‌یِ داراییِ پایه</p></li>
+<li><p><strong>type_</strong> (<a class="reference internal" href="pricing/index.html#xuk.options.pricing.OptionType" title="xuk.options.pricing.OptionType"><em>OptionType</em></a><em>, </em><em>{'call'</em><em>, </em><em>'put'}</em>) – نوعِ اختیار</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – نرخِ بهره‌یِ بدونِ ریسک- سالانه</p></li>
+<li><p><strong>div</strong> (<em>int</em><em> or </em><em>float</em><em>, </em><em>default 0</em>) – سودِ تقسیمیِ داراییِ پایه قبل از تاریخِ اعمال</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>option value</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../fixed_incom/ytm/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.fixed_incom.ytm</span></code></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="position_builder/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.position_builder</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-contents">Package Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy"><code class="docutils literal notranslate"><span class="pre">Strategy</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.covered_call"><code class="docutils literal notranslate"><span class="pre">Strategy.covered_call()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.married_put"><code class="docutils literal notranslate"><span class="pre">Strategy.married_put()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.bull_call_spread"><code class="docutils literal notranslate"><span class="pre">Strategy.bull_call_spread()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.bear_call_spread"><code class="docutils literal notranslate"><span class="pre">Strategy.bear_call_spread()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.bull_put_spread"><code class="docutils literal notranslate"><span class="pre">Strategy.bull_put_spread()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Strategy.bear_put_spread"><code class="docutils literal notranslate"><span class="pre">Strategy.bear_put_spread()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.PositionBuilder"><code class="docutils literal notranslate"><span class="pre">PositionBuilder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.PositionBuilder.simulate_profit"><code class="docutils literal notranslate"><span class="pre">PositionBuilder.simulate_profit()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.OptionPositionProfit"><code class="docutils literal notranslate"><span class="pre">OptionPositionProfit</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.OptionPositionProfit.long_call"><code class="docutils literal notranslate"><span class="pre">OptionPositionProfit.long_call()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.OptionPositionProfit.short_call"><code class="docutils literal notranslate"><span class="pre">OptionPositionProfit.short_call()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.OptionPositionProfit.long_put"><code class="docutils literal notranslate"><span class="pre">OptionPositionProfit.long_put()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.OptionPositionProfit.short_put"><code class="docutils literal notranslate"><span class="pre">OptionPositionProfit.short_put()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.AssetPositionProfit"><code class="docutils literal notranslate"><span class="pre">AssetPositionProfit</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.AssetPositionProfit.long"><code class="docutils literal notranslate"><span class="pre">AssetPositionProfit.long()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.AssetPositionProfit.short"><code class="docutils literal notranslate"><span class="pre">AssetPositionProfit.short()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Pricing"><code class="docutils literal notranslate"><span class="pre">Pricing</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.options.Pricing.black_scholes_merton"><code class="docutils literal notranslate"><span class="pre">Pricing.black_scholes_merton()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../../../_sources/autoapi/xuk/options/index.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2023, Metafid.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

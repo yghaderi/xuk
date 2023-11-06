@@ -1,0 +1,101 @@
+:py:mod:`xuk.options.pricing`
+=============================
+
+.. py:module:: xuk.options.pricing
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   xuk.options.pricing.OptionType
+   xuk.options.pricing.Pricing
+
+
+
+
+.. py:class:: OptionType
+
+
+   Bases: :py:obj:`str`, :py:obj:`enum.Enum`
+
+   str(object='') -> str
+   str(bytes_or_buffer[, encoding[, errors]]) -> str
+
+   Create a new string object from the given object. If encoding or
+   errors is specified, then the object must expose a data buffer
+   that will be decoded using the given encoding and error handler.
+   Otherwise, returns the result of object.__str__() (if defined)
+   or repr(object).
+   encoding defaults to sys.getdefaultencoding().
+   errors defaults to 'strict'.
+
+   .. py:attribute:: put
+      :value: 'put'
+
+      
+
+   .. py:attribute:: call
+      :value: 'call'
+
+      
+
+
+.. py:class:: Pricing
+
+
+   .. raw:: html
+
+       <div dir="rtl">
+           مدل‌هایِ قیمت-گذاریِ اختیارِ-معامله رو پوشش میده.
+       </div>
+
+   .. py:method:: black_scholes_merton(s0: float | int, k: float | int, t: int, sigma: float, type_: OptionType, r: float, div: float | int = 0) -> float
+
+      .. raw:: html
+
+          <div dir="rtl">
+              مدلِ قیمت-گذاریِ بلک-شولز-مرتون برای اختارِ-معامله‌هایِ اروپایی.
+          </div>
+
+      :math:`C = N(d_1)S_T-N(d_2)K_e^{-rT}`
+
+      where
+
+      .. line-block::
+          :math:`d_1 = \frac {ln\frac{S_T}{K}+(r+\frac {\sigma^2}{2})T}{\sigma\sqrt{T}}`
+          :math:`d_2 = d_1 - \sigma\sqrt{T}`
+          :math:`C`: call option value
+          :math:`S_t`: underlying asset price
+          :math:`N`: CDF of the normal distribution
+          :math:`K`: strike-price
+          :math:`e`: the base of the natural log function, approximately 2.71828
+          :math:`r`: risk-free interest rate
+          :math:`T`: time to expiration of option, in years
+          :math:`ln`: natural logarithm function
+          :math:`\sigma`: standard deviation of the annualized continuously compounded rate of return of the underlying asset.
+
+      :param s0: قیمتِ داراییِ پایه
+      :type s0: int or float
+      :param k: قیمتِ اعمال
+      :type k: int or float
+      :param t: تعدادِ روزهایِ مانده تا تاریخِ اعمال
+      :type t: int
+      :param sigma: انحراف-از-معیارِ روزانه‌یِ داراییِ پایه
+      :type sigma: float
+      :param type\_: نوعِ اختیار
+      :type type\_: OptionType, {'call', 'put'}
+      :param r: نرخِ بهره‌یِ بدونِ ریسک- سالانه
+      :type r: float
+      :param div: سودِ تقسیمیِ داراییِ پایه قبل از تاریخِ اعمال
+      :type div: int or float, default 0
+
+      :returns: **option value**
+      :rtype: int
+
+
+
