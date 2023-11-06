@@ -1,13 +1,16 @@
-import logging
-from typing import Literal
-from operator import mul, truediv, add
+from pydantic import BaseModel
 import numpy as np
 from scipy.stats import norm
 
 
+class OptionType(BaseModel):
+    call: "call"
+    put: "put"
+
+
 class Pricing:
     def __init__(self):
-        self.N = 252
+        self.N = 250
         self.Y = 365
 
     def black_scholes_merton(
@@ -16,12 +19,15 @@ class Pricing:
         k: float | str,
         t: int,
         sigma: float,
-        type_: Literal["call", "put"],
+        type_: OptionType,
         r: float,
         div: float | int = 0,
     ) -> int:
         """
-        Black and Scholes and Merton formula for European option-pricing.
+        .. raw:: html
+            <div>
+                مدلِ قیمت-گذاریِ بلک-شولز-مرتون برای اختارِ-معامله‌هایِ اروپایی.
+            </div>
 
         :math:`C = N(d_1)S_T-N(d_2)K_e^{-rT}`
 
@@ -42,21 +48,21 @@ class Pricing:
 
         Parameters
         ----------
-        s0
-            current underlying asset price
-        k
-            strike-price
-        t
-            day to expiration of option, > 0
-        sigma
-            standard deviation of the daily underlying asset return
-        type\_
-            * "call": call option
-            * "put": put option
+        s0: str
+            قیمتِ داراییِ پایه
+        k: str
+            قیمتِ اعمال
+        t: str
+            تعدادِ روزهایِ مانده تا تاریخِ اعمال
+        sigma: float
+            انحراف-از-معیارِ روزانه‌یِ داراییِ پایه
+        type\_ OptionType, {'call', 'put'}
+            * "call": اختیارِ خرید
+            * "put": اختیارِ فروش
         r
-            risk-free interest rate
-        div
-            dividends before option expiration. Default: ``0``
+            نرخِ بهره‌یِ بدونِ ریسک- سالانه
+        div: int, default 0
+            سودِ تقسیمیِ داراییِ پایه قبل از تاریخِ اعمال
 
         Returns
         -------
@@ -64,12 +70,8 @@ class Pricing:
         """
         sigma = sigma * np.sqrt(self.N)
         t = t / self.Y
-        type_ = type_.lower()
         s0 = s0 - div / pow((1 + r), t) if type_ == "call" else s0
-
-        d1 = add(np.log(s0 / k), (r + mul(truediv(pow(sigma, 2), 2), t))) / (
-            sigma * np.sqrt(t)
-        )
+        d1 = (np.log(s0 / k) + (r + pow(sigma, 2) / 2) * t) / (sigma * np.sqrt(t))
         d2 = d1 - sigma * np.sqrt(t)
 
         match type_:
@@ -83,8 +85,3 @@ class Pricing:
                 n_d2 = norm.cdf(-d2, 0, 1)
                 val = k * np.exp(-r * t) * n_d2 - s0 * n_d1
                 return max(0, val)
-
-            case _:
-                logging.error(
-                    f"type of option can be 'put' or 'call', but you passed '{type_}'"
-                )
