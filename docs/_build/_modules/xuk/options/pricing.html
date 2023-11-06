@@ -391,7 +391,13 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        option value: int</span>
+<span class="sd">        option value: float</span>
+
+<span class="sd">        example</span>
+<span class="sd">        -------</span>
+<span class="sd">        &gt;&gt;&gt; from xuk.options import Pricing</span>
+<span class="sd">        &gt;&gt;&gt; Pricing().black_scholes_merton(s0=148_000, k=200_000, t=6, sigma=0.05, type_=&quot;put&quot;, r =0.25)</span>
+<span class="sd">        51188.254650913295</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span>

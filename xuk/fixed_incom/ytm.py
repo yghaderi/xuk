@@ -1,9 +1,7 @@
 import datetime
-import logging
 from dateutil.relativedelta import relativedelta
 from sympy import nsolve, solve, symbols, Sum
 from scipy.optimize import fsolve
-import numpy as np
 
 
 class YTM:
@@ -42,45 +40,45 @@ class YTM:
         return int(floor_division), modulo
 
     def coupon_bond(
-        self,
-        fv: int | float,
-        pv: int | float,
-        coupon_rate: float,
-        maturity_date: datetime.date,
-        period: int,
-        adjust_pv: bool = True,
+            self,
+            fv: int | float,
+            pv: int | float,
+            coupon_rate: float,
+            maturity_date: datetime.date,
+            n: int,
+            adjust_pv: bool = True,
     ):
         """
-        Calculates yield to maturity for coupon bonds.
+        .. raw:: html
 
-        بازده-تا-سررسید را برای اوراقِ کپن-دار محاسبه می‌کند.
+            <div dir="rtl">
+                بازده-تا-سررسید رو برای اوراقِ کوپن-دار محاسبه می‌کنه.
+            </div>
+
 
         .. note::
-            Note that the output amount is based on the coupon payment period. For example, if the cap period is 3
-            months, the ``yield-to-maturity`` is 3 months (!) which should be converted to annual.
+            .. raw:: html
 
-        .. note::
-         توجه شود که مقدار خروجیِ بر اساسِ دوره‌یِ پرداختِ کپن است.
-          برای نمونه اگر دوره‌یِ کپن 3 ماهه باشد، ``بازده-تا-سررسید`` 3 ماهه است(!) که باید به سالانه تبدیل شود.
+                <div dir="rtl">
+                     دقت کن که مقدار خروجیِ بر اساسِ دوره‌یِ پرداختِ کوپن به صورتِ مؤثر سالانه می‌شه.
+                </div>
 
 
         Parameters
         ----------
         fv: int
-            future value paid at maturity, or the par value of the bond
+            قیمتِ اسمیِ اوراق
         pv: int or float
-            present value, or the price of the bond
+            قیمتِ فعلی
         coupon_rate: float
-            nominal yield
+            نرخِ بازدهِ اسمیِ هر کوپن
         maturity_date: datetime.date
-            bond maturity date
-        period: int
-            coupon period (***number of months***)
-        adjust_pv: bool
-            It depends on the market. If the yield of the coupon due to the days that have passed until the day of the
-            transaction is paid separately, it should be entered ``True``, otherwise it should be entered ``False``.
-            Default: ``True``
-
+            تاریخِ سررسید
+        n: int
+            دوره‌یِ پرداخت سود (بر حسب ماه)
+        adjust_pv: bool, default True
+            این مورد بسته به نوعِ بازاره. اگه بازدهِ اسمیِ روزهایِ سپری-شده از کوپن جاری در قیمتِ معامله لحاظ نمیشه و
+            جداگانه در کارگزاری تسوه می‌شه-معمولن در بورسِ ایران اینجوریه- ``ترو`` رو وارد کنید در غیرِ این ``فالس``.
 
         Returns
         -------
@@ -94,54 +92,53 @@ class YTM:
         >>> from xuk.fixed_incom import YTM
 
         >>> datetime.date.today()
-        datetime.date(2023, 10, 13)
-        >>> YTM().coupon_bond(fv=100, pv=98, coupon_rate=0.09,maturity_date= datetime.date(2024,6,2), period=6)
-        0.10675403744515967
+        datetime.date(2023, 11, 6)
+        >>> YTM().coupon_bond(fv=100, pv=98, coupon_rate=0.09,maturity_date= datetime.date(2024,6,2), n=6)
+        0.229779371206994
         """
         floor_division, modulo = self._evenly_spaced_periods(
-            date=maturity_date, period=period
+            date=maturity_date, period=n
         )
         if adjust_pv:
             if modulo != 0:
                 pv = pv + fv * (1 - modulo) * coupon_rate
 
-        try:
-            r, i = symbols("r i")
-            pmt = fv * coupon_rate  # coupon payment per period
-            fd_event = (
-                Sum(pmt / (1 + r) ** (i + modulo), (i, 1, floor_division))
-                if floor_division > 0
-                else 0
-            )
-            m_event = pmt / (1 + r) ** modulo if modulo > 0 else 0
-            eq = fd_event + m_event + fv / (1 + r) ** (floor_division + modulo) - pv
-            if floor_division:
-                return float(nsolve(eq, 0))
-            return float(solve(eq, r)[0])
-        except Exception as e:
-            logging.warning(f"Have a problem! {e}")
-            return np.nan
+        r, i = symbols("r i")
+        pmt = fv * coupon_rate  # coupon payment per period
+        fd_event = (
+            Sum(pmt / (1 + r) ** (i + modulo), (i, 1, floor_division))
+            if floor_division > 0
+            else 0
+        )
+        m_event = pmt / (1 + r) ** modulo if modulo > 0 else 0
+        eq = fd_event + m_event + fv / (1 + r) ** (floor_division + modulo) - pv
+        if floor_division:
+            return (1 + float(nsolve(eq, 0))) ** (12 / n) - 1
+        return (1 + float(solve(eq, r)[0])) ** (12 / n) - 1
 
     def zero_coupon_bond(self, fv: int | float, pv: int | float, n: int):
         """
-        Calculates yield to maturity for zero-coupon bonds.
+        .. raw:: html
 
-        بازده-تا-سررسید را برای اوراقِ بدونِ-کپن محاسبه می‌کند.
+            <div dir="rtl">
+                بازده-تا-سررسید را برای اوراقِ بدونِ-کوپن محاسبه می‌کند.
+            </div>
 
         .. note::
-            ``بازده-تا-سررسید`` سالانه است!
+            .. raw:: html
 
-        .. note::
-            ``yield-to-maturity`` is annum!
+                <div dir="rtl">
+                    بازده-تا-سررسید سالانه است!
+                </div>
 
         Parameters
         ----------
         fv: int or float
-            future value paid at maturity, or the par value of the bond
+            قیمتِ اسمیِ اوراق
         pv: int or float
-            present value, or the price of the bond
+            قیمتِ فعلی
         n: int
-            number of days to maturity
+            تعدادِ روزهایِ مانده تا سررسید
 
         Returns
         -------
@@ -149,21 +146,14 @@ class YTM:
 
         Examples
         --------
-        Import libraries
-
         >>> from xuk.fixed_incom import YTM
-
         >>> YTM().zero_coupon_bond(fv=100, pv=73, n=543)
         0.23558667358353835
         """
-        try:
-            n = n / self.year_days
+        n = n / self.year_days
 
-            def eq(val):
-                r = val
-                return fv / (1 + r) ** n - pv
+        def eq(val):
+            r = val
+            return fv / (1 + r) ** n - pv
 
-            return fsolve(eq, 0)[0]
-        except Exception as e:
-            logging.warning(f"Have a problem! {e}")
-            return np.nan
+        return fsolve(eq, 0)[0]

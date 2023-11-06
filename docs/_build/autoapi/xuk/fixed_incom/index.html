@@ -359,32 +359,24 @@ document.write(`
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">YTM</span></span><a class="reference internal" href="../../../_modules/xuk/fixed_incom/ytm.html#YTM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.fixed_incom.YTM" title="Link to this definition">#</a></dt>
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="xuk.fixed_incom.YTM.coupon_bond">
-<span class="sig-name descname"><span class="pre">coupon_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupon_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maturity_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime.date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjust_pv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/fixed_incom/ytm.html#YTM.coupon_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.fixed_incom.YTM.coupon_bond" title="Link to this definition">#</a></dt>
-<dd><p>Calculates yield to maturity for coupon bonds.</p>
-<p>بازده-تا-سررسید را برای اوراقِ کپن-دار محاسبه می‌کند.</p>
-<div class="admonition note">
+<span class="sig-name descname"><span class="pre">coupon_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupon_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maturity_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime.date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjust_pv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/fixed_incom/ytm.html#YTM.coupon_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.fixed_incom.YTM.coupon_bond" title="Link to this definition">#</a></dt>
+<dd><div dir="rtl">
+    بازده-تا-سررسید رو برای اوراقِ کوپن-دار محاسبه می‌کنه.
+</div><div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Note that the output amount is based on the coupon payment period. For example, if the cap period is 3
-months, the <code class="docutils literal notranslate"><span class="pre">yield-to-maturity</span></code> is 3 months (!) which should be converted to annual.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<dl class="simple">
-<dt>توجه شود که مقدار خروجیِ بر اساسِ دوره‌یِ پرداختِ کپن است.</dt><dd><p>برای نمونه اگر دوره‌یِ کپن 3 ماهه باشد، <code class="docutils literal notranslate"><span class="pre">بازده-تا-سررسید</span></code> 3 ماهه است(!) که باید به سالانه تبدیل شود.</p>
-</dd>
-</dl>
-</div>
+<div dir="rtl">
+     دقت کن که مقدار خروجیِ بر اساسِ دوره‌یِ پرداختِ کوپن به صورتِ مؤثر سالانه می‌شه.
+</div></div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fv</strong> (<em>int</em>) – future value paid at maturity, or the par value of the bond</p></li>
-<li><p><strong>pv</strong> (<em>int</em><em> or </em><em>float</em>) – present value, or the price of the bond</p></li>
-<li><p><strong>coupon_rate</strong> (<em>float</em>) – nominal yield</p></li>
-<li><p><strong>maturity_date</strong> (<em>datetime.date</em>) – bond maturity date</p></li>
-<li><p><strong>period</strong> (<em>int</em>) – coupon period (<strong>*number of months*</strong>)</p></li>
-<li><p><strong>adjust_pv</strong> (<em>bool</em>) – It depends on the market. If the yield of the coupon due to the days that have passed until the day of the
-transaction is paid separately, it should be entered <code class="docutils literal notranslate"><span class="pre">True</span></code>, otherwise it should be entered <code class="docutils literal notranslate"><span class="pre">False</span></code>.
-Default: <code class="docutils literal notranslate"><span class="pre">True</span></code></p></li>
+<li><p><strong>fv</strong> (<em>int</em>) – قیمتِ اسمیِ اوراق</p></li>
+<li><p><strong>pv</strong> (<em>int</em><em> or </em><em>float</em>) – قیمتِ فعلی</p></li>
+<li><p><strong>coupon_rate</strong> (<em>float</em>) – نرخِ بازدهِ اسمیِ هر کوپن</p></li>
+<li><p><strong>maturity_date</strong> (<em>datetime.date</em>) – تاریخِ سررسید</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – دوره‌یِ پرداخت سود (بر حسب ماه)</p></li>
+<li><p><strong>adjust_pv</strong> (<em>bool</em><em>, </em><em>default True</em>) – این مورد بسته به نوعِ بازاره. اگه بازدهِ اسمیِ روزهایِ سپری-شده از کوپن جاری در قیمتِ معامله لحاظ نمیشه و
+جداگانه در کارگزاری تسوه می‌شه-معمولن در بورسِ ایران اینجوریه- <code class="docutils literal notranslate"><span class="pre">ترو</span></code> رو وارد کنید در غیرِ این <code class="docutils literal notranslate"><span class="pre">فالس</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -401,9 +393,9 @@ Default: <code class="docutils literal notranslate"><span class="pre">True</span
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
-<span class="go">datetime.date(2023, 10, 13)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">YTM</span><span class="p">()</span><span class="o">.</span><span class="n">coupon_bond</span><span class="p">(</span><span class="n">fv</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">pv</span><span class="o">=</span><span class="mi">98</span><span class="p">,</span> <span class="n">coupon_rate</span><span class="o">=</span><span class="mf">0.09</span><span class="p">,</span><span class="n">maturity_date</span><span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">period</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
-<span class="go">0.10675403744515967</span>
+<span class="go">datetime.date(2023, 11, 6)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">YTM</span><span class="p">()</span><span class="o">.</span><span class="n">coupon_bond</span><span class="p">(</span><span class="n">fv</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">pv</span><span class="o">=</span><span class="mi">98</span><span class="p">,</span> <span class="n">coupon_rate</span><span class="o">=</span><span class="mf">0.09</span><span class="p">,</span><span class="n">maturity_date</span><span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">n</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="go">0.229779371206994</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -411,22 +403,19 @@ Default: <code class="docutils literal notranslate"><span class="pre">True</span
 <dl class="py method">
 <dt class="sig sig-object py" id="xuk.fixed_incom.YTM.zero_coupon_bond">
 <span class="sig-name descname"><span class="pre">zero_coupon_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/fixed_incom/ytm.html#YTM.zero_coupon_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.fixed_incom.YTM.zero_coupon_bond" title="Link to this definition">#</a></dt>
-<dd><p>Calculates yield to maturity for zero-coupon bonds.</p>
-<p>بازده-تا-سررسید را برای اوراقِ بدونِ-کپن محاسبه می‌کند.</p>
-<div class="admonition note">
+<dd><div dir="rtl">
+    بازده-تا-سررسید را برای اوراقِ بدونِ-کوپن محاسبه می‌کند.
+</div><div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">بازده-تا-سررسید</span></code> سالانه است!</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">yield-to-maturity</span></code> is annum!</p>
-</div>
+<div dir="rtl">
+    بازده-تا-سررسید سالانه است!
+</div></div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fv</strong> (<em>int</em><em> or </em><em>float</em>) – future value paid at maturity, or the par value of the bond</p></li>
-<li><p><strong>pv</strong> (<em>int</em><em> or </em><em>float</em>) – present value, or the price of the bond</p></li>
-<li><p><strong>n</strong> (<em>int</em>) – number of days to maturity</p></li>
+<li><p><strong>fv</strong> (<em>int</em><em> or </em><em>float</em>) – قیمتِ اسمیِ اوراق</p></li>
+<li><p><strong>pv</strong> (<em>int</em><em> or </em><em>float</em>) – قیمتِ فعلی</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – تعدادِ روزهایِ مانده تا سررسید</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -437,11 +426,8 @@ Default: <code class="docutils literal notranslate"><span class="pre">True</span
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<p>Import libraries</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xuk.fixed_incom</span> <span class="kn">import</span> <span class="n">YTM</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">YTM</span><span class="p">()</span><span class="o">.</span><span class="n">zero_coupon_bond</span><span class="p">(</span><span class="n">fv</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">pv</span><span class="o">=</span><span class="mi">73</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">543</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">YTM</span><span class="p">()</span><span class="o">.</span><span class="n">zero_coupon_bond</span><span class="p">(</span><span class="n">fv</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">pv</span><span class="o">=</span><span class="mi">73</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">543</span><span class="p">)</span>
 <span class="go">0.23558667358353835</span>
 </pre></div>
 </div>

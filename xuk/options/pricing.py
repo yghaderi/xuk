@@ -77,6 +77,12 @@ class Pricing:
         Returns
         -------
         option value: float
+
+        example
+        -------
+        >>> from xuk.options import Pricing
+        >>> Pricing().black_scholes_merton(s0=148_000, k=200_000, t=6, sigma=0.05, type_="put", r =0.25)
+        51188.254650913295
         """
         sigma = sigma * np.sqrt(self.N)
         t = t / self.Y

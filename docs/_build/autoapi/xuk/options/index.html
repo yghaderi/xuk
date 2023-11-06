@@ -697,9 +697,15 @@ price, t: Days to expiration date</p></li>
 <dd class="field-even"><p><strong>option value</strong></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xuk.options</span> <span class="kn">import</span> <span class="n">Pricing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Pricing</span><span class="p">()</span><span class="o">.</span><span class="n">black_scholes_merton</span><span class="p">(</span><span class="n">s0</span><span class="o">=</span><span class="mi">148_000</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">200_000</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="s2">&quot;put&quot;</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="go">51188.254650913295</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>

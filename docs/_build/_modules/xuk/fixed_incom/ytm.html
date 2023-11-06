@@ -301,11 +301,9 @@ document.write(`
                   
   <h1>Source code for xuk.fixed_incom.ytm</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">dateutil.relativedelta</span> <span class="kn">import</span> <span class="n">relativedelta</span>
 <span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">nsolve</span><span class="p">,</span> <span class="n">solve</span><span class="p">,</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">Sum</span>
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fsolve</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
 <div class="viewcode-block" id="YTM">
@@ -348,45 +346,45 @@ document.write(`
 <div class="viewcode-block" id="YTM.coupon_bond">
 <a class="viewcode-back" href="../../../autoapi/xuk/fixed_incom/ytm/index.html#xuk.fixed_incom.YTM.coupon_bond">[docs]</a>
     <span class="k">def</span> <span class="nf">coupon_bond</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">fv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">pv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">coupon_rate</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">maturity_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
-        <span class="n">period</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">adjust_pv</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">fv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span>
+            <span class="n">pv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span>
+            <span class="n">coupon_rate</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+            <span class="n">maturity_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span>
+            <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+            <span class="n">adjust_pv</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Calculates yield to maturity for coupon bonds.</span>
+<span class="sd">        .. raw:: html</span>
 
-<span class="sd">        بازده-تا-سررسید را برای اوراقِ کپن-دار محاسبه می‌کند.</span>
+<span class="sd">            &lt;div dir=&quot;rtl&quot;&gt;</span>
+<span class="sd">                بازده-تا-سررسید رو برای اوراقِ کوپن-دار محاسبه می‌کنه.</span>
+<span class="sd">            &lt;/div&gt;</span>
+
 
 <span class="sd">        .. note::</span>
-<span class="sd">            Note that the output amount is based on the coupon payment period. For example, if the cap period is 3</span>
-<span class="sd">            months, the ``yield-to-maturity`` is 3 months (!) which should be converted to annual.</span>
+<span class="sd">            .. raw:: html</span>
 
-<span class="sd">        .. note::</span>
-<span class="sd">         توجه شود که مقدار خروجیِ بر اساسِ دوره‌یِ پرداختِ کپن است.</span>
-<span class="sd">          برای نمونه اگر دوره‌یِ کپن 3 ماهه باشد، ``بازده-تا-سررسید`` 3 ماهه است(!) که باید به سالانه تبدیل شود.</span>
+<span class="sd">                &lt;div dir=&quot;rtl&quot;&gt;</span>
+<span class="sd">                     دقت کن که مقدار خروجیِ بر اساسِ دوره‌یِ پرداختِ کوپن به صورتِ مؤثر سالانه می‌شه.</span>
+<span class="sd">                &lt;/div&gt;</span>
 
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        fv: int</span>
-<span class="sd">            future value paid at maturity, or the par value of the bond</span>
+<span class="sd">            قیمتِ اسمیِ اوراق</span>
 <span class="sd">        pv: int or float</span>
-<span class="sd">            present value, or the price of the bond</span>
+<span class="sd">            قیمتِ فعلی</span>
 <span class="sd">        coupon_rate: float</span>
-<span class="sd">            nominal yield</span>
+<span class="sd">            نرخِ بازدهِ اسمیِ هر کوپن</span>
 <span class="sd">        maturity_date: datetime.date</span>
-<span class="sd">            bond maturity date</span>
-<span class="sd">        period: int</span>
-<span class="sd">            coupon period (***number of months***)</span>
-<span class="sd">        adjust_pv: bool</span>
-<span class="sd">            It depends on the market. If the yield of the coupon due to the days that have passed until the day of the</span>
-<span class="sd">            transaction is paid separately, it should be entered ``True``, otherwise it should be entered ``False``.</span>
-<span class="sd">            Default: ``True``</span>
-
+<span class="sd">            تاریخِ سررسید</span>
+<span class="sd">        n: int</span>
+<span class="sd">            دوره‌یِ پرداخت سود (بر حسب ماه)</span>
+<span class="sd">        adjust_pv: bool, default True</span>
+<span class="sd">            این مورد بسته به نوعِ بازاره. اگه بازدهِ اسمیِ روزهایِ سپری-شده از کوپن جاری در قیمتِ معامله لحاظ نمیشه و</span>
+<span class="sd">            جداگانه در کارگزاری تسوه می‌شه-معمولن در بورسِ ایران اینجوریه- ``ترو`` رو وارد کنید در غیرِ این ``فالس``.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -400,57 +398,56 @@ document.write(`
 <span class="sd">        &gt;&gt;&gt; from xuk.fixed_incom import YTM</span>
 
 <span class="sd">        &gt;&gt;&gt; datetime.date.today()</span>
-<span class="sd">        datetime.date(2023, 10, 13)</span>
-<span class="sd">        &gt;&gt;&gt; YTM().coupon_bond(fv=100, pv=98, coupon_rate=0.09,maturity_date= datetime.date(2024,6,2), period=6)</span>
-<span class="sd">        0.10675403744515967</span>
+<span class="sd">        datetime.date(2023, 11, 6)</span>
+<span class="sd">        &gt;&gt;&gt; YTM().coupon_bond(fv=100, pv=98, coupon_rate=0.09,maturity_date= datetime.date(2024,6,2), n=6)</span>
+<span class="sd">        0.229779371206994</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">floor_division</span><span class="p">,</span> <span class="n">modulo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evenly_spaced_periods</span><span class="p">(</span>
-            <span class="n">date</span><span class="o">=</span><span class="n">maturity_date</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="n">period</span>
+            <span class="n">date</span><span class="o">=</span><span class="n">maturity_date</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="n">n</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">adjust_pv</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">modulo</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">pv</span> <span class="o">=</span> <span class="n">pv</span> <span class="o">+</span> <span class="n">fv</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">modulo</span><span class="p">)</span> <span class="o">*</span> <span class="n">coupon_rate</span>
 
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">r</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;r i&quot;</span><span class="p">)</span>
-            <span class="n">pmt</span> <span class="o">=</span> <span class="n">fv</span> <span class="o">*</span> <span class="n">coupon_rate</span>  <span class="c1"># coupon payment per period</span>
-            <span class="n">fd_event</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">Sum</span><span class="p">(</span><span class="n">pmt</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">modulo</span><span class="p">),</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">floor_division</span><span class="p">))</span>
-                <span class="k">if</span> <span class="n">floor_division</span> <span class="o">&gt;</span> <span class="mi">0</span>
-                <span class="k">else</span> <span class="mi">0</span>
-            <span class="p">)</span>
-            <span class="n">m_event</span> <span class="o">=</span> <span class="n">pmt</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">**</span> <span class="n">modulo</span> <span class="k">if</span> <span class="n">modulo</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
-            <span class="n">eq</span> <span class="o">=</span> <span class="n">fd_event</span> <span class="o">+</span> <span class="n">m_event</span> <span class="o">+</span> <span class="n">fv</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="n">floor_division</span> <span class="o">+</span> <span class="n">modulo</span><span class="p">)</span> <span class="o">-</span> <span class="n">pv</span>
-            <span class="k">if</span> <span class="n">floor_division</span><span class="p">:</span>
-                <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">nsolve</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="n">r</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Have a problem! </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span></div>
+        <span class="n">r</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s2">&quot;r i&quot;</span><span class="p">)</span>
+        <span class="n">pmt</span> <span class="o">=</span> <span class="n">fv</span> <span class="o">*</span> <span class="n">coupon_rate</span>  <span class="c1"># coupon payment per period</span>
+        <span class="n">fd_event</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">Sum</span><span class="p">(</span><span class="n">pmt</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">modulo</span><span class="p">),</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">floor_division</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">floor_division</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="k">else</span> <span class="mi">0</span>
+        <span class="p">)</span>
+        <span class="n">m_event</span> <span class="o">=</span> <span class="n">pmt</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">**</span> <span class="n">modulo</span> <span class="k">if</span> <span class="n">modulo</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">eq</span> <span class="o">=</span> <span class="n">fd_event</span> <span class="o">+</span> <span class="n">m_event</span> <span class="o">+</span> <span class="n">fv</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="n">floor_division</span> <span class="o">+</span> <span class="n">modulo</span><span class="p">)</span> <span class="o">-</span> <span class="n">pv</span>
+        <span class="k">if</span> <span class="n">floor_division</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">nsolve</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span> <span class="o">**</span> <span class="p">(</span><span class="mi">12</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="n">r</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">**</span> <span class="p">(</span><span class="mi">12</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span></div>
 
 
 <div class="viewcode-block" id="YTM.zero_coupon_bond">
 <a class="viewcode-back" href="../../../autoapi/xuk/fixed_incom/ytm/index.html#xuk.fixed_incom.YTM.zero_coupon_bond">[docs]</a>
     <span class="k">def</span> <span class="nf">zero_coupon_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">pv</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Calculates yield to maturity for zero-coupon bonds.</span>
+<span class="sd">        .. raw:: html</span>
 
-<span class="sd">        بازده-تا-سررسید را برای اوراقِ بدونِ-کپن محاسبه می‌کند.</span>
+<span class="sd">            &lt;div dir=&quot;rtl&quot;&gt;</span>
+<span class="sd">                بازده-تا-سررسید را برای اوراقِ بدونِ-کوپن محاسبه می‌کند.</span>
+<span class="sd">            &lt;/div&gt;</span>
 
 <span class="sd">        .. note::</span>
-<span class="sd">            ``بازده-تا-سررسید`` سالانه است!</span>
+<span class="sd">            .. raw:: html</span>
 
-<span class="sd">        .. note::</span>
-<span class="sd">            ``yield-to-maturity`` is annum!</span>
+<span class="sd">                &lt;div dir=&quot;rtl&quot;&gt;</span>
+<span class="sd">                    بازده-تا-سررسید سالانه است!</span>
+<span class="sd">                &lt;/div&gt;</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        fv: int or float</span>
-<span class="sd">            future value paid at maturity, or the par value of the bond</span>
+<span class="sd">            قیمتِ اسمیِ اوراق</span>
 <span class="sd">        pv: int or float</span>
-<span class="sd">            present value, or the price of the bond</span>
+<span class="sd">            قیمتِ فعلی</span>
 <span class="sd">        n: int</span>
-<span class="sd">            number of days to maturity</span>
+<span class="sd">            تعدادِ روزهایِ مانده تا سررسید</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -458,24 +455,17 @@ document.write(`
 
 <span class="sd">        Examples</span>
 <span class="sd">        --------</span>
-<span class="sd">        Import libraries</span>
-
 <span class="sd">        &gt;&gt;&gt; from xuk.fixed_incom import YTM</span>
-
 <span class="sd">        &gt;&gt;&gt; YTM().zero_coupon_bond(fv=100, pv=73, n=543)</span>
 <span class="sd">        0.23558667358353835</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">year_days</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">year_days</span>
 
-            <span class="k">def</span> <span class="nf">eq</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
-                <span class="n">r</span> <span class="o">=</span> <span class="n">val</span>
-                <span class="k">return</span> <span class="n">fv</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">**</span> <span class="n">n</span> <span class="o">-</span> <span class="n">pv</span>
+        <span class="k">def</span> <span class="nf">eq</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="k">return</span> <span class="n">fv</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">**</span> <span class="n">n</span> <span class="o">-</span> <span class="n">pv</span>
 
-            <span class="k">return</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Have a problem! </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span></div>
+        <span class="k">return</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
 </div>
 
 </pre></div>
