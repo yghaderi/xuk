@@ -16,12 +16,12 @@ class Strategy:
     Parameters
     ----------
     call
-        polars.DataFrame with (ua:str, ua_sell_price:int, ua_buy_price:int, symbol:str, strike_price:int,
-        t:int, bs:int, buy_price:int, sell_price:int) columns. Where ua: Underlying Asset, bs : Black-Scholes
+        polars.DataFrame with (ua:str, ua_ask_price:int, ua_bid_price:int, symbol:str, k:int,
+        t:int, bs:int, bid_price:int, ask_price:int) columns. Where ua: Underlying Asset, bs : Black-Scholes
         price, t: Days to expiration date
     put
-        polars.DataFrame with (ua:str, ua_sell_price:int, ua_buy_price:int, symbol:str, strike_price:int,
-        t:int, bs:int, buy_price:int, sell_price:int) columns. Where ua: Underlying Asset, bs : Black-Scholes
+        polars.DataFrame with (ua:str, ua_ask_price:int, ua_bid_price:int, symbol:str, k:int,
+        t:int, bs:int, bid_price:int, ask_price:int) columns. Where ua: Underlying Asset, bs : Black-Scholes
         price, t: Days to expiration date
     call_put
 
@@ -70,40 +70,40 @@ class Strategy:
 
         Returns
         -------
-        polars.DataFrame contain (writing, writing_at, buy_ua, buy_ua_at,strike_price,t, pct_status,
+        polars.DataFrame contain (writing, writing_at, buy_ua, buy_ua_at,k,t, pct_status,
         break_even, pct_break_even, max_pot_loss, max_pot_profit, pct_mpp, pct_monthly_cp, current_profit, pct_cp,
         pct_monthly_cp) columns.
         """
-        df = self.call.filter(pl.col("buy_price") > 0)
+        df = self.call.filter(pl.col("bid_price") > 0)
 
         df = df.with_columns(
-            max_pot_profit=pl.col("strike_price")
-            - pl.col("ua_sell_price")
-            + pl.col("buy_price"),
-            max_pot_loss=pl.col("buy_price") - pl.col("ua_sell_price"),
-            break_even=pl.col("ua_sell_price") - pl.col("buy_price"),
+            max_pot_profit=pl.col("k")
+            - pl.col("ua_ask_price")
+            + pl.col("bid_price"),
+            max_pot_loss=pl.col("bid_price") - pl.col("ua_ask_price"),
+            break_even=pl.col("ua_ask_price") - pl.col("bid_price"),
         )
 
         df = df.with_columns(
             (
-                pl.struct(["ua_sell_price", "strike_price", "buy_price"]).map_elements(
+                pl.struct(["ua_ask_price", "k", "bid_price"]).map_elements(
                     lambda x: OptionPositionProfit(
-                        st=x["ua_sell_price"],
-                        k=x["strike_price"],
-                        premium=x["buy_price"],
+                        st=x["ua_ask_price"],
+                        k=x["k"],
+                        premium=x["bid_price"],
                     ).short_call()
                 )
             ).alias("current_profit")
         )
         df = df.with_columns(
-            pct_break_even=(pl.col("break_even") / pl.col("ua_sell_price") - 1) * 100,
+            pct_break_even=(pl.col("break_even") / pl.col("ua_ask_price") - 1) * 100,
             pct_mpp=pl.col("max_pot_profit") / pl.col("break_even") * 100,
             pct_cp=pl.col("current_profit") / pl.col("break_even") * 100,
         )
         df = df.with_columns(
             pct_monthly_mpp=pl.col("pct_mpp") / pl.col("t") * 30,
             pct_monthly_cp=pl.col("pct_cp") / pl.col("t") * 30,
-            pct_status=(pl.col("strike_price") / pl.col("ua_final") - 1) * 100,
+            pct_status=(pl.col("k") / pl.col("ua_final") - 1) * 100,
         )
         return df.select(cols.covered_call.rep).rename(cols.covered_call.rename)
 
@@ -113,41 +113,41 @@ class Strategy:
 
         Returns
         -------
-        polars.DataFrame contain (writing, writing_at, buy_ua, buy_ua_at,strike_price,t, pct_status,
+        polars.DataFrame contain (writing, writing_at, buy_ua, buy_ua_at,k,t, pct_status,
         break_even, pct_break_even, max_pot_loss, max_pot_profit, pct_mpp, pct_monthly_cp, current_profit, pct_cp,
         pct_monthly_cp) columns.
         """
-        df = self.call.filter(pl.col("sell_price") > 0)
+        df = self.call.filter(pl.col("ask_price") > 0)
 
         df = df.with_columns(
             max_pot_profit=pl.lit(np.inf),
-            max_pot_loss=pl.col("strike_price")
-            - pl.col("ua_sell_price")
-            - pl.col("sell_price"),
-            break_even=pl.col("ua_sell_price") - pl.col("sell_price"),
+            max_pot_loss=pl.col("k")
+            - pl.col("ua_ask_price")
+            - pl.col("ask_price"),
+            break_even=pl.col("ua_ask_price") - pl.col("ask_price"),
         )
 
         df = df.with_columns(
             (
-                pl.struct(["ua_sell_price", "strike_price", "sell_price"]).map_elements(
+                pl.struct(["ua_ask_price", "k", "ask_price"]).map_elements(
                     lambda x: OptionPositionProfit(
-                        st=x["ua_sell_price"],
-                        k=x["strike_price"],
-                        premium=x["sell_price"],
+                        st=x["ua_ask_price"],
+                        k=x["k"],
+                        premium=x["ask_price"],
                     ).long_put()
                 )
             ).alias("current_profit")
         )
 
         df = df.with_columns(
-            pct_break_even=(pl.col("break_even") / pl.col("ua_sell_price") - 1) * 100,
+            pct_break_even=(pl.col("break_even") / pl.col("ua_ask_price") - 1) * 100,
             pct_mpp=pl.lit(np.inf),
             pct_cp=pl.col("current_profit") / pl.col("break_even") * 100,
         )
         df = df.with_columns(
             pct_monthly_mpp=pl.col("pct_mpp") / pl.col("t") * 30,
             pct_monthly_cp=pl.col("pct_cp") / pl.col("t") * 30,
-            pct_status=(pl.col("strike_price") / pl.col("ua_final") - 1) * 100,
+            pct_status=(pl.col("k") / pl.col("ua_final") - 1) * 100,
         )
 
         return df.select(cols.married_put.rep).rename(cols.married_put.rename)
@@ -186,47 +186,47 @@ class Strategy:
         """
         Strategy_ = namedtuple("Strategy", "sell buy")
         df = self.call.filter(
-            (pl.col("buy_price") > 0)
-            & (pl.col("sell_price") > 0)
+            (pl.col("bid_price") > 0)
+            & (pl.col("ask_price") > 0)
             & (pl.col("quote") == 1)
         )
         df_pairs = df.group_by(["ua", "t"]).agg(
-            pl.col("buy_price").count().alias("count")
+            pl.col("bid_price").count().alias("count")
         )
         df = df.join(df_pairs.filter(pl.col("count") > 1), on=["ua", "t"], how="inner")
         groups = df.group_by(["ua", "t"])
 
         df_ = pl.DataFrame()
         for _, data in groups:
-            data = data.sort(["strike_price"], descending=True)
+            data = data.sort(["k"], descending=True)
             combo_option = list(
-                Strategy_(sell=s, buy=b) for s, b in combinations(data["symbol_far"], 2)
+                Strategy_(sell=s, buy=b) for s, b in combinations(data["symbol"], 2)
             )
-            combo_strike_price = list(
+            combo_k = list(
                 Strategy_(sell=s, buy=b)
-                for s, b in combinations(data["strike_price"], 2)
+                for s, b in combinations(data["k"], 2)
             )
             combo_orderbook_price = list(
                 Strategy_(sell=s[0], buy=b[1])
                 for s, b in combinations(
-                    data.select(["buy_price", "sell_price"]).rows(), 2
+                    data.select(["bid_price", "ask_price"]).rows(), 2
                 )
             )
             max_pot_loss = [i.sell - i.buy for i in combo_orderbook_price]
             max_pot_profit = list(
-                map(add, [i.sell - i.buy for i in combo_strike_price], max_pot_loss)
+                map(add, [i.sell - i.buy for i in combo_k], max_pot_loss)
             )
 
             current_profit = []
-            for i in range(len(combo_strike_price)):
-                if all(s <= data["ua_final"][0] for s in combo_strike_price[i]):
+            for i in range(len(combo_k)):
+                if all(s <= data["ua_final"][0] for s in combo_k[i]):
                     current_profit.append(max_pot_profit[i])
-                elif all(s >= data["ua_final"][0] for s in combo_strike_price[i]):
+                elif all(s >= data["ua_final"][0] for s in combo_k[i]):
                     current_profit.append(max_pot_loss[i])
                 else:
                     current_profit.append(
                         data["ua_final"][0]
-                        - combo_strike_price[i].buy
+                        - combo_k[i].buy
                         + max_pot_loss[i]
                     )
 
@@ -236,7 +236,7 @@ class Strategy:
                     pl.DataFrame(
                         {
                             "symbol": combo_option,
-                            "strike_price": combo_strike_price,
+                            "k": combo_k,
                             "t": data["t"][0],
                             "ua": data["ua"][0],
                             "ua_final": data["ua_final"][0],
@@ -253,7 +253,7 @@ class Strategy:
             buy=pl.col("symbol").map_elements(lambda x: x[1]),
             writing_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
             buy_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
-        ).drop(["symbol", "strike_price", "orderbook_price"])
+        ).drop(["symbol", "k", "orderbook_price"])
         return df_.select(cols.bull_call_spread.rep)
 
     def bear_call_spread(self):
@@ -282,47 +282,47 @@ class Strategy:
         """
         Strategy_ = namedtuple("Strategy", "sell buy")
         df = self.call.filter(
-            (pl.col("buy_price") > 0)
-            & (pl.col("sell_price") > 0)
+            (pl.col("bid_price") > 0)
+            & (pl.col("ask_price") > 0)
             & (pl.col("quote") == 1)
         )
         df_pairs = df.group_by(["ua", "t"]).agg(
-            pl.col("buy_price").count().alias("count")
+            pl.col("bid_price").count().alias("count")
         )
         df = df.join(df_pairs.filter(pl.col("count") > 1), on=["ua", "t"], how="inner")
         groups = df.group_by(["ua", "t"])
 
         df_ = pl.DataFrame()
         for _, data in groups:
-            data = data.sort(["strike_price"], descending=False)
+            data = data.sort(["k"], descending=False)
             combo_option = list(
-                Strategy_(sell=s, buy=b) for s, b in combinations(data["symbol_far"], 2)
+                Strategy_(sell=s, buy=b) for s, b in combinations(data["symbol"], 2)
             )
-            combo_strike_price = list(
+            combo_k = list(
                 Strategy_(sell=s, buy=b)
-                for s, b in combinations(data["strike_price"], 2)
+                for s, b in combinations(data["k"], 2)
             )
             combo_orderbook_price = list(
                 Strategy_(sell=s[0], buy=b[1])
                 for s, b in combinations(
-                    data.select(["buy_price", "sell_price"]).rows(), 2
+                    data.select(["bid_price", "ask_price"]).rows(), 2
                 )
             )
             max_pot_profit = [i.buy - i.sell for i in combo_orderbook_price]
             max_pot_loss = list(
-                map(add, [i.sell - i.buy for i in combo_strike_price], max_pot_profit)
+                map(add, [i.sell - i.buy for i in combo_k], max_pot_profit)
             )
 
             current_profit = []
-            for i in range(len(combo_strike_price)):
-                if all(s >= data["ua_final"][0] for s in combo_strike_price[i]):
+            for i in range(len(combo_k)):
+                if all(s >= data["ua_final"][0] for s in combo_k[i]):
                     current_profit.append(max_pot_profit[i])
-                elif all(s <= data["ua_final"][0] for s in combo_strike_price[i]):
+                elif all(s <= data["ua_final"][0] for s in combo_k[i]):
                     current_profit.append(max_pot_loss[i])
                 else:
                     current_profit.append(
                         -data["ua_final"][0]
-                        + combo_strike_price[i].sell
+                        + combo_k[i].sell
                         + max_pot_loss[i]
                     )
 
@@ -332,7 +332,7 @@ class Strategy:
                     pl.DataFrame(
                         {
                             "symbol": combo_option,
-                            "strike_price": combo_strike_price,
+                            "k": combo_k,
                             "t": data["t"][0],
                             "ua": data["ua"][0],
                             "ua_final": data["ua_final"][0],
@@ -349,53 +349,53 @@ class Strategy:
             buy=pl.col("symbol").map_elements(lambda x: x[1]),
             writing_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
             buy_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
-        ).drop(["symbol", "strike_price", "orderbook_price"])
+        ).drop(["symbol", "k", "orderbook_price"])
         return df_.select(cols.bear_call_spread.rep)
 
     def bull_put_spread(self):
         Strategy_ = namedtuple("Strategy", "sell buy")
         df = self.put.filter(
-            (pl.col("buy_price") > 0)
-            & (pl.col("sell_price") > 0)
+            (pl.col("bid_price") > 0)
+            & (pl.col("ask_price") > 0)
             & (pl.col("quote") == 1)
         )
         df_pairs = df.group_by(["ua", "t"]).agg(
-            pl.col("buy_price").count().alias("count")
+            pl.col("bid_price").count().alias("count")
         )
         df = df.join(df_pairs.filter(pl.col("count") > 1), on=["ua", "t"], how="inner")
         groups = df.group_by(["ua", "t"])
 
         df_ = pl.DataFrame()
         for _, data in groups:
-            data = data.sort(["strike_price"], descending=True)
+            data = data.sort(["k"], descending=True)
             combo_option = list(
-                Strategy_(sell=s, buy=b) for s, b in combinations(data["symbol_far"], 2)
+                Strategy_(sell=s, buy=b) for s, b in combinations(data["symbol"], 2)
             )
-            combo_strike_price = list(
+            combo_k = list(
                 Strategy_(sell=s, buy=b)
-                for s, b in combinations(data["strike_price"], 2)
+                for s, b in combinations(data["k"], 2)
             )
             combo_orderbook_price = list(
                 Strategy_(sell=s[0], buy=b[1])
                 for s, b in combinations(
-                    data.select(["buy_price", "sell_price"]).rows(), 2
+                    data.select(["bid_price", "ask_price"]).rows(), 2
                 )
             )
             max_pot_profit = [i.sell - i.buy for i in combo_orderbook_price]
             max_pot_loss = list(
-                map(add, [i.sell - i.buy for i in combo_strike_price], max_pot_profit)
+                map(add, [i.sell - i.buy for i in combo_k], max_pot_profit)
             )
 
             current_profit = []
-            for i in range(len(combo_strike_price)):
-                if all(s <= data["ua_final"][0] for s in combo_strike_price[i]):
+            for i in range(len(combo_k)):
+                if all(s <= data["ua_final"][0] for s in combo_k[i]):
                     current_profit.append(max_pot_profit[i])
-                elif all(s >= data["ua_final"][0] for s in combo_strike_price[i]):
+                elif all(s >= data["ua_final"][0] for s in combo_k[i]):
                     current_profit.append(max_pot_loss[i])
                 else:
                     current_profit.append(
                         data["ua_final"][0]
-                        - combo_strike_price[i].sell
+                        - combo_k[i].sell
                         + max_pot_loss[i]
                     )
 
@@ -405,7 +405,7 @@ class Strategy:
                     pl.DataFrame(
                         {
                             "symbol": combo_option,
-                            "strike_price": combo_strike_price,
+                            "k": combo_k,
                             "t": data["t"][0],
                             "ua": data["ua"][0],
                             "ua_final": data["ua_final"][0],
@@ -422,53 +422,53 @@ class Strategy:
             buy=pl.col("symbol").map_elements(lambda x: x[1]),
             writing_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
             buy_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
-        ).drop(["symbol", "strike_price", "orderbook_price"])
+        ).drop(["symbol", "k", "orderbook_price"])
         return df_.select(cols.bull_put_spread.rep)
 
     def bear_put_spread(self):
         Strategy_ = namedtuple("Strategy", "sell buy")
         df = self.put.filter(
-            (pl.col("buy_price") > 0)
-            & (pl.col("sell_price") > 0)
+            (pl.col("bid_price") > 0)
+            & (pl.col("ask_price") > 0)
             & (pl.col("quote") == 1)
         )
         df_pairs = df.group_by(["ua", "t"]).agg(
-            pl.col("buy_price").count().alias("count")
+            pl.col("bid_price").count().alias("count")
         )
         df = df.join(df_pairs.filter(pl.col("count") > 1), on=["ua", "t"], how="inner")
         groups = df.group_by(["ua", "t"])
 
         df_ = pl.DataFrame()
         for _, data in groups:
-            data = data.sort(["strike_price"], descending=False)
+            data = data.sort(["k"], descending=False)
             combo_option = list(
-                Strategy_(sell=s, buy=b) for s, b in combinations(data["symbol_far"], 2)
+                Strategy_(sell=s, buy=b) for s, b in combinations(data["symbol"], 2)
             )
-            combo_strike_price = list(
+            combo_k = list(
                 Strategy_(sell=s, buy=b)
-                for s, b in combinations(data["strike_price"], 2)
+                for s, b in combinations(data["k"], 2)
             )
             combo_orderbook_price = list(
                 Strategy_(sell=s[0], buy=b[1])
                 for s, b in combinations(
-                    data.select(["buy_price", "sell_price"]).rows(), 2
+                    data.select(["bid_price", "ask_price"]).rows(), 2
                 )
             )
             max_pot_loss = [i.sell - i.buy for i in combo_orderbook_price]
             max_pot_profit = list(
-                map(add, [i.buy - i.sell for i in combo_strike_price], max_pot_loss)
+                map(add, [i.buy - i.sell for i in combo_k], max_pot_loss)
             )
 
             current_profit = []
-            for i in range(len(combo_strike_price)):
-                if all(s >= data["ua_final"][0] for s in combo_strike_price[i]):
+            for i in range(len(combo_k)):
+                if all(s >= data["ua_final"][0] for s in combo_k[i]):
                     current_profit.append(max_pot_profit[i])
-                elif all(s <= data["ua_final"][0] for s in combo_strike_price[i]):
+                elif all(s <= data["ua_final"][0] for s in combo_k[i]):
                     current_profit.append(max_pot_loss[i])
                 else:
                     current_profit.append(
                         -data["ua_final"][0]
-                        + combo_strike_price[i].sell
+                        + combo_k[i].sell
                         + max_pot_loss[i]
                     )
 
@@ -478,7 +478,7 @@ class Strategy:
                     pl.DataFrame(
                         {
                             "symbol": combo_option,
-                            "strike_price": combo_strike_price,
+                            "k": combo_k,
                             "t": data["t"][0],
                             "ua": data["ua"][0],
                             "ua_final": data["ua_final"][0],
@@ -495,5 +495,5 @@ class Strategy:
             buy=pl.col("symbol").map_elements(lambda x: x[1]),
             writing_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
             buy_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
-        ).drop(["symbol", "strike_price", "orderbook_price"])
+        ).drop(["symbol", "k", "orderbook_price"])
         return df_.select(cols.bear_put_spread.rep)

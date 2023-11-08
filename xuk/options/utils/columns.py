@@ -15,17 +15,17 @@ Property = namedtuple("Property", ["rename", "drop", "rep"])
 
 _covered_call = {
     "rename": {
-        "symbol_far": "writing",
-        "buy_price": "writing_at",
-        "ua_symbol_far": "buy_ua",
-        "ua_sell_price": "buy_ua_at",
+        "symbol": "writing",
+        "bid_price": "writing_at",
+        "ua_symbol": "buy_ua",
+        "ua_ask_price": "buy_ua_at",
     },
     "rep": [
-        "symbol_far",
-        "buy_price",
-        "ua_symbol_far",
-        "ua_sell_price",
-        "strike_price",
+        "symbol",
+        "bid_price",
+        "ua_symbol",
+        "ua_ask_price",
+        "k",
         "t",
         "pct_status",
         "break_even",
@@ -41,17 +41,17 @@ _covered_call = {
 }
 _married_put = {
     "rename": {
-        "symbol_far": "buy",
-        "buy_price": "buy_at",
-        "ua_symbol_far": "buy_ua",
-        "ua_sell_price": "buy_ua_at",
+        "symbol": "buy",
+        "bid_price": "buy_at",
+        "ua_symbol": "buy_ua",
+        "ua_ask_price": "buy_ua_at",
     },
     "rep": [
-        "symbol_far",
-        "buy_price",
-        "ua_symbol_far",
-        "ua_sell_price",
-        "strike_price",
+        "symbol",
+        "bid_price",
+        "ua_symbol",
+        "ua_ask_price",
+        "k",
         "t",
         "pct_status",
         "break_even",
