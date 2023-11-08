@@ -18,6 +18,36 @@
  puthon -m pip install xuk
 ```
 
+<div dir="rtl">
+مدل‌هایِ کنونی به شرحِ زیر است.
+    <h3>
+    اختیارِ معامله
+    </h3>
+        <h4>
+            قیمت-گذاری
+        </h4>
+            <li>black-scholes-merton</li>
+        <h4>
+           استراتژهایِ معاملاتی
+        </h4>
+            <li>covered-call</li>
+            <li>married-put</li>
+            <li>bull-call-spread</li>
+            <li>bear-call-spread</li>
+            <li>bull-put-spread</li>
+            <li>bear-put-spread</li>
+    <h3>
+        درآمدِ-ثابت
+    </h3>
+        <h4>
+            بازده تا سررسید
+        </h4>
+            <li>coupon-bond/li>
+            <li>zero-coupon-bond</li>
+
+</div>
+
+
 <a href="http://www.coffeete.ir/yghaderi">
        <img src="http://www.coffeete.ir/images/buttons/lemonchiffon.png" style="width:260px;" />
 </a>
