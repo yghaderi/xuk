@@ -42,7 +42,7 @@
         <h4>
             بازده تا سررسید
         </h4>
-            <li>coupon-bond/li>
+            <li>coupon-bond</li>
             <li>zero-coupon-bond</li>
 
 </div>

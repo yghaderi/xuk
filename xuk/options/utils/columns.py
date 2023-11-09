@@ -42,13 +42,13 @@ _covered_call = {
 _married_put = {
     "rename": {
         "symbol": "buy",
-        "bid_price": "buy_at",
+        "ask_price": "buy_at",
         "ua_symbol": "buy_ua",
         "ua_ask_price": "buy_ua_at",
     },
     "rep": [
         "symbol",
-        "bid_price",
+        "ask_price",
         "ua_symbol",
         "ua_ask_price",
         "k",

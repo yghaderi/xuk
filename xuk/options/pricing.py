@@ -18,20 +18,21 @@ class Pricing:
             مدل‌هایِ قیمت-گذاریِ اختیارِ-معامله رو پوشش میده.
         </div>
     """
+
     def __init__(self):
         self.N = 250
         self.Y = 365
 
     @validate_call
     def black_scholes_merton(
-            self,
-            s0: float | int,
-            k: float | int,
-            t: int,
-            sigma: float,
-            type_: OptionType,
-            r: float,
-            div: float | int = 0,
+        self,
+        s0: float | int,
+        k: float | int,
+        t: int,
+        sigma: float,
+        type_: OptionType,
+        r: float,
+        div: float | int = 0,
     ) -> float:
         """
         .. raw:: html

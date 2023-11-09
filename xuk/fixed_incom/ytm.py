@@ -40,13 +40,13 @@ class YTM:
         return int(floor_division), modulo
 
     def coupon_bond(
-            self,
-            fv: int | float,
-            pv: int | float,
-            coupon_rate: float,
-            maturity_date: datetime.date,
-            n: int,
-            adjust_pv: bool = True,
+        self,
+        fv: int | float,
+        pv: int | float,
+        coupon_rate: float,
+        maturity_date: datetime.date,
+        n: int,
+        adjust_pv: bool = True,
     ):
         """
         .. raw:: html

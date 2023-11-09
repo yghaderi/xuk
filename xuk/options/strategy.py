@@ -66,7 +66,7 @@ class Strategy:
 
     def covered_call(self) -> pl.DataFrame:
         """
-        Is the purchase of a share of stock coupled with a sale of a call option on that stock.
+        A covered call position is the purchase of a share of stock coupled with a sale of a call option on that stock.
 
         Returns
         -------
@@ -74,12 +74,10 @@ class Strategy:
         break_even, pct_break_even, max_pot_loss, max_pot_profit, pct_mpp, pct_monthly_cp, current_profit, pct_cp,
         pct_monthly_cp) columns.
         """
-        df = self.call.filter(pl.col("bid_price") > 0)
+        df = self.call.filter((pl.col("bid_price") > 0) & (pl.col("ua_ask_price") > 0))
 
         df = df.with_columns(
-            max_pot_profit=pl.col("k")
-            - pl.col("ua_ask_price")
-            + pl.col("bid_price"),
+            max_pot_profit=pl.col("k") - pl.col("ua_ask_price") + pl.col("bid_price"),
             max_pot_loss=pl.col("bid_price") - pl.col("ua_ask_price"),
             break_even=pl.col("ua_ask_price") - pl.col("bid_price"),
         )
@@ -117,13 +115,11 @@ class Strategy:
         break_even, pct_break_even, max_pot_loss, max_pot_profit, pct_mpp, pct_monthly_cp, current_profit, pct_cp,
         pct_monthly_cp) columns.
         """
-        df = self.call.filter(pl.col("ask_price") > 0)
+        df = self.put.filter((pl.col("ask_price") > 0) & (pl.col("ua_ask_price") > 0))
 
         df = df.with_columns(
             max_pot_profit=pl.lit(np.inf),
-            max_pot_loss=pl.col("k")
-            - pl.col("ua_ask_price")
-            - pl.col("ask_price"),
+            max_pot_loss=pl.col("k") - pl.col("ua_ask_price") - pl.col("ask_price"),
             break_even=pl.col("ua_ask_price") - pl.col("ask_price"),
         )
 
@@ -203,8 +199,7 @@ class Strategy:
                 Strategy_(sell=s, buy=b) for s, b in combinations(data["symbol"], 2)
             )
             combo_k = list(
-                Strategy_(sell=s, buy=b)
-                for s, b in combinations(data["k"], 2)
+                Strategy_(sell=s, buy=b) for s, b in combinations(data["k"], 2)
             )
             combo_orderbook_price = list(
                 Strategy_(sell=s[0], buy=b[1])
@@ -225,9 +220,7 @@ class Strategy:
                     current_profit.append(max_pot_loss[i])
                 else:
                     current_profit.append(
-                        data["ua_final"][0]
-                        - combo_k[i].buy
-                        + max_pot_loss[i]
+                        data["ua_final"][0] - combo_k[i].buy + max_pot_loss[i]
                     )
 
             df_ = pl.concat(
@@ -299,8 +292,7 @@ class Strategy:
                 Strategy_(sell=s, buy=b) for s, b in combinations(data["symbol"], 2)
             )
             combo_k = list(
-                Strategy_(sell=s, buy=b)
-                for s, b in combinations(data["k"], 2)
+                Strategy_(sell=s, buy=b) for s, b in combinations(data["k"], 2)
             )
             combo_orderbook_price = list(
                 Strategy_(sell=s[0], buy=b[1])
@@ -321,9 +313,7 @@ class Strategy:
                     current_profit.append(max_pot_loss[i])
                 else:
                     current_profit.append(
-                        -data["ua_final"][0]
-                        + combo_k[i].sell
-                        + max_pot_loss[i]
+                        -data["ua_final"][0] + combo_k[i].sell + max_pot_loss[i]
                     )
 
             df_ = pl.concat(
@@ -372,8 +362,7 @@ class Strategy:
                 Strategy_(sell=s, buy=b) for s, b in combinations(data["symbol"], 2)
             )
             combo_k = list(
-                Strategy_(sell=s, buy=b)
-                for s, b in combinations(data["k"], 2)
+                Strategy_(sell=s, buy=b) for s, b in combinations(data["k"], 2)
             )
             combo_orderbook_price = list(
                 Strategy_(sell=s[0], buy=b[1])
@@ -394,9 +383,7 @@ class Strategy:
                     current_profit.append(max_pot_loss[i])
                 else:
                     current_profit.append(
-                        data["ua_final"][0]
-                        - combo_k[i].sell
-                        + max_pot_loss[i]
+                        data["ua_final"][0] - combo_k[i].sell + max_pot_loss[i]
                     )
 
             df_ = pl.concat(
@@ -445,8 +432,7 @@ class Strategy:
                 Strategy_(sell=s, buy=b) for s, b in combinations(data["symbol"], 2)
             )
             combo_k = list(
-                Strategy_(sell=s, buy=b)
-                for s, b in combinations(data["k"], 2)
+                Strategy_(sell=s, buy=b) for s, b in combinations(data["k"], 2)
             )
             combo_orderbook_price = list(
                 Strategy_(sell=s[0], buy=b[1])
@@ -467,9 +453,7 @@ class Strategy:
                     current_profit.append(max_pot_loss[i])
                 else:
                     current_profit.append(
-                        -data["ua_final"][0]
-                        + combo_k[i].sell
-                        + max_pot_loss[i]
+                        -data["ua_final"][0] + combo_k[i].sell + max_pot_loss[i]
                     )
 
             df_ = pl.concat(
