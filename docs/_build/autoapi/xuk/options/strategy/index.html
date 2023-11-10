@@ -45,6 +45,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/xuk/options/strategy/index';</script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="xuk.ta" href="../../ta/index.html" />
     <link rel="prev" title="xuk.options.pricing" href="../pricing/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -270,6 +271,13 @@ document.write(`
 <li class="toctree-l3 current active"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.strategy</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../ta/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../ta/trend/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../ta/trend/dow/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend.dow</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -357,11 +365,11 @@ document.write(`
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>call</strong> – polars.DataFrame with (ua:str, ua_sell_price:int, ua_buy_price:int, symbol:str, strike_price:int,
-t:int, bs:int, buy_price:int, sell_price:int) columns. Where ua: Underlying Asset, bs : Black-Scholes
+<li><p><strong>call</strong> – polars.DataFrame with (ua:str, ua_ask_price:int, ua_bid_price:int, symbol:str, k:int,
+t:int, bs:int, bid_price:int, ask_price:int) columns. Where ua: Underlying Asset, bs : Black-Scholes
 price, t: Days to expiration date</p></li>
-<li><p><strong>put</strong> – polars.DataFrame with (ua:str, ua_sell_price:int, ua_buy_price:int, symbol:str, strike_price:int,
-t:int, bs:int, buy_price:int, sell_price:int) columns. Where ua: Underlying Asset, bs : Black-Scholes
+<li><p><strong>put</strong> – polars.DataFrame with (ua:str, ua_ask_price:int, ua_bid_price:int, symbol:str, k:int,
+t:int, bs:int, bid_price:int, ask_price:int) columns. Where ua: Underlying Asset, bs : Black-Scholes
 price, t: Days to expiration date</p></li>
 <li><p><strong>call_put</strong> – </p></li>
 </ul>
@@ -396,11 +404,11 @@ price, t: Days to expiration date</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="xuk.options.strategy.Strategy.covered_call">
 <span class="sig-name descname"><span class="pre">covered_call</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">polars.DataFrame</span></span></span><a class="reference internal" href="../../../../_modules/xuk/options/strategy.html#Strategy.covered_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.strategy.Strategy.covered_call" title="Link to this definition">#</a></dt>
-<dd><p>Is the purchase of a share of stock coupled with a sale of a call option on that stock.</p>
+<dd><p>A covered call position is the purchase of a share of stock coupled with a sale of a call option on that stock.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
-<li><p><em>polars.DataFrame contain (writing, writing_at, buy_ua, buy_ua_at,strike_price,t, pct_status,</em></p></li>
+<li><p><em>polars.DataFrame contain (writing, writing_at, buy_ua, buy_ua_at,k,t, pct_status,</em></p></li>
 <li><p><em>break_even, pct_break_even, max_pot_loss, max_pot_profit, pct_mpp, pct_monthly_cp, current_profit, pct_cp,</em></p></li>
 <li><p><em>pct_monthly_cp) columns.</em></p></li>
 </ul>
@@ -416,7 +424,7 @@ price, t: Days to expiration date</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
-<li><p><em>polars.DataFrame contain (writing, writing_at, buy_ua, buy_ua_at,strike_price,t, pct_status,</em></p></li>
+<li><p><em>polars.DataFrame contain (writing, writing_at, buy_ua, buy_ua_at,k,t, pct_status,</em></p></li>
 <li><p><em>break_even, pct_break_even, max_pot_loss, max_pot_profit, pct_mpp, pct_monthly_cp, current_profit, pct_cp,</em></p></li>
 <li><p><em>pct_monthly_cp) columns.</em></p></li>
 </ul>
@@ -507,6 +515,15 @@ price, t: Days to expiration date</p></li>
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.pricing</span></code></p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../../ta/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

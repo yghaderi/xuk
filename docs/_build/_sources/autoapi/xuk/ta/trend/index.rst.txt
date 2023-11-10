@@ -1,0 +1,15 @@
+:py:mod:`xuk.ta.trend`
+======================
+
+.. py:module:: xuk.ta.trend
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   dow/index.rst
+
+

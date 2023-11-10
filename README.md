@@ -44,6 +44,13 @@
         </h4>
             <li>coupon-bond</li>
             <li>zero-coupon-bond</li>
+    <h3>
+        تحلیلِ تکنیکی
+    </h3>
+        <h4>
+            روند
+        </h4>
+            <li>dow</li>
 
 </div>
 

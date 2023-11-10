@@ -331,6 +331,7 @@ document.write(`
 <span class="sd">            مدل‌هایِ قیمت-گذاریِ اختیارِ-معامله رو پوشش میده.</span>
 <span class="sd">        &lt;/div&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="mi">250</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="mi">365</span>
@@ -339,14 +340,14 @@ document.write(`
 <div class="viewcode-block" id="Pricing.black_scholes_merton">
 <a class="viewcode-back" href="../../../autoapi/xuk/options/pricing/index.html#xuk.options.Pricing.black_scholes_merton">[docs]</a>
     <span class="k">def</span> <span class="nf">black_scholes_merton</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">s0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
-            <span class="n">k</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
-            <span class="n">t</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-            <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-            <span class="n">type_</span><span class="p">:</span> <span class="n">OptionType</span><span class="p">,</span>
-            <span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-            <span class="n">div</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">s0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">k</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">t</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">type_</span><span class="p">:</span> <span class="n">OptionType</span><span class="p">,</span>
+        <span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">div</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        .. raw:: html</span>

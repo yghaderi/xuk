@@ -12,5 +12,6 @@ Subpackages
 
    fixed_incom/index.rst
    options/index.rst
+   ta/index.rst
 
 

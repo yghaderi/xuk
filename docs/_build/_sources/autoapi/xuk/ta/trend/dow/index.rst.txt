@@ -1,0 +1,38 @@
+:py:mod:`xuk.ta.trend.dow`
+==========================
+
+.. py:module:: xuk.ta.trend.dow
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   xuk.ta.trend.dow.dow
+
+
+
+.. py:function:: dow(df: polars.DataFrame, length: int)
+
+   .. raw:: html
+
+       <div dir="rtl">
+           روند رو بر مبنایِ رویکردِ داو تشخیص میده.
+           روندِ صعودی وختیه که HH, HL هایِ متوالی داشته باشیم. روندِ نزولی هم وختیه که LH, LL هایِ متوالی داشته باشیم.
+       </div>
+
+   The trend column, where 1 indicates an uptrend, -1 a downtrend, and 0 a trend-less.
+
+   :param df: شاملِ ستون‌هایِ date, symbol, close
+   :type df: polars.DataFrame
+   :param length: طولِ دوره‌هایِ محلی
+   :type length: int
+
+   :rtype: polars.DataFrame
+
+
