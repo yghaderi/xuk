@@ -2,7 +2,7 @@ from scipy.signal import argrelextrema
 import numpy as np
 import polars as pl
 
-__all__ = ["dow"]
+__all__ = ["dow", "last_dow_trend"]
 
 
 def _peak_trough_index(close: np.array, length: int):
@@ -148,3 +148,48 @@ def dow(df: pl.DataFrame, length: int):
         .alias("trend")
     )
     return df
+
+
+def last_dow_trend(df: pl.DataFrame) -> pl.DataFrame:
+    """
+    .. raw:: html
+
+        <div dir="rtl">
+            بر اساسِ روندِ داو تشخیص میده که آخرین روند چیه و اگه زرد باشه، مشتخص میکنه که از سبز یا قرمز زرد شده.
+        </div>
+
+    1: uptrend
+    -1: downtrend
+    2: uptrend -> trend-less
+    -2: downtrend -> trend-less
+
+    Parameters
+    ----------
+    df: polars.DataFrame
+        دیتا-فریم
+
+    Returns
+    -------
+    polars.DataFrame
+    """
+
+    def find_previous_trend(s: pl.Series):
+        for i in s:
+            match i:
+                case 1:
+                    return 2
+                case -1:
+                    return -2
+
+    records = []
+    for name, data in df.group_by("symbol"):
+        data = data.select(["date", "symbol", "trend"]).sort(by="date", descending=True)
+        match data["trend"][0]:
+            case 1:
+                records.append(data.row(0))
+            case -1:
+                records.append(data.row(0))
+            case _:
+                records.append((*data.row(0)[:2], find_previous_trend(data["trend"])))
+
+    return pl.from_records(records, schema=["date", "ins_id", "last_trend"])

@@ -1,1 +1,2 @@
-from xuk.ta.trend import dow
+from xuk.ta.trend.dow import dow, last_dow_trend
+
