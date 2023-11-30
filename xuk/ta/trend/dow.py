@@ -115,23 +115,21 @@ def dow(df: pl.DataFrame, length: int):
     -------
     polars.DataFrame
     """
-    df_ = pl.DataFrame()
-    for name, data in df.group_by("symbol"):
-        data = data.with_row_count()
-        data = data.with_columns(
-            pl.lit(0).alias("peak"),
-            pl.lit(0).alias("trough"),
-        )
-        peak_idx, trough_idx = _peak_trough_index(
-            close=data["close"].to_numpy(), length=length
-        )
-        for i in peak_idx:
-            data[int(i), "peak"] = 1
-        for i in trough_idx:
-            data[int(i), "trough"] = 1
-        df_ = pl.concat([df_, data])
 
-    df = _classification_peak_trough(df_)
+    df = df.with_row_count()
+    df = df.with_columns(
+        pl.lit(0).alias("peak"),
+        pl.lit(0).alias("trough"),
+    )
+    peak_idx, trough_idx = _peak_trough_index(
+        close=df["close"].to_numpy(), length=length
+    )
+    for i in peak_idx:
+        df[int(i), "peak"] = 1
+    for i in trough_idx:
+        df[int(i), "trough"] = 1
+
+    df = _classification_peak_trough(df)
     df = df.with_columns(
         [
             pl.col("hh_lh")
