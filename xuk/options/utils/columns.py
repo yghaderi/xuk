@@ -106,10 +106,12 @@ bull_call_spread = ManipulationCols(
     suffix=None,
     select=[
         "writing",
-        "buy",
         "writing_at",
+        "k_w",
+        "buy",
         "buy_at",
-        "ua",
+        "k_b",
+        "ua_symbol",
         "ua_final",
         "max_pot_loss",
         "max_pot_profit",
@@ -121,51 +123,21 @@ bear_call_spread = ManipulationCols(
     rename=None,
     prefix=None,
     suffix=None,
-    select=[
-        "writing",
-        "buy",
-        "writing_at",
-        "buy_at",
-        "ua",
-        "ua_final",
-        "max_pot_loss",
-        "max_pot_profit",
-        "current_profit",
-    ],
+    select=bull_call_spread.select,
     drop=None)
 
 bull_put_spread = ManipulationCols(
     rename=None,
     prefix=None,
     suffix=None,
-    select=[
-        "writing",
-        "buy",
-        "writing_at",
-        "buy_at",
-        "ua",
-        "ua_final",
-        "max_pot_loss",
-        "max_pot_profit",
-        "current_profit",
-    ],
+    select=bull_call_spread.select,
     drop=None)
 
 bear_put_spread = ManipulationCols(
     rename=None,
     prefix=None,
     suffix=None,
-    select=[
-        "writing",
-        "buy",
-        "writing_at",
-        "buy_at",
-        "ua",
-        "ua_final",
-        "max_pot_loss",
-        "max_pot_profit",
-        "current_profit",
-    ],
+    select=bull_call_spread.select,
     drop=None)
 
 strategy = Strategy(
