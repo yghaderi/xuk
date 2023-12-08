@@ -11,5 +11,74 @@ Submodules
    :maxdepth: 1
 
    dow/index.rst
+   pct_change/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   xuk.ta.trend.dow
+   xuk.ta.trend.last_dow_trend
+   xuk.ta.trend.pct_min_max_last
+
+
+
+.. py:function:: dow(df: polars.DataFrame, length: int)
+
+   .. raw:: html
+
+       <div dir="rtl">
+           روند رو بر مبنایِ رویکردِ داو تشخیص میده.
+           روندِ صعودی وختیه که HH, HL هایِ متوالی داشته باشیم. روندِ نزولی هم وختیه که LH, LL هایِ متوالی داشته باشیم.
+       </div>
+
+   The trend column, where 1 indicates an uptrend, -1 a downtrend, and 0 a trend-less.
+
+   :param df: شاملِ ستون‌هایِ date, symbol, close
+   :type df: polars.DataFrame
+   :param length: طولِ دوره‌هایِ محلی
+   :type length: int
+
+   :rtype: polars.DataFrame
+
+
+.. py:function:: last_dow_trend(df: polars.DataFrame) -> polars.DataFrame
+
+   .. raw:: html
+
+       <div dir="rtl">
+           بر اساسِ روندِ داو تشخیص میده که آخرین روند چیه و اگه زرد باشه، مشتخص میکنه که از سبز یا قرمز زرد شده.
+       </div>
+
+   1: uptrend
+   -1: downtrend
+   2: uptrend -> trend-less
+   -2: downtrend -> trend-less
+
+   :param df: دیتا-فریم
+   :type df: polars.DataFrame
+
+   :rtype: polars.DataFrame
+
+
+.. py:function:: pct_min_max_last(df: polars.DataFrame)
+
+   .. raw::html
+
+       <div dir="rtl">
+           بر اساسِ الویتِ کمینه-بیشنه، تغییراتِ قیمت رو در بازه‌یِ داده-شده محاسبه می‌کنه.
+            و سپس نسبت به کمینه-بیشنه‌یِ پسین، سطحِ آخرین قیمت رو محاسبه می‌کنه.
+       </div>
+
+   :param df polars.DataFrame:
+
+   :returns: **{"pct_mm"**
+   :rtype: float, "pct_last": float}
 
 

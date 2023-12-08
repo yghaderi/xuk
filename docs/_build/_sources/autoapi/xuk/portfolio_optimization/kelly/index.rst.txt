@@ -1,0 +1,56 @@
+:py:mod:`xuk.portfolio_optimization.kelly`
+==========================================
+
+.. py:module:: xuk.portfolio_optimization.kelly
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   xuk.portfolio_optimization.kelly.Kelly
+
+
+
+
+.. py:class:: Kelly(df, time_frame: str, window: int)
+
+
+   .. py:method:: calc_return()
+
+
+   .. py:method:: return_params()
+
+
+   .. py:method:: norm_integral(f, mean, std)
+
+
+   .. py:method:: norm_dev_integral(f, mean, std)
+
+
+   .. py:method:: get_kelly_share(data)
+
+
+   .. py:method:: f_single_asset()
+
+
+   .. py:method:: cov_return()
+
+
+   .. py:method:: kelly_allocation()
+
+
+   .. py:method:: kelly_portfolio_return(short_selling: bool = False)
+
+
+   .. py:method:: equal_weight_portfolio_return()
+
+
+   .. py:method:: benchmark_return()
+
+
+

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>xuk.fixed_incom &#8212; xuk 0.1.4 documentation</title>
+    <title>xuk.portfolio_optimization &#8212; xuk 0.1.4 documentation</title>
   
   
   
@@ -42,11 +42,11 @@
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../_static/copybutton.js?v=4ea706d9"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/xuk/fixed_incom/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/xuk/portfolio_optimization/index';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="xuk.fixed_incom.ytm" href="ytm/index.html" />
-    <link rel="prev" title="xuk" href="../index.html" />
+    <link rel="next" title="xuk.portfolio_optimization.kelly" href="kelly/index.html" />
+    <link rel="prev" title="xuk.options.strategy" href="../options/strategy/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -260,8 +260,8 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.fixed_incom</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="ytm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.fixed_incom.ytm</span></code></a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../fixed_incom/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.fixed_incom</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../fixed_incom/ytm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.fixed_incom.ytm</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../options/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -271,8 +271,8 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="../options/strategy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.strategy</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../portfolio_optimization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.portfolio_optimization</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../portfolio_optimization/kelly/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.portfolio_optimization.kelly</span></code></a></li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.portfolio_optimization</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="kelly/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.portfolio_optimization.kelly</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../ta/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -345,102 +345,15 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="module-xuk.fixed_incom">
-<span id="xuk-fixed-incom"></span><h1><a class="reference internal" href="#module-xuk.fixed_incom" title="xuk.fixed_incom"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.fixed_incom</span></code></a><a class="headerlink" href="#module-xuk.fixed_incom" title="Link to this heading">#</a></h1>
+  <section id="module-xuk.portfolio_optimization">
+<span id="xuk-portfolio-optimization"></span><h1><a class="reference internal" href="#module-xuk.portfolio_optimization" title="xuk.portfolio_optimization"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.portfolio_optimization</span></code></a><a class="headerlink" href="#module-xuk.portfolio_optimization" title="Link to this heading">#</a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="ytm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.fixed_incom.ytm</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="kelly/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.portfolio_optimization.kelly</span></code></a></li>
 </ul>
 </div>
-</section>
-<section id="package-contents">
-<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">#</a></h2>
-<section id="functions">
-<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h3>
-<table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xuk.fixed_incom.coupon_bond_ytm" title="xuk.fixed_incom.coupon_bond_ytm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coupon_bond_ytm</span></code></a>(fv, pv, coupon_rate, n, maturity_date)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xuk.fixed_incom.zero_coupon_bond_ytm" title="xuk.fixed_incom.zero_coupon_bond_ytm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero_coupon_bond_ytm</span></code></a>(fv, pv, n)</p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-<dl class="py function">
-<dt class="sig sig-object py" id="xuk.fixed_incom.coupon_bond_ytm">
-<span class="sig-name descname"><span class="pre">coupon_bond_ytm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupon_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maturity_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjust_pv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/fixed_incom/ytm.html#coupon_bond_ytm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.fixed_incom.coupon_bond_ytm" title="Link to this definition">#</a></dt>
-<dd><div dir="rtl">
-    بازده-تا-سررسید رو برای اوراقِ کوپن-دار محاسبه می‌کنه.
-</div><div class="admonition note">
-<p class="admonition-title">Note</p>
-<div dir="rtl">
-     دقت کن که مقدار خروجیِ بر اساسِ دوره‌یِ پرداختِ کوپن به صورتِ مؤثر سالانه می‌شه.
-</div></div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fv</strong> (<em>int</em>) – قیمتِ اسمیِ اوراق</p></li>
-<li><p><strong>pv</strong> (<em>int</em><em> or </em><em>float</em>) – قیمتِ فعلی</p></li>
-<li><p><strong>coupon_rate</strong> (<em>float</em>) – نرخِ بازدهِ اسمیِ هر کوپن</p></li>
-<li><p><strong>start_date</strong> (<em>str</em><em>, </em><em>format &quot;yyyymmdd&quot;</em><em>, </em><em>&quot;yyyy-mm-dd&quot;</em><em>, </em><em>&quot;yyyy/mm/dd&quot;</em>) – تاریخِ جلالیِ شروعِ. اگه هیچی پاس داده نشه، پیش-فرض امروزه.</p></li>
-<li><p><strong>maturity_date</strong> (<em>str</em><em>, </em><em>format &quot;yyyymmdd&quot;</em><em>, </em><em>&quot;yyyy-mm-dd&quot;</em><em>, </em><em>&quot;yyyy/mm/dd&quot;</em>) – تاریخِ جلالیِ سررسید</p></li>
-<li><p><strong>n</strong> (<em>int</em>) – دوره‌یِ پرداخت سود (بر حسب ماه)</p></li>
-<li><p><strong>adjust_pv</strong> (<em>bool</em><em>, </em><em>default True</em>) – این مورد بسته به نوعِ بازاره. اگه بازدهِ اسمیِ روزهایِ سپری-شده از کوپن جاری در قیمتِ معامله لحاظ نمیشه و
-جداگانه در کارگزاری تسوه می‌شه-معمولن در بورسِ ایران اینجوریه- <code class="docutils literal notranslate"><span class="pre">ترو</span></code> رو وارد کنید در غیرِ این <code class="docutils literal notranslate"><span class="pre">فالس</span></code>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>yield-to-maturity</strong></p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xuk.fixed_incom</span> <span class="kn">import</span> <span class="n">coupon_bond_ytm</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">coupon_bond_ytm</span><span class="p">(</span><span class="n">fv</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">pv</span><span class="o">=</span><span class="mi">98</span><span class="p">,</span> <span class="n">coupon_rate</span><span class="o">=</span><span class="mf">0.09</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">maturity_date</span> <span class="o">=</span> <span class="s2">&quot;1404-02-18&quot;</span><span class="p">,</span> <span class="n">start_date</span><span class="o">=</span><span class="s2">&quot;1402-08-18&quot;</span><span class="p">)</span>
-<span class="go">0.20562720385247046</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="xuk.fixed_incom.zero_coupon_bond_ytm">
-<span class="sig-name descname"><span class="pre">zero_coupon_bond_ytm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/xuk/fixed_incom/ytm.html#zero_coupon_bond_ytm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.fixed_incom.zero_coupon_bond_ytm" title="Link to this definition">#</a></dt>
-<dd><div dir="rtl">
-    بازده-تا-سررسید را برای اوراقِ بدونِ-کوپن محاسبه می‌کند.
-</div><div class="admonition note">
-<p class="admonition-title">Note</p>
-<div dir="rtl">
-    بازده-تا-سررسید سالانه است!
-</div></div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fv</strong> (<em>int</em><em> or </em><em>float</em>) – قیمتِ اسمیِ اوراق</p></li>
-<li><p><strong>pv</strong> (<em>int</em><em> or </em><em>float</em>) – قیمتِ فعلی</p></li>
-<li><p><strong>n</strong> (<em>int</em>) – تعدادِ روزهایِ مانده تا سررسید</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>yield-to-maturity</strong></p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xuk.fixed_incom</span> <span class="kn">import</span> <span class="n">zero_coupon_bond_ytm</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">zero_coupon_bond_ytm</span><span class="p">(</span><span class="n">fv</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">pv</span><span class="o">=</span><span class="mi">73</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">543</span><span class="p">)</span>
-<span class="go">0.23558667358353835</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</section>
 </section>
 </section>
 
@@ -455,20 +368,20 @@ document.write(`
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../index.html"
+       href="../options/strategy/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk</span></code></p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.strategy</span></code></p>
       </div>
     </a>
     <a class="right-next"
-       href="ytm/index.html"
+       href="kelly/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.fixed_incom.ytm</span></code></p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.portfolio_optimization.kelly</span></code></p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -488,20 +401,12 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-contents">Package Contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.fixed_incom.coupon_bond_ytm"><code class="docutils literal notranslate"><span class="pre">coupon_bond_ytm()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.fixed_incom.zero_coupon_bond_ytm"><code class="docutils literal notranslate"><span class="pre">zero_coupon_bond_ytm()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../../_sources/autoapi/xuk/fixed_incom/index.rst.txt">
+    <a href="../../../_sources/autoapi/xuk/portfolio_optimization/index.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

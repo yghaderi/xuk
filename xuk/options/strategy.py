@@ -124,9 +124,7 @@ class Strategy:
 
         Returns
         -------
-        polars.DataFrame contain (writing, writing_at, buy_ua, buy_ua_at,k,t, pct_status,
-        break_even, pct_break_even, max_pot_loss, max_pot_profit, pct_mpp, pct_monthly_cp, current_profit, pct_cp,
-        pct_monthly_cp) columns.
+        polars.DataFrame
         """
         df = self.put.filter((pl.col("ask_price") > 0) & (pl.col("ua_ask_price") > 0))
 
@@ -161,12 +159,15 @@ class Strategy:
         df = manipulation_cols(df=df, columns=cols.strategy.married_put)
         return df
 
-    def _spread_base(self, stg: str):
+    def _spread_base(self, stg: str) -> pl.DataFrame:
         """
         <div dir="rtl">
                 پایه‌یِ استراتژی‌هایِ spread هست.
             </div>
-        :return:
+
+        Returns
+        -------
+        polars.DataFrame
         """
 
         Strategy_ = namedtuple("Strategy", "sell buy")
@@ -311,14 +312,16 @@ class Strategy:
 
         A bull call spread involves two call options with the same expiration date:
 
-        1. Buy a call option at a lower strike price (gives you the right to buy at that price).
-        2. Sell a call option at a higher strike price (obligates you to sell at that price).
+        #. Buy a call option at a lower strike price (gives you the right to buy at that price).
+        #. Sell a call option at a higher strike price (obligates you to sell at that price).
+
         This strategy:
 
-        Requires an upfront cost: You pay a premium for the call option you buy.
-        Reduces the cost by selling a call option: You receive a premium from selling the higher strike call.
-        Limits potential losses: Your maximum loss is capped at the difference in strike prices minus the net premium
-         paid.
+        * **Requires an upfront cost:** You pay a premium for the call option you buy.
+        * **Reduces the cost by selling a call option:** You receive a premium from selling the higher strike call.
+        * **Limits potential losses:** Your maximum loss is capped at the difference in strike prices minus the net \
+        premium paid.
+
         Caps potential profits: Profit is limited to the difference in strike prices minus the net premium paid.
         It's used when you're moderately bullish on the underlying asset, expecting its price to stay above the lower
         strike price by expiration. However, like any options strategy, it's crucial to assess risks and ensure it
@@ -345,13 +348,15 @@ class Strategy:
 
         A bear call spread involves two call options with the same expiration date:
 
-        Sell a call option at a lower strike price (obligates you to sell at that price).
-        Buy a call option at a higher strike price (gives you the right to buy at that price).
+        #. Sell a call option at a lower strike price (obligates you to sell at that price).
+        #. Buy a call option at a higher strike price (gives you the right to buy at that price).
+
         This strategy:
 
-        Generates income: You receive a premium by selling the call option.
-        Limits risk: Your maximum loss is capped, and it's reduced by the premium received.
-        Caps potential profits: Profit is limited to the premium received.
+        * **Generates income:** You receive a premium by selling the call option.
+        * **Limits risk:** Your maximum loss is capped, and it's reduced by the premium received.
+        * **Caps potential profits:** Profit is limited to the premium received.
+
         It's used when you're moderately bearish on the underlying asset, expecting its price to stay below the lower
         strike price by expiration. However, it's important to assess risks and ensure this strategy aligns with your
         investment goals and risk tolerance before implementing it.
@@ -374,13 +379,16 @@ class Strategy:
             </div>
 
         A bull put spread involves two put options with the same expiration date:
-        1. Buy a put option at a higher strike price (gives you the right to sell at that price).
-        2. Sell a put option at a lower strike price (obligates you to buy at that price).
+
+        #. Buy a put option at a higher strike price (gives you the right to sell at that price).
+        #. Sell a put option at a lower strike price (obligates you to buy at that price).
 
         This strategy:
-        Generates income: You receive a premium by selling the put option.
-        Limits risk: Your maximum loss is capped, and it's reduced by the premium received.
-        Has capped profit potential: Profit is limited to the difference in strike prices minus the premium paid.
+
+        * **Generates income:** You receive a premium by selling the put option.
+        * **Limits risk:** Your maximum loss is capped, and it's reduced by the premium received.
+        * **Has capped profit potential:** Profit is limited to the difference in strike prices minus the premium paid.
+
         It's used when you're moderately bullish on the underlying asset, expecting its price to stay above the lower
         strike price by expiration. But remember, it's important to consider the risks involved and how they align with
         your overall investment strategy.
@@ -404,18 +412,22 @@ class Strategy:
 
         A bear put spread involves two put options with the same expiration date:
 
-        1. Buy a put option at a lower strike price (gives you the right to sell at that price).
-        2. Sell a put option at a higher strike price (obligates you to buy at that price).
+        #. Buy a put option at a lower strike price (gives you the right to sell at that price).
+        #. Sell a put option at a higher strike price (obligates you to buy at that price).
 
         This strategy:
 
-        Generates income: You receive a premium by selling the put option.
-        Limits risk: Your maximum loss is capped, and it's reduced by the premium received.
-        Has capped profit potential: Profit is limited to the difference in strike prices minus the premium paid.
+        * **Generates income:** You receive a premium by selling the put option.
+        * **Limits risk:** Your maximum loss is capped, and it's reduced by the premium received.
+        * **Has capped profit potential:** Profit is limited to the difference in strike prices minus the premium paid.
+
         It's used when you're moderately bearish on the underlying asset, expecting its price to stay below the higher
         strike price by expiration. Remember, it's essential to assess risks and ensure this strategy aligns with your
         investment goals and risk tolerance.
-        :return:
+
+        Returns
+        -------
+        polars.DataFrame
         """
         df = self._spread_base(stg="bear_put_spread")
         df = manipulation_cols(df=df, columns=cols.strategy.bear_put_spread)

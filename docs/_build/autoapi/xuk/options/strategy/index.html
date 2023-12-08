@@ -45,7 +45,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/xuk/options/strategy/index';</script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="xuk.ta" href="../../ta/index.html" />
+    <link rel="next" title="xuk.portfolio_optimization" href="../../portfolio_optimization/index.html" />
     <link rel="prev" title="xuk.options.pricing" href="../pricing/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -271,9 +271,14 @@ document.write(`
 <li class="toctree-l3 current active"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.options.strategy</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../ta/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../ta/trend/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../portfolio_optimization/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.portfolio_optimization</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../portfolio_optimization/kelly/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.portfolio_optimization.kelly</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../ta/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../ta/trend/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../ta/trend/dow/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend.dow</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ta/trend/pct_change/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend.pct_change</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -354,15 +359,16 @@ document.write(`
 <table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#xuk.options.strategy.Strategy" title="xuk.options.strategy.Strategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Strategy</span></code></a></p></td>
-<td><p>It calculates the necessary parameters related to the well-known option trading strategies.</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py class">
 <dt class="sig sig-object py" id="xuk.options.strategy.Strategy">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">call</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">pl.DataFrame()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">put</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">pl.DataFrame()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_put</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">pl.DataFrame()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/options/strategy.html#Strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.strategy.Strategy" title="Link to this definition">#</a></dt>
-<dd><p>It calculates the necessary parameters related to the well-known option trading strategies.</p>
-<dl class="field-list simple">
+<dd><div dir="rtl">
+    پارامترهایِ مهمِ مربوط به استراتژی‌هایِ اختیارِ-معامله رو حساب می‌کنه.
+</div><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>call</strong> – polars.DataFrame with (ua:str, ua_ask_price:int, ua_bid_price:int, symbol:str, k:int,
@@ -377,13 +383,13 @@ price, t: Days to expiration date</p></li>
 </dl>
 <p class="rubric">Examples</p>
 <p>Import libraries</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">oxtapus.ise</span> <span class="kn">import</span> <span class="n">TSETMC</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">oxtapus</span> <span class="kn">import</span> <span class="n">TSETMC</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xuk.options</span> <span class="kn">import</span> <span class="n">Strategy</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
 </pre></div>
 </div>
 <p>Get option data and create object</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">TSETMC</span><span class="p">()</span><span class="o">.</span><span class="n">option_market_watch</span><span class="p">())</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">TSETMC</span><span class="p">()</span><span class="o">.</span><span class="n">options_mw</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stg</span> <span class="o">=</span> <span class="n">Strategy</span><span class="p">(</span><span class="n">call</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span><span class="o">==</span><span class="s2">&quot;call&quot;</span><span class="p">),</span> <span class="n">put</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span><span class="o">==</span><span class="s2">&quot;put&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -404,8 +410,9 @@ price, t: Days to expiration date</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="xuk.options.strategy.Strategy.covered_call">
 <span class="sig-name descname"><span class="pre">covered_call</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">polars.DataFrame</span></span></span><a class="reference internal" href="../../../../_modules/xuk/options/strategy.html#Strategy.covered_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.strategy.Strategy.covered_call" title="Link to this definition">#</a></dt>
-<dd><p>A covered call position is the purchase of a share of stock coupled with a sale of a call option on that stock.</p>
-<dl class="field-list simple">
+<dd><div dir="rtl">
+    در این استراتژی داراییِ پایه خریداری می‌شه و اختیارِ خرید فروخته می‌شه.
+</div><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p><em>polars.DataFrame contain (writing, writing_at, buy_ua, buy_ua_at,k,t, pct_status,</em></p></li>
@@ -420,15 +427,11 @@ price, t: Days to expiration date</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="xuk.options.strategy.Strategy.married_put">
 <span class="sig-name descname"><span class="pre">married_put</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">polars.DataFrame</span></span></span><a class="reference internal" href="../../../../_modules/xuk/options/strategy.html#Strategy.married_put"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.strategy.Strategy.married_put" title="Link to this definition">#</a></dt>
-<dd><p>Is the purchase of a share of stock coupled with a purchase of a put option on that stock.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><em>polars.DataFrame contain (writing, writing_at, buy_ua, buy_ua_at,k,t, pct_status,</em></p></li>
-<li><p><em>break_even, pct_break_even, max_pot_loss, max_pot_profit, pct_mpp, pct_monthly_cp, current_profit, pct_cp,</em></p></li>
-<li><p><em>pct_monthly_cp) columns.</em></p></li>
-</ul>
-</p>
+<dd><div dir="rtl">
+    در این استراتژی داراییِ پایه و اختیارِ فروش خریداری می‌شه.
+</div><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>polars.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -436,23 +439,24 @@ price, t: Days to expiration date</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="xuk.options.strategy.Strategy.bull_call_spread">
 <span class="sig-name descname"><span class="pre">bull_call_spread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/options/strategy.html#Strategy.bull_call_spread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.strategy.Strategy.bull_call_spread" title="Link to this definition">#</a></dt>
-<dd><p>A bull call spread is an options trading strategy that’s used when an investor is moderately bullish on the underlying asset (e.g., a stock, index, or commodity) and wants to profit from an anticipated upward price movement while also limiting their potential downside risk. It involves buying one call option and simultaneously selling another call option with the same expiration date but at a higher strike price. This strategy is also known as a “debit call spread” because it typically requires an upfront payment (debit) to establish the position.</p>
-<p>Here are the key components and characteristics of a bull call spread:</p>
+<dd><div dir="rtl">
+    در این استراتژی یِ اختیارِ خرید با قیمتِ اعمالِ پایین‌تر خریداری می‌شه و همزمان اختیارِ خریدِ دیگه‌ای با
+    تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ بالاتر فروخته می‌شه.
+</div><p>A bull call spread involves two call options with the same expiration date:</p>
 <ol class="arabic simple">
-<li><p><strong>Components</strong>:
-- <strong>Buy a Call Option</strong>: You start by buying a call option with a lower strike price (the strike price at which you have the right to buy the underlying asset).
-- <strong>Sell a Call Option</strong>: Simultaneously, you sell a call option with a higher strike price than the one you bought. This is often referred to as the “short call” or “written call.”</p></li>
-<li><p><strong>Expiration Date</strong>: Both the long and short call options should have the same expiration date.</p></li>
-<li><p><strong>Strike Prices</strong>:
-- The strike price of the long call option is typically below the current market price of the underlying asset.
-- The strike price of the short call option is higher than the strike price of the long call.</p></li>
-<li><p><strong>Profit Potential</strong>: A bull call spread profits from a rising price of the underlying asset. The maximum profit is limited and occurs when the price of the underlying asset is above the higher strike price at expiration.</p></li>
-<li><p><strong>Risk and Losses</strong>: The maximum loss for a bull call spread is limited to the initial cost (debit) of establishing the position. This loss occurs if the price of the underlying asset is below the lower strike price at expiration.</p></li>
-<li><p><strong>Break-even Point</strong>: The break-even point for this strategy is the sum of the lower strike price and the net premium paid for the spread. In other words, it’s the point at which your gains equal your initial cost.</p></li>
-<li><p><strong>Risk-Reward Ratio</strong>: A bull call spread provides a limited potential profit and a limited potential loss. The risk-reward ratio is typically skewed in favor of limited profit potential.</p></li>
-<li><p><strong>Time Decay</strong>: Time decay (theta) can impact the value of both the long and short call options. Generally, the impact of time decay is smaller on the long call than on the short call. This can affect the profitability of the strategy.</p></li>
+<li><p>Buy a call option at a lower strike price (gives you the right to buy at that price).</p></li>
+<li><p>Sell a call option at a higher strike price (obligates you to sell at that price).</p></li>
 </ol>
-<p>In summary, a bull call spread is a strategy that allows investors to benefit from a moderate bullish view on an underlying asset while controlling their risk. It’s a defined-risk strategy with limited profit potential and is often used when an investor expects a moderate price increase but wants to reduce the cost of buying a call option outright. Traders should carefully consider the strike prices, expiration date, and market conditions when implementing this strategy.</p>
+<p>This strategy:</p>
+<ul class="simple">
+<li><p><strong>Requires an upfront cost:</strong> You pay a premium for the call option you buy.</p></li>
+<li><p><strong>Reduces the cost by selling a call option:</strong> You receive a premium from selling the higher strike call.</p></li>
+<li><p><strong>Limits potential losses:</strong> Your maximum loss is capped at the difference in strike prices minus the net         premium paid.</p></li>
+</ul>
+<p>Caps potential profits: Profit is limited to the difference in strike prices minus the net premium paid.
+It’s used when you’re moderately bullish on the underlying asset, expecting its price to stay above the lower
+strike price by expiration. However, like any options strategy, it’s crucial to assess risks and ensure it
+aligns with your investment goals and risk tolerance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>polars.DataFrame</p>
@@ -463,17 +467,23 @@ price, t: Days to expiration date</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="xuk.options.strategy.Strategy.bear_call_spread">
 <span class="sig-name descname"><span class="pre">bear_call_spread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/options/strategy.html#Strategy.bear_call_spread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.strategy.Strategy.bear_call_spread" title="Link to this definition">#</a></dt>
-<dd><p>A bear call spread is an options trading strategy that involves two call options with the same expiration date but different strike prices. This strategy is used by investors who are moderately bearish on the underlying asset’s price and want to profit from a potential decrease in the asset’s price. Here’s how a bear call spread works:</p>
+<dd><div dir="rtl">
+    در این استراتژی یِ اختیارِ فروش با قیمتِ اعمالِ بالاتر خریداری می‌شه و همزمان اختیارِ فروشِ دیگه‌ای با
+    تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ پایین‌تر فروخته می‌شه.
+</div><p>A bear call spread involves two call options with the same expiration date:</p>
 <ol class="arabic simple">
-<li><p><strong>Select the Underlying Asset:</strong> You start by choosing an underlying asset, such as a stock, index, or commodity.</p></li>
-<li><p><strong>Sell a Call Option:</strong> You sell (write) a call option with a strike price that’s closer to the current market price of the underlying asset. This is called the “short call” or “short leg” of the spread. By selling this option, you collect a premium.</p></li>
-<li><p><strong>Buy a Call Option:</strong> Simultaneously, you buy a call option with a higher strike price than the one you sold. This is called the “long call” or “long leg” of the spread. This purchase also involves paying a premium.</p></li>
-<li><p><strong>Limited Risk:</strong> The primary advantage of the bear call spread is that it has limited risk. The premium received from selling the short call partially offsets the premium paid for the long call. Your maximum loss is capped at the difference between the strike prices minus the net premium received.</p></li>
-<li><p><strong>Profit Potential:</strong> Your maximum profit is limited to the net premium you receive when you enter the trade. This profit occurs if the underlying asset’s price remains below the strike price of the short call at expiration.</p></li>
-<li><p><strong>Break-even Point:</strong> The strategy’s break-even point is the strike price of the short call plus the net premium received. As long as the underlying asset’s price remains below this point, you won’t incur a loss.</p></li>
-<li><p><strong>Expiration:</strong> The strategy typically involves holding both the short and long call options until expiration. If the underlying asset’s price is below the short call’s strike price at expiration, the short call expires worthless, and you keep the premium. The long call can also expire worthless or be sold for any remaining value.</p></li>
+<li><p>Sell a call option at a lower strike price (obligates you to sell at that price).</p></li>
+<li><p>Buy a call option at a higher strike price (gives you the right to buy at that price).</p></li>
 </ol>
-<p>A bear call spread can be a useful strategy when you expect a moderate downward price movement in the underlying asset. It allows you to profit from the premium received by selling the short call while limiting your potential losses. However, keep in mind that options trading carries risks and should only be undertaken if you understand the strategy and the potential outcomes.</p>
+<p>This strategy:</p>
+<ul class="simple">
+<li><p><strong>Generates income:</strong> You receive a premium by selling the call option.</p></li>
+<li><p><strong>Limits risk:</strong> Your maximum loss is capped, and it’s reduced by the premium received.</p></li>
+<li><p><strong>Caps potential profits:</strong> Profit is limited to the premium received.</p></li>
+</ul>
+<p>It’s used when you’re moderately bearish on the underlying asset, expecting its price to stay below the lower
+strike price by expiration. However, it’s important to assess risks and ensure this strategy aligns with your
+investment goals and risk tolerance before implementing it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>polars.DataFrame</p>
@@ -484,12 +494,56 @@ price, t: Days to expiration date</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="xuk.options.strategy.Strategy.bull_put_spread">
 <span class="sig-name descname"><span class="pre">bull_put_spread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/options/strategy.html#Strategy.bull_put_spread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.strategy.Strategy.bull_put_spread" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><div dir="rtl">
+    در این استراتژی یِ اختیارِ خریدِ با قیمتِ اعمالِ بالاتر خریداری می‌شه و همزمان اختیارِ خرید دیگه‌ای با
+    تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ پایین‌تر فروخته می‌شه.
+</div><p>A bull put spread involves two put options with the same expiration date:</p>
+<ol class="arabic simple">
+<li><p>Buy a put option at a higher strike price (gives you the right to sell at that price).</p></li>
+<li><p>Sell a put option at a lower strike price (obligates you to buy at that price).</p></li>
+</ol>
+<p>This strategy:</p>
+<ul class="simple">
+<li><p><strong>Generates income:</strong> You receive a premium by selling the put option.</p></li>
+<li><p><strong>Limits risk:</strong> Your maximum loss is capped, and it’s reduced by the premium received.</p></li>
+<li><p><strong>Has capped profit potential:</strong> Profit is limited to the difference in strike prices minus the premium paid.</p></li>
+</ul>
+<p>It’s used when you’re moderately bullish on the underlying asset, expecting its price to stay above the lower
+strike price by expiration. But remember, it’s important to consider the risks involved and how they align with
+your overall investment strategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>polars.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xuk.options.strategy.Strategy.bear_put_spread">
 <span class="sig-name descname"><span class="pre">bear_put_spread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/options/strategy.html#Strategy.bear_put_spread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.strategy.Strategy.bear_put_spread" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><div dir="rtl">
+    در این استراتژی یِ اختیارِ فروش با قیمتِ اعمالِ پایین‌تر خریداری می‌شه و همزمان اختیارِ فروشِ دیگه‌ای با
+    تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ بالاتر فروخته می‌شه.
+</div><p>A bear put spread involves two put options with the same expiration date:</p>
+<ol class="arabic simple">
+<li><p>Buy a put option at a lower strike price (gives you the right to sell at that price).</p></li>
+<li><p>Sell a put option at a higher strike price (obligates you to buy at that price).</p></li>
+</ol>
+<p>This strategy:</p>
+<ul class="simple">
+<li><p><strong>Generates income:</strong> You receive a premium by selling the put option.</p></li>
+<li><p><strong>Limits risk:</strong> Your maximum loss is capped, and it’s reduced by the premium received.</p></li>
+<li><p><strong>Has capped profit potential:</strong> Profit is limited to the difference in strike prices minus the premium paid.</p></li>
+</ul>
+<p>It’s used when you’re moderately bearish on the underlying asset, expecting its price to stay below the higher
+strike price by expiration. Remember, it’s essential to assess risks and ensure this strategy aligns with your
+investment goals and risk tolerance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>polars.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -517,11 +571,11 @@ price, t: Days to expiration date</p></li>
       </div>
     </a>
     <a class="right-next"
-       href="../../ta/index.html"
+       href="../../portfolio_optimization/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta</span></code></p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.portfolio_optimization</span></code></p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

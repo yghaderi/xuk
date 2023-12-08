@@ -12,6 +12,7 @@ Subpackages
 
    fixed_incom/index.rst
    options/index.rst
+   portfolio_optimization/index.rst
    ta/index.rst
 
 

@@ -7,96 +7,108 @@
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+
+Functions
+~~~~~~~~~
 
 .. autoapisummary::
 
-   xuk.fixed_incom.ytm.YTM
+   xuk.fixed_incom.ytm.coupon_bond_ytm
+   xuk.fixed_incom.ytm.zero_coupon_bond_ytm
 
 
 
+Attributes
+~~~~~~~~~~
 
-.. py:class:: YTM
+.. autoapisummary::
 
-
-   .. py:method:: coupon_bond(fv: int | float, pv: int | float, coupon_rate: float, maturity_date: datetime.date, n: int, adjust_pv: bool = True)
-
-      .. raw:: html
-
-          <div dir="rtl">
-              بازده-تا-سررسید رو برای اوراقِ کوپن-دار محاسبه می‌کنه.
-          </div>
+   xuk.fixed_incom.ytm.MONTH_DAYS
+   xuk.fixed_incom.ytm.YEAR_DAYS
 
 
-      .. note::
-          .. raw:: html
+.. py:data:: MONTH_DAYS
+   :value: 30
 
-              <div dir="rtl">
-                   دقت کن که مقدار خروجیِ بر اساسِ دوره‌یِ پرداختِ کوپن به صورتِ مؤثر سالانه می‌شه.
-              </div>
+   
 
+.. py:data:: YEAR_DAYS
+   :value: 365
 
-      :param fv: قیمتِ اسمیِ اوراق
-      :type fv: int
-      :param pv: قیمتِ فعلی
-      :type pv: int or float
-      :param coupon_rate: نرخِ بازدهِ اسمیِ هر کوپن
-      :type coupon_rate: float
-      :param maturity_date: تاریخِ سررسید
-      :type maturity_date: datetime.date
-      :param n: دوره‌یِ پرداخت سود (بر حسب ماه)
-      :type n: int
-      :param adjust_pv: این مورد بسته به نوعِ بازاره. اگه بازدهِ اسمیِ روزهایِ سپری-شده از کوپن جاری در قیمتِ معامله لحاظ نمیشه و
-                        جداگانه در کارگزاری تسوه می‌شه-معمولن در بورسِ ایران اینجوریه- ``ترو`` رو وارد کنید در غیرِ این ``فالس``.
-      :type adjust_pv: bool, default True
+   
 
-      :returns: **yield-to-maturity**
-      :rtype: float
+.. py:function:: coupon_bond_ytm(fv: int | float, pv: int | float, coupon_rate: float, n: int, maturity_date: str, start_date: str | None = None, adjust_pv: bool = True)
 
-      .. rubric:: Examples
+   .. raw:: html
 
-      Import libraries
-
-      >>> import datetime
-      >>> from xuk.fixed_incom import YTM
-
-      >>> datetime.date.today()
-      datetime.date(2023, 11, 6)
-      >>> YTM().coupon_bond(fv=100, pv=98, coupon_rate=0.09,maturity_date= datetime.date(2024,6,2), n=6)
-      0.229779371206994
+       <div dir="rtl">
+           بازده-تا-سررسید رو برای اوراقِ کوپن-دار محاسبه می‌کنه.
+       </div>
 
 
-   .. py:method:: zero_coupon_bond(fv: int | float, pv: int | float, n: int)
+   .. note::
+       .. raw:: html
 
-      .. raw:: html
+           <div dir="rtl">
+                دقت کن که مقدار خروجیِ بر اساسِ دوره‌یِ پرداختِ کوپن به صورتِ مؤثر سالانه می‌شه.
+           </div>
 
-          <div dir="rtl">
-              بازده-تا-سررسید را برای اوراقِ بدونِ-کوپن محاسبه می‌کند.
-          </div>
 
-      .. note::
-          .. raw:: html
+   :param fv: قیمتِ اسمیِ اوراق
+   :type fv: int
+   :param pv: قیمتِ فعلی
+   :type pv: int or float
+   :param coupon_rate: نرخِ بازدهِ اسمیِ هر کوپن
+   :type coupon_rate: float
+   :param start_date: تاریخِ جلالیِ شروعِ. اگه هیچی پاس داده نشه، پیش-فرض امروزه.
+   :type start_date: str, format "yyyymmdd", "yyyy-mm-dd", "yyyy/mm/dd"
+   :param maturity_date: تاریخِ جلالیِ سررسید
+   :type maturity_date: str, format "yyyymmdd", "yyyy-mm-dd", "yyyy/mm/dd"
+   :param n: دوره‌یِ پرداخت سود (بر حسب ماه)
+   :type n: int
+   :param adjust_pv: این مورد بسته به نوعِ بازاره. اگه بازدهِ اسمیِ روزهایِ سپری-شده از کوپن جاری در قیمتِ معامله لحاظ نمیشه و
+                     جداگانه در کارگزاری تسوه می‌شه-معمولن در بورسِ ایران اینجوریه- ``ترو`` رو وارد کنید در غیرِ این ``فالس``.
+   :type adjust_pv: bool, default True
 
-              <div dir="rtl">
-                  بازده-تا-سررسید سالانه است!
-              </div>
+   :returns: **yield-to-maturity**
+   :rtype: float
 
-      :param fv: قیمتِ اسمیِ اوراق
-      :type fv: int or float
-      :param pv: قیمتِ فعلی
-      :type pv: int or float
-      :param n: تعدادِ روزهایِ مانده تا سررسید
-      :type n: int
+   .. rubric:: Examples
 
-      :returns: **yield-to-maturity**
-      :rtype: float
+   >>> from xuk.fixed_incom import coupon_bond_ytm
+   >>> coupon_bond_ytm(fv=100, pv=98, coupon_rate=0.09, n=6, maturity_date = "1404-02-18", start_date="1402-08-18")
+   0.20562720385247046
 
-      .. rubric:: Examples
 
-      >>> from xuk.fixed_incom import YTM
-      >>> YTM().zero_coupon_bond(fv=100, pv=73, n=543)
-      0.23558667358353835
+.. py:function:: zero_coupon_bond_ytm(fv: int | float, pv: int | float, n: int)
 
+   .. raw:: html
+
+       <div dir="rtl">
+           بازده-تا-سررسید را برای اوراقِ بدونِ-کوپن محاسبه می‌کند.
+       </div>
+
+   .. note::
+       .. raw:: html
+
+           <div dir="rtl">
+               بازده-تا-سررسید سالانه است!
+           </div>
+
+   :param fv: قیمتِ اسمیِ اوراق
+   :type fv: int or float
+   :param pv: قیمتِ فعلی
+   :type pv: int or float
+   :param n: تعدادِ روزهایِ مانده تا سررسید
+   :type n: int
+
+   :returns: **yield-to-maturity**
+   :rtype: float
+
+   .. rubric:: Examples
+
+   >>> from xuk.fixed_incom import zero_coupon_bond_ytm
+   >>> zero_coupon_bond_ytm(fv=100, pv=73, n=543)
+   0.23558667358353835
 
 

@@ -304,7 +304,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;dow&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;dow&quot;</span><span class="p">,</span> <span class="s2">&quot;last_dow_trend&quot;</span><span class="p">]</span>
 
 
 <span class="k">def</span> <span class="nf">_peak_trough_index</span><span class="p">(</span><span class="n">close</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
@@ -419,23 +419,21 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">    polars.DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">df_</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="s2">&quot;symbol&quot;</span><span class="p">):</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">with_row_count</span><span class="p">()</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
-            <span class="n">pl</span><span class="o">.</span><span class="n">lit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;peak&quot;</span><span class="p">),</span>
-            <span class="n">pl</span><span class="o">.</span><span class="n">lit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;trough&quot;</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="n">peak_idx</span><span class="p">,</span> <span class="n">trough_idx</span> <span class="o">=</span> <span class="n">_peak_trough_index</span><span class="p">(</span>
-            <span class="n">close</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;close&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">length</span><span class="o">=</span><span class="n">length</span>
-        <span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">peak_idx</span><span class="p">:</span>
-            <span class="n">data</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s2">&quot;peak&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">trough_idx</span><span class="p">:</span>
-            <span class="n">data</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s2">&quot;trough&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">df_</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_</span><span class="p">,</span> <span class="n">data</span><span class="p">])</span>
 
-    <span class="n">df</span> <span class="o">=</span> <span class="n">_classification_peak_trough</span><span class="p">(</span><span class="n">df_</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">with_row_count</span><span class="p">()</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
+        <span class="n">pl</span><span class="o">.</span><span class="n">lit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;peak&quot;</span><span class="p">),</span>
+        <span class="n">pl</span><span class="o">.</span><span class="n">lit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;trough&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">peak_idx</span><span class="p">,</span> <span class="n">trough_idx</span> <span class="o">=</span> <span class="n">_peak_trough_index</span><span class="p">(</span>
+        <span class="n">close</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;close&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">length</span><span class="o">=</span><span class="n">length</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">peak_idx</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s2">&quot;peak&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">trough_idx</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s2">&quot;trough&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">_classification_peak_trough</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
         <span class="p">[</span>
             <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;hh_lh&quot;</span><span class="p">)</span>
@@ -452,6 +450,54 @@ document.write(`
         <span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&quot;trend&quot;</span><span class="p">)</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span></div>
+
+
+
+<div class="viewcode-block" id="last_dow_trend">
+<a class="viewcode-back" href="../../../../autoapi/xuk/ta/trend/index.html#xuk.ta.trend.dow.last_dow_trend">[docs]</a>
+<span class="k">def</span> <span class="nf">last_dow_trend</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    .. raw:: html</span>
+
+<span class="sd">        &lt;div dir=&quot;rtl&quot;&gt;</span>
+<span class="sd">            بر اساسِ روندِ داو تشخیص میده که آخرین روند چیه و اگه زرد باشه، مشتخص میکنه که از سبز یا قرمز زرد شده.</span>
+<span class="sd">        &lt;/div&gt;</span>
+
+<span class="sd">    1: uptrend</span>
+<span class="sd">    -1: downtrend</span>
+<span class="sd">    2: uptrend -&gt; trend-less</span>
+<span class="sd">    -2: downtrend -&gt; trend-less</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df: polars.DataFrame</span>
+<span class="sd">        دیتا-فریم</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    polars.DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">find_previous_trend</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">match</span> <span class="n">i</span><span class="p">:</span>
+                <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="mi">2</span>
+                <span class="k">case</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="o">-</span><span class="mi">2</span>
+
+    <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="s2">&quot;symbol&quot;</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;trend&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">match</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;trend&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+            <span class="k">case</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+            <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+                <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">row</span><span class="p">(</span><span class="mi">0</span><span class="p">)[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">find_previous_trend</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;trend&quot;</span><span class="p">])))</span>
+
+    <span class="k">return</span> <span class="n">pl</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;ins_id&quot;</span><span class="p">,</span> <span class="s2">&quot;last_trend&quot;</span><span class="p">])</span></div>
 
 </pre></div>
 

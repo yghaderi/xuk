@@ -14,6 +14,7 @@ Functions
 .. autoapisummary::
 
    xuk.ta.trend.dow.dow
+   xuk.ta.trend.dow.last_dow_trend
 
 
 
@@ -32,6 +33,25 @@ Functions
    :type df: polars.DataFrame
    :param length: طولِ دوره‌هایِ محلی
    :type length: int
+
+   :rtype: polars.DataFrame
+
+
+.. py:function:: last_dow_trend(df: polars.DataFrame) -> polars.DataFrame
+
+   .. raw:: html
+
+       <div dir="rtl">
+           بر اساسِ روندِ داو تشخیص میده که آخرین روند چیه و اگه زرد باشه، مشتخص میکنه که از سبز یا قرمز زرد شده.
+       </div>
+
+   1: uptrend
+   -1: downtrend
+   2: uptrend -> trend-less
+   -2: downtrend -> trend-less
+
+   :param df: دیتا-فریم
+   :type df: polars.DataFrame
 
    :rtype: polars.DataFrame
 

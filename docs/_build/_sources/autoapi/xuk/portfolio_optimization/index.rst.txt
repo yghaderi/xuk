@@ -1,0 +1,15 @@
+:py:mod:`xuk.portfolio_optimization`
+====================================
+
+.. py:module:: xuk.portfolio_optimization
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   kelly/index.rst
+
+

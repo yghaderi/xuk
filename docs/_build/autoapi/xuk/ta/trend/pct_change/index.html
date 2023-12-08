@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>xuk.ta.trend.dow &#8212; xuk 0.1.4 documentation</title>
+    <title>xuk.ta.trend.pct_change &#8212; xuk 0.1.4 documentation</title>
   
   
   
@@ -42,11 +42,10 @@
     <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../../../_static/copybutton.js?v=4ea706d9"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/xuk/ta/trend/dow/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/xuk/ta/trend/pct_change/index';</script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" />
-    <link rel="next" title="xuk.ta.trend.pct_change" href="../pct_change/index.html" />
-    <link rel="prev" title="xuk.ta.trend" href="../index.html" />
+    <link rel="prev" title="xuk.ta.trend.dow" href="../dow/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -277,8 +276,8 @@ document.write(`
 </li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l4 current active"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend.dow</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../pct_change/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend.pct_change</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../dow/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend.dow</span></code></a></li>
+<li class="toctree-l4 current active"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend.pct_change</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -350,57 +349,31 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="module-xuk.ta.trend.dow">
-<span id="xuk-ta-trend-dow"></span><h1><a class="reference internal" href="../index.html#xuk.ta.trend.dow" title="xuk.ta.trend.dow"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend.dow</span></code></a><a class="headerlink" href="#module-xuk.ta.trend.dow" title="Link to this heading">#</a></h1>
+  <section id="module-xuk.ta.trend.pct_change">
+<span id="xuk-ta-trend-pct-change"></span><h1><a class="reference internal" href="#module-xuk.ta.trend.pct_change" title="xuk.ta.trend.pct_change"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend.pct_change</span></code></a><a class="headerlink" href="#module-xuk.ta.trend.pct_change" title="Link to this heading">#</a></h1>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <section id="functions">
 <h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h3>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xuk.ta.trend.dow.dow" title="xuk.ta.trend.dow.dow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dow</span></code></a>(df, length)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#xuk.ta.trend.dow.last_dow_trend" title="xuk.ta.trend.dow.last_dow_trend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">last_dow_trend</span></code></a>(→ polars.DataFrame)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xuk.ta.trend.pct_change.pct_min_max_last" title="xuk.ta.trend.pct_change.pct_min_max_last"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pct_min_max_last</span></code></a>(df)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
-<dt class="sig sig-object py" id="xuk.ta.trend.dow.dow">
-<span class="sig-name descname"><span class="pre">dow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/xuk/ta/trend/dow.html#dow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.ta.trend.dow.dow" title="Link to this definition">#</a></dt>
-<dd><div dir="rtl">
-    روند رو بر مبنایِ رویکردِ داو تشخیص میده.
-    روندِ صعودی وختیه که HH, HL هایِ متوالی داشته باشیم. روندِ نزولی هم وختیه که LH, LL هایِ متوالی داشته باشیم.
-</div><p>The trend column, where 1 indicates an uptrend, -1 a downtrend, and 0 a trend-less.</p>
-<dl class="field-list simple">
+<dt class="sig sig-object py" id="xuk.ta.trend.pct_change.pct_min_max_last">
+<span class="sig-name descname"><span class="pre">pct_min_max_last</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/xuk/ta/trend/pct_change.html#pct_min_max_last"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.ta.trend.pct_change.pct_min_max_last" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>df</strong> (<em>polars.DataFrame</em>) – شاملِ ستون‌هایِ date, symbol, close</p></li>
-<li><p><strong>length</strong> (<em>int</em>) – طولِ دوره‌هایِ محلی</p></li>
-</ul>
+<dd class="field-odd"><p><strong>polars.DataFrame</strong> (<em>df</em>) – </p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>polars.DataFrame</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>{“pct_mm”</strong></p>
 </dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="xuk.ta.trend.dow.last_dow_trend">
-<span class="sig-name descname"><span class="pre">last_dow_trend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">polars.DataFrame</span></span></span><a class="reference internal" href="../../../../../_modules/xuk/ta/trend/dow.html#last_dow_trend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.ta.trend.dow.last_dow_trend" title="Link to this definition">#</a></dt>
-<dd><div dir="rtl">
-    بر اساسِ روندِ داو تشخیص میده که آخرین روند چیه و اگه زرد باشه، مشتخص میکنه که از سبز یا قرمز زرد شده.
-</div><p>1: uptrend
--1: downtrend
-2: uptrend -&gt; trend-less
--2: downtrend -&gt; trend-less</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>df</strong> (<em>polars.DataFrame</em>) – دیتا-فریم</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>polars.DataFrame</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float, “pct_last”: float}</p>
 </dd>
 </dl>
 </dd></dl>
@@ -420,22 +393,13 @@ document.write(`
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../index.html"
+       href="../dow/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend</span></code></p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend.dow</span></code></p>
       </div>
-    </a>
-    <a class="right-next"
-       href="../pct_change/index.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.ta.trend.pct_change</span></code></p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -454,8 +418,7 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.ta.trend.dow.dow"><code class="docutils literal notranslate"><span class="pre">dow()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.ta.trend.dow.last_dow_trend"><code class="docutils literal notranslate"><span class="pre">last_dow_trend()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.ta.trend.pct_change.pct_min_max_last"><code class="docutils literal notranslate"><span class="pre">pct_min_max_last()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -465,7 +428,7 @@ document.write(`
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../../../../_sources/autoapi/xuk/ta/trend/dow/index.rst.txt">
+    <a href="../../../../../_sources/autoapi/xuk/ta/trend/pct_change/index.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

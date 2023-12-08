@@ -1,0 +1,34 @@
+:py:mod:`xuk.ta.trend.pct_change`
+=================================
+
+.. py:module:: xuk.ta.trend.pct_change
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   xuk.ta.trend.pct_change.pct_min_max_last
+
+
+
+.. py:function:: pct_min_max_last(df: polars.DataFrame)
+
+   .. raw::html
+
+       <div dir="rtl">
+           بر اساسِ الویتِ کمینه-بیشنه، تغییراتِ قیمت رو در بازه‌یِ داده-شده محاسبه می‌کنه.
+            و سپس نسبت به کمینه-بیشنه‌یِ پسین، سطحِ آخرین قیمت رو محاسبه می‌کنه.
+       </div>
+
+   :param df polars.DataFrame:
+
+   :returns: **{"pct_mm"**
+   :rtype: float, "pct_last": float}
+
+
