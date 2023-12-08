@@ -6,12 +6,16 @@ import polars as pl
 import numpy as np
 
 from xuk.options.position_profit import OptionPositionProfit
-from xuk.options.utils import cols
+from xuk.options.utils import cols, manipulation_cols
 
 
 class Strategy:
     """
-    It calculates the necessary parameters related to the well-known option trading strategies.
+    .. raw:: html
+
+        <div dir="rtl">
+            پارامترهایِ مهمِ مربوط به استراتژی‌هایِ اختیارِ-معامله رو حساب می‌کنه.
+        </div>
 
     Parameters
     ----------
@@ -29,13 +33,13 @@ class Strategy:
     --------
     Import libraries
 
-    >>> from oxtapus.ise import TSETMC
+    >>> from oxtapus import TSETMC
     >>> from xuk.options import Strategy
     >>> import polars as pl
 
     Get option data and create object
 
-    >>> data = pl.from_pandas(TSETMC().option_market_watch())
+    >>> data = TSETMC().options_mw()
     >>> stg = Strategy(call=data.filter(pl.col("type")=="call"), put=data.filter(pl.col("type")=="put")
 
     Call strategies
@@ -55,10 +59,10 @@ class Strategy:
     """
 
     def __init__(
-        self,
-        call: Optional[pl.DataFrame] = pl.DataFrame(),
-        put: Optional[pl.DataFrame] = pl.DataFrame(),
-        call_put: Optional[pl.DataFrame] = pl.DataFrame(),
+            self,
+            call: Optional[pl.DataFrame] = pl.DataFrame(),
+            put: Optional[pl.DataFrame] = pl.DataFrame(),
+            call_put: Optional[pl.DataFrame] = pl.DataFrame(),
     ) -> None:
         self.call = call if call.is_empty() else call.filter(pl.col("t") > 0)
         self.put = put if put.is_empty() else put.filter(pl.col("t") > 0)
@@ -66,7 +70,11 @@ class Strategy:
 
     def covered_call(self) -> pl.DataFrame:
         """
-        A covered call position is the purchase of a share of stock coupled with a sale of a call option on that stock.
+        .. raw:: html
+
+            <div dir="rtl">
+                در این استراتژی داراییِ پایه خریداری می‌شه و اختیارِ خرید فروخته می‌شه.
+            </div>
 
         Returns
         -------
@@ -103,11 +111,16 @@ class Strategy:
             pct_monthly_cp=pl.col("pct_cp") / pl.col("t") * 30,
             pct_status=(pl.col("k") / pl.col("ua_final") - 1) * 100,
         )
-        return df.select(cols.covered_call.rep).rename(cols.covered_call.rename)
+        df = manipulation_cols(df=df, columns=cols.strategy.covered_call)
+        return df
 
     def married_put(self) -> pl.DataFrame:
         """
-        Is the purchase of a share of stock coupled with a purchase of a put option on that stock.
+        .. raw:: html
+
+            <div dir="rtl">
+                در این استراتژی داراییِ پایه و اختیارِ فروش خریداری می‌شه.
+            </div>
 
         Returns
         -------
@@ -120,7 +133,7 @@ class Strategy:
         df = df.with_columns(
             max_pot_profit=pl.lit(np.inf),
             max_pot_loss=pl.col("k") - pl.col("ua_ask_price") - pl.col("ask_price"),
-            break_even=pl.col("ua_ask_price") - pl.col("ask_price"),
+            break_even=pl.col("ua_ask_price") + pl.col("ask_price"),
         )
 
         df = df.with_columns(
@@ -141,56 +154,83 @@ class Strategy:
             pct_cp=pl.col("current_profit") / pl.col("break_even") * 100,
         )
         df = df.with_columns(
-            pct_monthly_mpp=pl.col("pct_mpp") / pl.col("t") * 30,
+            pct_monthly_mpp=pl.lit(np.inf),
             pct_monthly_cp=pl.col("pct_cp") / pl.col("t") * 30,
-            pct_status=(pl.col("k") / pl.col("ua_final") - 1) * 100,
+            pct_status=-(pl.col("k") / pl.col("ua_final") - 1) * 100,
         )
-
-        return df.select(cols.married_put.rep).rename(cols.married_put.rename)
+        df = manipulation_cols(df=df, columns=cols.strategy.married_put)
+        return df
 
     def bull_call_spread(self):
         """
-        A bull call spread is an options trading strategy that's used when an investor is moderately bullish on the underlying asset (e.g., a stock, index, or commodity) and wants to profit from an anticipated upward price movement while also limiting their potential downside risk. It involves buying one call option and simultaneously selling another call option with the same expiration date but at a higher strike price. This strategy is also known as a "debit call spread" because it typically requires an upfront payment (debit) to establish the position.
+        .. raw:: html
+
+            <div dir="rtl">
+                در این استراتژی یِ اختیارِ خرید خریداری می‌شه و همزمان اختیارِ خرید دیگه‌ای با تارخِ اعمالِ همسان اما
+                 قیمتِ اعمالِ بالاتر فروخته می‌شه.
+            </div>
+
+        A bull call spread is an options trading strategy that's used when an investor is moderately bullish on the
+        underlying asset (e.g., a stock, index, or commodity) and wants to profit from an anticipated upward price
+        movement while also limiting their potential downside risk. It involves buying one call option and
+        simultaneously selling another call option with the same expiration date but at a higher strike price.
+        This strategy is also known as a "debit call spread" because it typically requires an upfront payment
+        (debit) to establish the position.
 
         Here are the key components and characteristics of a bull call spread:
 
         1. **Components**:
-           - **Buy a Call Option**: You start by buying a call option with a lower strike price (the strike price at which you have the right to buy the underlying asset).
-           - **Sell a Call Option**: Simultaneously, you sell a call option with a higher strike price than the one you bought. This is often referred to as the "short call" or "written call."
+           - **Buy a Call Option**: You start by buying a call option with a lower strike price (the strike price at
+           which you have the right to buy the underlying asset).
+           - **Sell a Call Option**: Simultaneously, you sell a call option with a higher strike price than the one you
+           bought. This is often referred to as the "short call" or "written call."
 
         2. **Expiration Date**: Both the long and short call options should have the same expiration date.
 
         3. **Strike Prices**:
-           - The strike price of the long call option is typically below the current market price of the underlying asset.
+           - The strike price of the long call option is typically below the current market price of the underlying
+            asset.
            - The strike price of the short call option is higher than the strike price of the long call.
 
-        4. **Profit Potential**: A bull call spread profits from a rising price of the underlying asset. The maximum profit is limited and occurs when the price of the underlying asset is above the higher strike price at expiration.
+        4. **Profit Potential**: A bull call spread profits from a rising price of the underlying asset. The maximum
+        profit is limited and occurs when the price of the underlying asset is above the higher strike price at
+        expiration.
 
-        5. **Risk and Losses**: The maximum loss for a bull call spread is limited to the initial cost (debit) of establishing the position. This loss occurs if the price of the underlying asset is below the lower strike price at expiration.
+        5. **Risk and Losses**: The maximum loss for a bull call spread is limited to the initial cost (debit) of
+        establishing the position. This loss occurs if the price of the underlying asset is below the lower strike price
+        at expiration.
 
-        6. **Break-even Point**: The break-even point for this strategy is the sum of the lower strike price and the net premium paid for the spread. In other words, it's the point at which your gains equal your initial cost.
+        6. **Break-even Point**: The break-even point for this strategy is the sum of the lower strike price and the net
+        premium paid for the spread. In other words, it's the point at which your gains equal your initial cost.
 
-        7. **Risk-Reward Ratio**: A bull call spread provides a limited potential profit and a limited potential loss. The risk-reward ratio is typically skewed in favor of limited profit potential.
+        7. **Risk-Reward Ratio**: A bull call spread provides a limited potential profit and a limited potential loss.
+        The risk-reward ratio is typically skewed in favor of limited profit potential.
 
-        8. **Time Decay**: Time decay (theta) can impact the value of both the long and short call options. Generally, the impact of time decay is smaller on the long call than on the short call. This can affect the profitability of the strategy.
+        8. **Time Decay**: Time decay (theta) can impact the value of both the long and short call options. Generally,
+        the impact of time decay is smaller on the long call than on the short call. This can affect the profitability
+        of the strategy.
 
-        In summary, a bull call spread is a strategy that allows investors to benefit from a moderate bullish view on an underlying asset while controlling their risk. It's a defined-risk strategy with limited profit potential and is often used when an investor expects a moderate price increase but wants to reduce the cost of buying a call option outright. Traders should carefully consider the strike prices, expiration date, and market conditions when implementing this strategy.
+        In summary, a bull call spread is a strategy that allows investors to benefit from a moderate bullish view on an
+        underlying asset while controlling their risk. It's a defined-risk strategy with limited profit potential and is
+        often used when an investor expects a moderate price increase but wants to reduce the cost of buying a call
+        option outright. Traders should carefully consider the strike prices, expiration date, and market conditions
+        when implementing this strategy.
 
         Returns
         -------
         polars.DataFrame
         """
         Strategy_ = namedtuple("Strategy", "sell buy")
-        df = self.call.filter(
+        df_main = self.call.filter(
             (pl.col("bid_price") > 0)
             & (pl.col("ask_price") > 0)
-            & (pl.col("quote") == 1)
+            & (pl.col("ob_level") == 1)
         )
-        df_pairs = df.group_by(["ua", "t"]).agg(
+        df_pairs = df_main.group_by(["ua_symbol", "t"]).agg(
             pl.col("bid_price").count().alias("count")
         )
-        df = df.join(df_pairs.filter(pl.col("count") > 1), on=["ua", "t"], how="inner")
-        groups = df.group_by(["ua", "t"])
+        df = df_main.join(df_pairs.filter(pl.col("count") > 1), on=["ua_symbol", "t"], how="inner")
+        groups = df.group_by(["ua_symbol", "t"])
 
         df_ = pl.DataFrame()
         for _, data in groups:
@@ -231,7 +271,7 @@ class Strategy:
                             "symbol": combo_option,
                             "k": combo_k,
                             "t": data["t"][0],
-                            "ua": data["ua"][0],
+                            "ua_symbol": data["ua_symbol"][0],
                             "ua_final": data["ua_final"][0],
                             "orderbook_price": combo_orderbook_price,
                             "max_pot_loss": max_pot_loss,
@@ -242,48 +282,78 @@ class Strategy:
                 ]
             )
         df_ = df_.with_columns(
-            writing=pl.col("symbol").map_elements(lambda x: x[0]),
-            buy=pl.col("symbol").map_elements(lambda x: x[1]),
-            writing_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
-            buy_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
+            writing=pl.col("symbol").map_elements(lambda x: x["sell"]),
+            writing_at=pl.col("orderbook_price").map_elements(lambda x: x["sell"]),
+            buy=pl.col("symbol").map_elements(lambda x: x["buy"]),
+            buy_at=pl.col("orderbook_price").map_elements(lambda x: x["buy"]),
         ).drop(["symbol", "k", "orderbook_price"])
-        return df_.select(cols.bull_call_spread.rep)
+        df_k = df_main.select(["symbol", "k"]).unique()
+        df_ = df_.join(df_k, left_on=["buy"], right_on=["symbol"], how="inner").rename({"k": "k_b"})
+        df_ = df_.join(df_k, left_on=["writing"], right_on=["symbol"], how="inner").rename({"k": "k_w"})
+        df_ = manipulation_cols(df=df_, columns=cols.strategy.bull_call_spread)
+        return df_
 
     def bear_call_spread(self):
         """
-        A bear call spread is an options trading strategy that involves two call options with the same expiration date but different strike prices. This strategy is used by investors who are moderately bearish on the underlying asset's price and want to profit from a potential decrease in the asset's price. Here's how a bear call spread works:
+        .. raw:: html
 
-        1. **Select the Underlying Asset:** You start by choosing an underlying asset, such as a stock, index, or commodity.
+            <div dir="rtl">
+                در این استراتژی یِ اختیارِ خرید خریداری می‌شه و همزمان اختیارِ خرید دیگه‌ای با تارخِ اعمالِ همسان اما
+                 قیمتِ اعمالِ بالاتر فروخته می‌شه.
+            </div>
 
-        2. **Sell a Call Option:** You sell (write) a call option with a strike price that's closer to the current market price of the underlying asset. This is called the "short call" or "short leg" of the spread. By selling this option, you collect a premium.
 
-        3. **Buy a Call Option:** Simultaneously, you buy a call option with a higher strike price than the one you sold. This is called the "long call" or "long leg" of the spread. This purchase also involves paying a premium.
+        A bear call spread is an options trading strategy that involves two call options with the same expiration date
+        but different strike prices. This strategy is used by investors who are moderately bearish on the underlying
+        asset's price and want to profit from a potential decrease in the asset's price. Here's how a bear call spread
+        works:
 
-        4. **Limited Risk:** The primary advantage of the bear call spread is that it has limited risk. The premium received from selling the short call partially offsets the premium paid for the long call. Your maximum loss is capped at the difference between the strike prices minus the net premium received.
+        1. **Select the Underlying Asset:** You start by choosing an underlying asset, such as a stock, index, or
+        commodity.
 
-        5. **Profit Potential:** Your maximum profit is limited to the net premium you receive when you enter the trade. This profit occurs if the underlying asset's price remains below the strike price of the short call at expiration.
+        2. **Sell a Call Option:** You sell (write) a call option with a strike price that's closer to the current
+        market price of the underlying asset. This is called the "short call" or "short leg" of the spread. By selling
+        this option, you collect a premium.
 
-        6. **Break-even Point:** The strategy's break-even point is the strike price of the short call plus the net premium received. As long as the underlying asset's price remains below this point, you won't incur a loss.
+        3. **Buy a Call Option:** Simultaneously, you buy a call option with a higher strike price than the one you
+        sold. This is called the "long call" or "long leg" of the spread. This purchase also involves paying a premium.
 
-        7. **Expiration:** The strategy typically involves holding both the short and long call options until expiration. If the underlying asset's price is below the short call's strike price at expiration, the short call expires worthless, and you keep the premium. The long call can also expire worthless or be sold for any remaining value.
+        4. **Limited Risk:** The primary advantage of the bear call spread is that it has limited risk. The premium
+        received from selling the short call partially offsets the premium paid for the long call. Your maximum loss is
+        capped at the difference between the strike prices minus the net premium received.
 
-        A bear call spread can be a useful strategy when you expect a moderate downward price movement in the underlying asset. It allows you to profit from the premium received by selling the short call while limiting your potential losses. However, keep in mind that options trading carries risks and should only be undertaken if you understand the strategy and the potential outcomes.
+        5. **Profit Potential:** Your maximum profit is limited to the net premium you receive when you enter the trade.
+        This profit occurs if the underlying asset's price remains below the strike price of the short call at
+        expiration.
+
+        6. **Break-even Point:** The strategy's break-even point is the strike price of the short call plus the net
+        premium received. As long as the underlying asset's price remains below this point, you won't incur a loss.
+
+        7. **Expiration:** The strategy typically involves holding both the short and long call options until
+        expiration. If the underlying asset's price is below the short call's strike price at expiration, the short call
+        expires worthless, and you keep the premium. The long call can also expire worthless or be sold for any
+        remaining value.
+
+        A bear call spread can be a useful strategy when you expect a moderate downward price movement in the underlying
+        asset. It allows you to profit from the premium received by selling the short call while limiting your potential
+        losses. However, keep in mind that options trading carries risks and should only be undertaken if you understand
+        the strategy and the potential outcomes.
 
         Returns
         -------
         polars.DataFrame
         """
         Strategy_ = namedtuple("Strategy", "sell buy")
-        df = self.call.filter(
+        df_main = self.call.filter(
             (pl.col("bid_price") > 0)
             & (pl.col("ask_price") > 0)
-            & (pl.col("quote") == 1)
+            & (pl.col("ob_level") == 1)
         )
-        df_pairs = df.group_by(["ua", "t"]).agg(
+        df_pairs = df_main.group_by(["ua_symbol", "t"]).agg(
             pl.col("bid_price").count().alias("count")
         )
-        df = df.join(df_pairs.filter(pl.col("count") > 1), on=["ua", "t"], how="inner")
-        groups = df.group_by(["ua", "t"])
+        df = df_main.join(df_pairs.filter(pl.col("count") > 1), on=["ua_symbol", "t"], how="inner")
+        groups = df.group_by(["ua_symbol", "t"])
 
         df_ = pl.DataFrame()
         for _, data in groups:
@@ -324,7 +394,7 @@ class Strategy:
                             "symbol": combo_option,
                             "k": combo_k,
                             "t": data["t"][0],
-                            "ua": data["ua"][0],
+                            "ua_symbol": data["ua_symbol"][0],
                             "ua_final": data["ua_final"][0],
                             "orderbook_price": combo_orderbook_price,
                             "max_pot_loss": max_pot_loss,
@@ -335,14 +405,35 @@ class Strategy:
                 ]
             )
         df_ = df_.with_columns(
-            writing=pl.col("symbol").map_elements(lambda x: x[0]),
-            buy=pl.col("symbol").map_elements(lambda x: x[1]),
-            writing_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
-            buy_at=pl.col("orderbook_price").map_elements(lambda x: x[0]),
+            writing=pl.col("symbol").map_elements(lambda x: x["sell"]),
+            writing_at=pl.col("orderbook_price").map_elements(lambda x: x["sell"]),
+            buy=pl.col("symbol").map_elements(lambda x: x["buy"]),
+            buy_at=pl.col("orderbook_price").map_elements(lambda x: x["buy"]),
         ).drop(["symbol", "k", "orderbook_price"])
-        return df_.select(cols.bear_call_spread.rep)
+        df_k = df_main.select(["symbol", "k"]).unique()
+        df_ = df_.join(df_k, left_on=["buy"], right_on=["symbol"], how="inner").rename({"k": "k_b"})
+        df_ = df_.join(df_k, left_on=["writing"], right_on=["symbol"], how="inner").rename({"k": "k_w"})
+        df_ = manipulation_cols(df=df_, columns=cols.strategy.bear_call_spread)
+        return df_
 
     def bull_put_spread(self):
+        """
+        A bull put spread involves two put options with the same expiration date:
+        1. **Buy a put option at a higher strike price (gives you the right to sell at that price).
+        2. **Sell a put option at a lower strike price (obligates you to buy at that price).
+
+        This strategy:
+        Generates income: You receive a premium by selling the put option.
+        Limits risk: Your maximum loss is capped, and it's reduced by the premium received.
+        Has capped profit potential: Profit is limited to the difference in strike prices minus the premium paid.
+        It's used when you're moderately bullish on the underlying asset, expecting its price to stay above the lower
+        strike price by expiration. But remember, it's important to consider the risks involved and how they align with
+        your overall investment strategy.
+
+        Returns
+        -------
+        polars.DataFrame
+        """
         Strategy_ = namedtuple("Strategy", "sell buy")
         df = self.put.filter(
             (pl.col("bid_price") > 0)
@@ -413,6 +504,22 @@ class Strategy:
         return df_.select(cols.bull_put_spread.rep)
 
     def bear_put_spread(self):
+        """
+        A bear put spread involves two put options with the same expiration date:
+
+        1. **Buy a put option at a lower strike price (gives you the right to sell at that price).
+        2. **Sell a put option at a higher strike price (obligates you to buy at that price).
+
+        This strategy:
+
+        Generates income: You receive a premium by selling the put option.
+        Limits risk: Your maximum loss is capped, and it's reduced by the premium received.
+        Has capped profit potential: Profit is limited to the difference in strike prices minus the premium paid.
+        It's used when you're moderately bearish on the underlying asset, expecting its price to stay below the higher
+        strike price by expiration. Remember, it's essential to assess risks and ensure this strategy aligns with your
+        investment goals and risk tolerance.
+        :return:
+        """
         Strategy_ = namedtuple("Strategy", "sell buy")
         df = self.put.filter(
             (pl.col("bid_price") > 0)

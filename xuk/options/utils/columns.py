@@ -1,30 +1,61 @@
-from collections import namedtuple
+from dataclasses import dataclass
+import polars as pl
 
-Cols = namedtuple(
-    "Cols",
-    [
-        "covered_call",
-        "married_put",
-        "bull_call_spread",
-        "bear_call_spread",
-        "bull_put_spread",
-        "bear_put_spread",
-    ],
-)
-Property = namedtuple("Property", ["rename", "drop", "rep"])
+__all__ = ["manipulation_cols", "cols"]
 
-_covered_call = {
-    "rename": {
+
+@dataclass
+class ManipulationCols:
+    rename: dict | None
+    prefix: str | None
+    suffix: str | None
+    select: list[str] | None
+    drop: list[str] | None
+
+
+@dataclass
+class Strategy:
+    covered_call: ManipulationCols
+    married_put: ManipulationCols
+    bull_call_spread: ManipulationCols
+    bear_call_spread: ManipulationCols
+    bull_put_spread: ManipulationCols
+    bear_put_spread: ManipulationCols
+
+
+@dataclass
+class Cols:
+    strategy: Strategy
+
+
+def manipulation_cols(df: pl.DataFrame, columns: ManipulationCols):
+    if columns.rename:
+        df = df.rename(columns.rename)
+    if columns.prefix:
+        df = df.rename({i: f"{columns.prefix}{i}" for i in df.columns})
+    if columns.suffix:
+        df = df.rename({i: f"{i}{columns.suffix}" for i in df.columns})
+    if columns.select:
+        df = df.select(columns.select)
+    if columns.drop:
+        df = df.drop(columns.drop)
+    return df
+
+
+covered_call = ManipulationCols(
+    rename={
         "symbol": "writing",
         "bid_price": "writing_at",
         "ua_symbol": "buy_ua",
         "ua_ask_price": "buy_ua_at",
     },
-    "rep": [
-        "symbol",
-        "bid_price",
-        "ua_symbol",
-        "ua_ask_price",
+    prefix=None,
+    suffix=None,
+    select=[
+        "writing",
+        "writing_at",
+        "buy_ua",
+        "buy_ua_at",
         "k",
         "t",
         "pct_status",
@@ -38,19 +69,22 @@ _covered_call = {
         "pct_cp",
         "pct_monthly_cp",
     ],
-}
-_married_put = {
-    "rename": {
+    drop=None)
+
+married_put = ManipulationCols(
+    rename={
         "symbol": "buy",
         "ask_price": "buy_at",
         "ua_symbol": "buy_ua",
         "ua_ask_price": "buy_ua_at",
     },
-    "rep": [
-        "symbol",
-        "ask_price",
-        "ua_symbol",
-        "ua_ask_price",
+    prefix=None,
+    suffix=None,
+    select=[
+        "buy",
+        "buy_at",
+        "buy_ua",
+        "buy_ua_at",
         "k",
         "t",
         "pct_status",
@@ -64,10 +98,13 @@ _married_put = {
         "pct_cp",
         "pct_monthly_cp",
     ],
-}
+    drop=None)
 
-_bull_call_spread = {
-    "rep": [
+bull_call_spread = ManipulationCols(
+    rename=None,
+    prefix=None,
+    suffix=None,
+    select=[
         "writing",
         "buy",
         "writing_at",
@@ -78,10 +115,13 @@ _bull_call_spread = {
         "max_pot_profit",
         "current_profit",
     ],
-}
+    drop=None)
 
-_bear_call_spread = {
-    "rep": [
+bear_call_spread = ManipulationCols(
+    rename=None,
+    prefix=None,
+    suffix=None,
+    select=[
         "writing",
         "buy",
         "writing_at",
@@ -92,10 +132,13 @@ _bear_call_spread = {
         "max_pot_profit",
         "current_profit",
     ],
-}
+    drop=None)
 
-_bull_put_spread = {
-    "rep": [
+bull_put_spread = ManipulationCols(
+    rename=None,
+    prefix=None,
+    suffix=None,
+    select=[
         "writing",
         "buy",
         "writing_at",
@@ -106,10 +149,13 @@ _bull_put_spread = {
         "max_pot_profit",
         "current_profit",
     ],
-}
+    drop=None)
 
-_bear_put_spread = {
-    "rep": [
+bear_put_spread = ManipulationCols(
+    rename=None,
+    prefix=None,
+    suffix=None,
+    select=[
         "writing",
         "buy",
         "writing_at",
@@ -120,47 +166,17 @@ _bear_put_spread = {
         "max_pot_profit",
         "current_profit",
     ],
-}
+    drop=None)
 
-covered_call = Property(
-    rename=_covered_call.get("rename"),
-    drop=_covered_call.get("drop"),
-    rep=_covered_call.get("rep"),
-)
-married_put = Property(
-    rename=_married_put.get("rename"),
-    drop=_married_put.get("drop"),
-    rep=_married_put.get("rep"),
-)
-
-bull_call_spread = Property(
-    rename=_bull_call_spread.get("rename"),
-    drop=_bull_call_spread.get("drop"),
-    rep=_bull_call_spread.get("rep"),
-)
-
-bear_call_spread = Property(
-    rename=_bear_call_spread.get("rename"),
-    drop=_bear_call_spread.get("drop"),
-    rep=_bear_call_spread.get("rep"),
-)
-
-bull_put_spread = Property(
-    rename=_bull_put_spread.get("rename"),
-    drop=_bull_put_spread.get("drop"),
-    rep=_bull_put_spread.get("rep"),
-)
-
-bear_put_spread = Property(
-    rename=_bear_put_spread.get("rename"),
-    drop=_bear_put_spread.get("drop"),
-    rep=_bear_put_spread.get("rep"),
-)
-cols = Cols(
+strategy = Strategy(
     covered_call=covered_call,
     married_put=married_put,
     bull_call_spread=bull_call_spread,
     bear_call_spread=bear_call_spread,
     bull_put_spread=bull_put_spread,
-    bear_put_spread=bear_put_spread,
+    bear_put_spread=bear_put_spread
+)
+
+cols = Cols(
+    strategy=strategy
 )
