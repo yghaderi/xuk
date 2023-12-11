@@ -111,6 +111,7 @@ bull_call_spread = ManipulationCols(
         "buy",
         "buy_at",
         "k_b",
+        "t",
         "ua_symbol",
         "ua_final",
         "max_pot_loss",
