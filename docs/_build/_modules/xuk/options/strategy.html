@@ -481,11 +481,8 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">Strategy_</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Strategy&quot;</span><span class="p">,</span> <span class="s2">&quot;sell buy&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s2">&quot;call&quot;</span> <span class="ow">in</span> <span class="n">stg</span><span class="p">:</span>
-            <span class="n">df_main</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call</span>
-        <span class="k">elif</span> <span class="s2">&quot;put&quot;</span> <span class="ow">in</span> <span class="n">stg</span><span class="p">:</span>
-            <span class="n">df_main</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">put</span>
 
+        <span class="n">df_main</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call</span> <span class="k">if</span> <span class="s2">&quot;put&quot;</span> <span class="ow">in</span> <span class="n">stg</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">put</span>
         <span class="n">df_main</span> <span class="o">=</span> <span class="n">df_main</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
             <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;bid_price&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
             <span class="o">&amp;</span> <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;ask_price&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
@@ -497,12 +494,7 @@ document.write(`
         <span class="n">df</span> <span class="o">=</span> <span class="n">df_main</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df_pairs</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">),</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ua_symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>
         <span class="n">groups</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">group_by</span><span class="p">([</span><span class="s2">&quot;ua_symbol&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">])</span>
 
-        <span class="k">match</span> <span class="n">stg</span><span class="p">:</span>
-            <span class="k">case</span> <span class="s2">&quot;bull_call_spread&quot;</span> <span class="o">|</span> <span class="s2">&quot;bear_put_spread&quot;</span><span class="p">:</span>
-                <span class="n">descending</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">case</span> <span class="s2">&quot;bear_call_spread&quot;</span> <span class="o">|</span> <span class="s2">&quot;bull_put_spread&quot;</span><span class="p">:</span>
-                <span class="n">descending</span> <span class="o">=</span> <span class="kc">False</span>
-
+        <span class="n">descending</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">stg</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;bull&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span>
         <span class="n">df_</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sort</span><span class="p">([</span><span class="s2">&quot;k&quot;</span><span class="p">],</span> <span class="n">descending</span><span class="o">=</span><span class="n">descending</span><span class="p">)</span>
@@ -519,6 +511,10 @@ document.write(`
                 <span class="p">)</span>
             <span class="p">)</span>
 
+            <span class="n">ua_final</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">max_pot_loss</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">max_pot_profit</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">current_profit</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">match</span> <span class="n">stg</span><span class="p">:</span>
                 <span class="k">case</span> <span class="s2">&quot;bull_call_spread&quot;</span><span class="p">:</span>
                     <span class="n">max_pot_loss</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">sell</span> <span class="o">-</span> <span class="n">i</span><span class="o">.</span><span class="n">buy</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">combo_orderbook_price</span><span class="p">]</span>
@@ -527,43 +523,43 @@ document.write(`
                     <span class="p">)</span>
                     <span class="n">current_profit</span> <span class="o">=</span> <span class="p">[]</span>
                     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">combo_k</span><span class="p">)):</span>
-                        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="n">ua_final</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
                             <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_pot_profit</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-                        <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                        <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="n">ua_final</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
                             <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_pot_loss</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">buy</span> <span class="o">+</span> <span class="n">max_pot_loss</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                                <span class="n">ua_final</span> <span class="o">-</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">buy</span> <span class="o">+</span> <span class="n">max_pot_loss</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                             <span class="p">)</span>
                 <span class="k">case</span> <span class="s2">&quot;bear_call_spread&quot;</span><span class="p">:</span>
-                    <span class="n">max_pot_profit</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">buy</span> <span class="o">-</span> <span class="n">i</span><span class="o">.</span><span class="n">sell</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">combo_orderbook_price</span><span class="p">]</span>
-                    <span class="n">max_pot_loss</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-                        <span class="nb">map</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">sell</span> <span class="o">-</span> <span class="n">i</span><span class="o">.</span><span class="n">buy</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">],</span> <span class="n">max_pot_profit</span><span class="p">)</span>
-                    <span class="p">)</span>
-                    <span class="n">current_profit</span> <span class="o">=</span> <span class="p">[]</span>
-                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">combo_k</span><span class="p">)):</span>
-                        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
-                            <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_pot_profit</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-                        <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
-                            <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_pot_loss</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-                        <span class="k">else</span><span class="p">:</span>
-                            <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                                <span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">sell</span> <span class="o">+</span> <span class="n">max_pot_loss</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                            <span class="p">)</span>
-                <span class="k">case</span> <span class="s2">&quot;bull_put_spread&quot;</span><span class="p">:</span>
                     <span class="n">max_pot_profit</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">sell</span> <span class="o">-</span> <span class="n">i</span><span class="o">.</span><span class="n">buy</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">combo_orderbook_price</span><span class="p">]</span>
                     <span class="n">max_pot_loss</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
                         <span class="nb">map</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">sell</span> <span class="o">-</span> <span class="n">i</span><span class="o">.</span><span class="n">buy</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">],</span> <span class="n">max_pot_profit</span><span class="p">)</span>
                     <span class="p">)</span>
                     <span class="n">current_profit</span> <span class="o">=</span> <span class="p">[]</span>
                     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">combo_k</span><span class="p">)):</span>
-                        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="n">ua_final</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
                             <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_pot_profit</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-                        <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                        <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="n">ua_final</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
                             <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_pot_loss</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                                <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">sell</span> <span class="o">+</span> <span class="n">max_pot_loss</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                                <span class="o">-</span><span class="n">ua_final</span> <span class="o">+</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">sell</span> <span class="o">+</span> <span class="n">max_pot_profit</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                            <span class="p">)</span>
+                <span class="k">case</span> <span class="s2">&quot;bull_put_spread&quot;</span><span class="p">:</span>
+                    <span class="n">max_pot_profit</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">sell</span> <span class="o">-</span> <span class="n">i</span><span class="o">.</span><span class="n">buy</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">combo_orderbook_price</span><span class="p">]</span>
+                    <span class="n">max_pot_loss</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                        <span class="nb">map</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span><span class="o">.</span><span class="n">sell</span> <span class="o">+</span> <span class="n">i</span><span class="o">.</span><span class="n">buy</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">],</span> <span class="n">max_pot_profit</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="n">current_profit</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">combo_k</span><span class="p">)):</span>
+                        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="n">ua_final</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                            <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_pot_profit</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                        <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="n">ua_final</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                            <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_pot_loss</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                <span class="n">ua_final</span> <span class="o">-</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">sell</span> <span class="o">+</span> <span class="n">max_pot_profit</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                             <span class="p">)</span>
                 <span class="k">case</span> <span class="s2">&quot;bear_put_spread&quot;</span><span class="p">:</span>
                     <span class="n">max_pot_loss</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">sell</span> <span class="o">-</span> <span class="n">i</span><span class="o">.</span><span class="n">buy</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">combo_orderbook_price</span><span class="p">]</span>
@@ -573,13 +569,13 @@ document.write(`
 
                     <span class="n">current_profit</span> <span class="o">=</span> <span class="p">[]</span>
                     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">combo_k</span><span class="p">)):</span>
-                        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="n">ua_final</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
                             <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_pot_profit</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-                        <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                        <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="n">ua_final</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
                             <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_pot_loss</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="n">current_profit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                                <span class="o">-</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;ua_final&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">sell</span> <span class="o">+</span> <span class="n">max_pot_loss</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                                <span class="o">-</span><span class="n">ua_final</span> <span class="o">+</span> <span class="n">combo_k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">buy</span> <span class="o">+</span> <span class="n">max_pot_loss</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                             <span class="p">)</span>
 
             <span class="n">df_</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
@@ -656,7 +652,7 @@ document.write(`
 <span class="sd">        .. raw:: html</span>
 
 <span class="sd">            &lt;div dir=&quot;rtl&quot;&gt;</span>
-<span class="sd">                در این استراتژی یِ اختیارِ فروش با قیمتِ اعمالِ بالاتر خریداری می‌شه و همزمان اختیارِ فروشِ دیگه‌ای با</span>
+<span class="sd">                در این استراتژی یِ اختیارِ خرید با قیمتِ اعمالِ بالاتر خریداری می‌شه و همزمان اختیارِ خریدِ دیگه‌ای با</span>
 <span class="sd">                تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ پایین‌تر فروخته می‌شه.</span>
 <span class="sd">            &lt;/div&gt;</span>
 
@@ -692,24 +688,27 @@ document.write(`
 <span class="sd">        .. raw:: html</span>
 
 <span class="sd">            &lt;div dir=&quot;rtl&quot;&gt;</span>
-<span class="sd">                در این استراتژی یِ اختیارِ خریدِ با قیمتِ اعمالِ بالاتر خریداری می‌شه و همزمان اختیارِ خرید دیگه‌ای با</span>
-<span class="sd">                تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ پایین‌تر فروخته می‌شه.</span>
+<span class="sd">                در این استراتژی یِ اختیارِ فروش با قیمتِ اعمالِ پایین‌تر خریداری می‌شه و همزمان اختیارِ فروشِ دیگه‌ای با</span>
+<span class="sd">                تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ بالاتر فروخته می‌شه.</span>
 <span class="sd">            &lt;/div&gt;</span>
 
-<span class="sd">        A bull put spread involves two put options with the same expiration date:</span>
+<span class="sd">        A bull put spread is an options trading strategy used when an investor expects a moderate increase in the price</span>
+<span class="sd">        of the underlying asset. It involves two put options: selling one put option and buying another put option with</span>
+<span class="sd">        the same expiration date but at a lower strike price. Here’s how it works:</span>
 
-<span class="sd">        #. Buy a put option at a higher strike price (gives you the right to sell at that price).</span>
-<span class="sd">        #. Sell a put option at a lower strike price (obligates you to buy at that price).</span>
+<span class="sd">        #. Sell a Put Option: You sell a put option with a higher strike price, usually out-of-the-money (OTM), to</span>
+<span class="sd">        receive a premium.</span>
 
-<span class="sd">        This strategy:</span>
+<span class="sd">        #. Buy a Put Option: Simultaneously, you buy a put option with a lower strike price, usually in-the-money (ITM),</span>
+<span class="sd">        paying a smaller premium.</span>
 
-<span class="sd">        * **Generates income:** You receive a premium by selling the put option.</span>
-<span class="sd">        * **Limits risk:** Your maximum loss is capped, and it&#39;s reduced by the premium received.</span>
-<span class="sd">        * **Has capped profit potential:** Profit is limited to the difference in strike prices minus the premium paid.</span>
+<span class="sd">        The idea behind a bull put spread is to benefit from a bullish market while limiting potential losses. The</span>
+<span class="sd">        maximum profit is the difference between the premiums received and paid, and it occurs if the underlying asset’s</span>
+<span class="sd">        price remains above the higher strike price at expiration. The maximum loss is limited to the difference between</span>
+<span class="sd">        the strike prices minus the net premium received.</span>
 
-<span class="sd">        It&#39;s used when you&#39;re moderately bullish on the underlying asset, expecting its price to stay above the lower</span>
-<span class="sd">        strike price by expiration. But remember, it&#39;s important to consider the risks involved and how they align with</span>
-<span class="sd">        your overall investment strategy.</span>
+<span class="sd">        This strategy allows you to capitalize on a moderate rise in the underlying asset&#39;s price, and by using options,</span>
+<span class="sd">        it provides a defined risk-reward scenario.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -731,20 +730,32 @@ document.write(`
 <span class="sd">                تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ بالاتر فروخته می‌شه.</span>
 <span class="sd">            &lt;/div&gt;</span>
 
-<span class="sd">        A bear put spread involves two put options with the same expiration date:</span>
 
-<span class="sd">        #. Buy a put option at a lower strike price (gives you the right to sell at that price).</span>
-<span class="sd">        #. Sell a put option at a higher strike price (obligates you to buy at that price).</span>
+<span class="sd">        A bear put spread, also known as a put debit spread or a bear put credit spread, is an options trading strategy</span>
+<span class="sd">        used when an investor expects a moderate decrease in the price of the underlying asset. It involves buying one</span>
+<span class="sd">        put option and simultaneously selling another put option with the same expiration date but at a lower strike</span>
+<span class="sd">        price. Here&#39;s how it works:</span>
 
-<span class="sd">        This strategy:</span>
+<span class="sd">        #. Buy a Put Option: You buy a put option with a higher strike price, usually in-the-money (ITM), paying a</span>
+<span class="sd">        higher premium.</span>
 
-<span class="sd">        * **Generates income:** You receive a premium by selling the put option.</span>
-<span class="sd">        * **Limits risk:** Your maximum loss is capped, and it&#39;s reduced by the premium received.</span>
-<span class="sd">        * **Has capped profit potential:** Profit is limited to the difference in strike prices minus the premium paid.</span>
+<span class="sd">        #. Sell a Put Option: Simultaneously, you sell a put option with a lower strike price, usually out-of-the-money</span>
+<span class="sd">        (OTM), to receive a premium.</span>
 
-<span class="sd">        It&#39;s used when you&#39;re moderately bearish on the underlying asset, expecting its price to stay below the higher</span>
-<span class="sd">        strike price by expiration. Remember, it&#39;s essential to assess risks and ensure this strategy aligns with your</span>
-<span class="sd">        investment goals and risk tolerance.</span>
+<span class="sd">        The goal of a bear put spread is to profit from a declining market while limiting potential losses. The maximum</span>
+<span class="sd">        profit is the difference between the strike prices minus the net premium paid, and it occurs if the underlying</span>
+<span class="sd">        asset&#39;s price is below the lower strike price at expiration. The maximum loss is limited to the net premium paid</span>
+<span class="sd">        for the spread.</span>
+
+<span class="sd">        This strategy allows you to benefit from a moderate decline in the underlying asset&#39;s price, and by using</span>
+<span class="sd">        options, it provides a defined risk-reward scenario.</span>
+
+<span class="sd">        Here&#39;s a brief summary of the key points:</span>
+
+<span class="sd">        * **Maximum Profit:** The difference between the strike prices minus the net premium paid.</span>
+<span class="sd">        * **Maximum Loss:** Limited to the net premium paid for the spread.</span>
+<span class="sd">        * **Break-even Point:** The underlying asset&#39;s price at which the total gains equal the total losses, and it is</span>
+<span class="sd">        calculated as the higher strike price minus the net premium paid.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>

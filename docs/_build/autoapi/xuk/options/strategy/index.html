@@ -468,7 +468,7 @@ aligns with your investment goals and risk tolerance.</p>
 <dt class="sig sig-object py" id="xuk.options.strategy.Strategy.bear_call_spread">
 <span class="sig-name descname"><span class="pre">bear_call_spread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/options/strategy.html#Strategy.bear_call_spread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.strategy.Strategy.bear_call_spread" title="Link to this definition">#</a></dt>
 <dd><div dir="rtl">
-    در این استراتژی یِ اختیارِ فروش با قیمتِ اعمالِ بالاتر خریداری می‌شه و همزمان اختیارِ فروشِ دیگه‌ای با
+    در این استراتژی یِ اختیارِ خرید با قیمتِ اعمالِ بالاتر خریداری می‌شه و همزمان اختیارِ خریدِ دیگه‌ای با
     تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ پایین‌تر فروخته می‌شه.
 </div><p>A bear call spread involves two call options with the same expiration date:</p>
 <ol class="arabic simple">
@@ -495,22 +495,21 @@ investment goals and risk tolerance before implementing it.</p>
 <dt class="sig sig-object py" id="xuk.options.strategy.Strategy.bull_put_spread">
 <span class="sig-name descname"><span class="pre">bull_put_spread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/options/strategy.html#Strategy.bull_put_spread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.options.strategy.Strategy.bull_put_spread" title="Link to this definition">#</a></dt>
 <dd><div dir="rtl">
-    در این استراتژی یِ اختیارِ خریدِ با قیمتِ اعمالِ بالاتر خریداری می‌شه و همزمان اختیارِ خرید دیگه‌ای با
-    تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ پایین‌تر فروخته می‌شه.
-</div><p>A bull put spread involves two put options with the same expiration date:</p>
-<ol class="arabic simple">
-<li><p>Buy a put option at a higher strike price (gives you the right to sell at that price).</p></li>
-<li><p>Sell a put option at a lower strike price (obligates you to buy at that price).</p></li>
-</ol>
-<p>This strategy:</p>
-<ul class="simple">
-<li><p><strong>Generates income:</strong> You receive a premium by selling the put option.</p></li>
-<li><p><strong>Limits risk:</strong> Your maximum loss is capped, and it’s reduced by the premium received.</p></li>
-<li><p><strong>Has capped profit potential:</strong> Profit is limited to the difference in strike prices minus the premium paid.</p></li>
-</ul>
-<p>It’s used when you’re moderately bullish on the underlying asset, expecting its price to stay above the lower
-strike price by expiration. But remember, it’s important to consider the risks involved and how they align with
-your overall investment strategy.</p>
+    در این استراتژی یِ اختیارِ فروش با قیمتِ اعمالِ پایین‌تر خریداری می‌شه و همزمان اختیارِ فروشِ دیگه‌ای با
+    تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ بالاتر فروخته می‌شه.
+</div><p>A bull put spread is an options trading strategy used when an investor expects a moderate increase in the price
+of the underlying asset. It involves two put options: selling one put option and buying another put option with
+the same expiration date but at a lower strike price. Here’s how it works:</p>
+<p>#. Sell a Put Option: You sell a put option with a higher strike price, usually out-of-the-money (OTM), to
+receive a premium.</p>
+<p>#. Buy a Put Option: Simultaneously, you buy a put option with a lower strike price, usually in-the-money (ITM),
+paying a smaller premium.</p>
+<p>The idea behind a bull put spread is to benefit from a bullish market while limiting potential losses. The
+maximum profit is the difference between the premiums received and paid, and it occurs if the underlying asset’s
+price remains above the higher strike price at expiration. The maximum loss is limited to the difference between
+the strike prices minus the net premium received.</p>
+<p>This strategy allows you to capitalize on a moderate rise in the underlying asset’s price, and by using options,
+it provides a defined risk-reward scenario.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>polars.DataFrame</p>
@@ -524,20 +523,27 @@ your overall investment strategy.</p>
 <dd><div dir="rtl">
     در این استراتژی یِ اختیارِ فروش با قیمتِ اعمالِ پایین‌تر خریداری می‌شه و همزمان اختیارِ فروشِ دیگه‌ای با
     تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ بالاتر فروخته می‌شه.
-</div><p>A bear put spread involves two put options with the same expiration date:</p>
-<ol class="arabic simple">
-<li><p>Buy a put option at a lower strike price (gives you the right to sell at that price).</p></li>
-<li><p>Sell a put option at a higher strike price (obligates you to buy at that price).</p></li>
-</ol>
-<p>This strategy:</p>
+</div><p>A bear put spread, also known as a put debit spread or a bear put credit spread, is an options trading strategy
+used when an investor expects a moderate decrease in the price of the underlying asset. It involves buying one
+put option and simultaneously selling another put option with the same expiration date but at a lower strike
+price. Here’s how it works:</p>
+<p>#. Buy a Put Option: You buy a put option with a higher strike price, usually in-the-money (ITM), paying a
+higher premium.</p>
+<p>#. Sell a Put Option: Simultaneously, you sell a put option with a lower strike price, usually out-of-the-money
+(OTM), to receive a premium.</p>
+<p>The goal of a bear put spread is to profit from a declining market while limiting potential losses. The maximum
+profit is the difference between the strike prices minus the net premium paid, and it occurs if the underlying
+asset’s price is below the lower strike price at expiration. The maximum loss is limited to the net premium paid
+for the spread.</p>
+<p>This strategy allows you to benefit from a moderate decline in the underlying asset’s price, and by using
+options, it provides a defined risk-reward scenario.</p>
+<p>Here’s a brief summary of the key points:</p>
 <ul class="simple">
-<li><p><strong>Generates income:</strong> You receive a premium by selling the put option.</p></li>
-<li><p><strong>Limits risk:</strong> Your maximum loss is capped, and it’s reduced by the premium received.</p></li>
-<li><p><strong>Has capped profit potential:</strong> Profit is limited to the difference in strike prices minus the premium paid.</p></li>
+<li><p><strong>Maximum Profit:</strong> The difference between the strike prices minus the net premium paid.</p></li>
+<li><p><strong>Maximum Loss:</strong> Limited to the net premium paid for the spread.</p></li>
+<li><p><strong>Break-even Point:</strong> The underlying asset’s price at which the total gains equal the total losses, and it is</p></li>
 </ul>
-<p>It’s used when you’re moderately bearish on the underlying asset, expecting its price to stay below the higher
-strike price by expiration. Remember, it’s essential to assess risks and ensure this strategy aligns with your
-investment goals and risk tolerance.</p>
+<p>calculated as the higher strike price minus the net premium paid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>polars.DataFrame</p>
