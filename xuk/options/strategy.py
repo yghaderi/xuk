@@ -171,11 +171,8 @@ class Strategy:
         """
 
         Strategy_ = namedtuple("Strategy", "sell buy")
-        if "call" in stg:
-            df_main = self.call
-        elif "put" in stg:
-            df_main = self.put
 
+        df_main = self.call if "put" in stg else self.put
         df_main = df_main.filter(
             (pl.col("bid_price") > 0)
             & (pl.col("ask_price") > 0)
@@ -187,12 +184,7 @@ class Strategy:
         df = df_main.join(df_pairs.filter(pl.col("count") > 1), on=["ua_symbol", "t"], how="inner")
         groups = df.group_by(["ua_symbol", "t"])
 
-        match stg:
-            case "bull_call_spread" | "bear_put_spread":
-                descending = True
-            case "bear_call_spread" | "bull_put_spread":
-                descending = False
-
+        descending = True if stg.startswith("bull") else False
         df_ = pl.DataFrame()
         for _, data in groups:
             data = data.sort(["k"], descending=descending)
@@ -209,6 +201,10 @@ class Strategy:
                 )
             )
 
+            ua_final = data["ua_final"][0]
+            max_pot_loss = 0
+            max_pot_profit = 0
+            current_profit = 0
             match stg:
                 case "bull_call_spread":
                     max_pot_loss = [i.sell - i.buy for i in combo_orderbook_price]
@@ -217,43 +213,43 @@ class Strategy:
                     )
                     current_profit = []
                     for i in range(len(combo_k)):
-                        if all(s <= data["ua_final"][0] for s in combo_k[i]):
+                        if all(s <= ua_final for s in combo_k[i]):
                             current_profit.append(max_pot_profit[i])
-                        elif all(s >= data["ua_final"][0] for s in combo_k[i]):
+                        elif all(s >= ua_final for s in combo_k[i]):
                             current_profit.append(max_pot_loss[i])
                         else:
                             current_profit.append(
-                                data["ua_final"][0] - combo_k[i].buy + max_pot_loss[i]
+                                ua_final - combo_k[i].buy + max_pot_loss[i]
                             )
                 case "bear_call_spread":
-                    max_pot_profit = [i.buy - i.sell for i in combo_orderbook_price]
-                    max_pot_loss = list(
-                        map(add, [i.sell - i.buy for i in combo_k], max_pot_profit)
-                    )
-                    current_profit = []
-                    for i in range(len(combo_k)):
-                        if all(s >= data["ua_final"][0] for s in combo_k[i]):
-                            current_profit.append(max_pot_profit[i])
-                        elif all(s <= data["ua_final"][0] for s in combo_k[i]):
-                            current_profit.append(max_pot_loss[i])
-                        else:
-                            current_profit.append(
-                                -data["ua_final"][0] + combo_k[i].sell + max_pot_loss[i]
-                            )
-                case "bull_put_spread":
                     max_pot_profit = [i.sell - i.buy for i in combo_orderbook_price]
                     max_pot_loss = list(
                         map(add, [i.sell - i.buy for i in combo_k], max_pot_profit)
                     )
                     current_profit = []
                     for i in range(len(combo_k)):
-                        if all(s <= data["ua_final"][0] for s in combo_k[i]):
+                        if all(s >= ua_final for s in combo_k[i]):
                             current_profit.append(max_pot_profit[i])
-                        elif all(s >= data["ua_final"][0] for s in combo_k[i]):
+                        elif all(s <= ua_final for s in combo_k[i]):
                             current_profit.append(max_pot_loss[i])
                         else:
                             current_profit.append(
-                                data["ua_final"][0] - combo_k[i].sell + max_pot_loss[i]
+                                -ua_final + combo_k[i].sell + max_pot_profit[i]
+                            )
+                case "bull_put_spread":
+                    max_pot_profit = [i.sell - i.buy for i in combo_orderbook_price]
+                    max_pot_loss = list(
+                        map(add, [-i.sell + i.buy for i in combo_k], max_pot_profit)
+                    )
+                    current_profit = []
+                    for i in range(len(combo_k)):
+                        if all(s <= ua_final for s in combo_k[i]):
+                            current_profit.append(max_pot_profit[i])
+                        elif all(s >= ua_final for s in combo_k[i]):
+                            current_profit.append(max_pot_loss[i])
+                        else:
+                            current_profit.append(
+                                ua_final - combo_k[i].sell + max_pot_profit[i]
                             )
                 case "bear_put_spread":
                     max_pot_loss = [i.sell - i.buy for i in combo_orderbook_price]
@@ -263,13 +259,13 @@ class Strategy:
 
                     current_profit = []
                     for i in range(len(combo_k)):
-                        if all(s >= data["ua_final"][0] for s in combo_k[i]):
+                        if all(s >= ua_final for s in combo_k[i]):
                             current_profit.append(max_pot_profit[i])
-                        elif all(s <= data["ua_final"][0] for s in combo_k[i]):
+                        elif all(s <= ua_final for s in combo_k[i]):
                             current_profit.append(max_pot_loss[i])
                         else:
                             current_profit.append(
-                                -data["ua_final"][0] + combo_k[i].sell + max_pot_loss[i]
+                                -ua_final + combo_k[i].buy + max_pot_loss[i]
                             )
 
             df_ = pl.concat(
@@ -341,7 +337,7 @@ class Strategy:
         .. raw:: html
 
             <div dir="rtl">
-                در این استراتژی یِ اختیارِ فروش با قیمتِ اعمالِ بالاتر خریداری می‌شه و همزمان اختیارِ فروشِ دیگه‌ای با
+                در این استراتژی یِ اختیارِ خرید با قیمتِ اعمالِ بالاتر خریداری می‌شه و همزمان اختیارِ خریدِ دیگه‌ای با
                 تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ پایین‌تر فروخته می‌شه.
             </div>
 
@@ -374,24 +370,27 @@ class Strategy:
         .. raw:: html
 
             <div dir="rtl">
-                در این استراتژی یِ اختیارِ خریدِ با قیمتِ اعمالِ بالاتر خریداری می‌شه و همزمان اختیارِ خرید دیگه‌ای با
-                تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ پایین‌تر فروخته می‌شه.
+                در این استراتژی یِ اختیارِ فروش با قیمتِ اعمالِ پایین‌تر خریداری می‌شه و همزمان اختیارِ فروشِ دیگه‌ای با
+                تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ بالاتر فروخته می‌شه.
             </div>
 
-        A bull put spread involves two put options with the same expiration date:
+        A bull put spread is an options trading strategy used when an investor expects a moderate increase in the price
+        of the underlying asset. It involves two put options: selling one put option and buying another put option with
+        the same expiration date but at a lower strike price. Here’s how it works:
 
-        #. Buy a put option at a higher strike price (gives you the right to sell at that price).
-        #. Sell a put option at a lower strike price (obligates you to buy at that price).
+        #. Sell a Put Option: You sell a put option with a higher strike price, usually out-of-the-money (OTM), to
+        receive a premium.
 
-        This strategy:
+        #. Buy a Put Option: Simultaneously, you buy a put option with a lower strike price, usually in-the-money (ITM),
+        paying a smaller premium.
 
-        * **Generates income:** You receive a premium by selling the put option.
-        * **Limits risk:** Your maximum loss is capped, and it's reduced by the premium received.
-        * **Has capped profit potential:** Profit is limited to the difference in strike prices minus the premium paid.
+        The idea behind a bull put spread is to benefit from a bullish market while limiting potential losses. The
+        maximum profit is the difference between the premiums received and paid, and it occurs if the underlying asset’s
+        price remains above the higher strike price at expiration. The maximum loss is limited to the difference between
+        the strike prices minus the net premium received.
 
-        It's used when you're moderately bullish on the underlying asset, expecting its price to stay above the lower
-        strike price by expiration. But remember, it's important to consider the risks involved and how they align with
-        your overall investment strategy.
+        This strategy allows you to capitalize on a moderate rise in the underlying asset's price, and by using options,
+        it provides a defined risk-reward scenario.
 
         Returns
         -------
@@ -410,20 +409,32 @@ class Strategy:
                 تارخِ اعمالِ و داراییِ پایه‌یِ همسان، اما قیمتِ اعمالِ بالاتر فروخته می‌شه.
             </div>
 
-        A bear put spread involves two put options with the same expiration date:
 
-        #. Buy a put option at a lower strike price (gives you the right to sell at that price).
-        #. Sell a put option at a higher strike price (obligates you to buy at that price).
+        A bear put spread, also known as a put debit spread or a bear put credit spread, is an options trading strategy
+        used when an investor expects a moderate decrease in the price of the underlying asset. It involves buying one
+        put option and simultaneously selling another put option with the same expiration date but at a lower strike
+        price. Here's how it works:
 
-        This strategy:
+        #. Buy a Put Option: You buy a put option with a higher strike price, usually in-the-money (ITM), paying a
+        higher premium.
 
-        * **Generates income:** You receive a premium by selling the put option.
-        * **Limits risk:** Your maximum loss is capped, and it's reduced by the premium received.
-        * **Has capped profit potential:** Profit is limited to the difference in strike prices minus the premium paid.
+        #. Sell a Put Option: Simultaneously, you sell a put option with a lower strike price, usually out-of-the-money
+        (OTM), to receive a premium.
 
-        It's used when you're moderately bearish on the underlying asset, expecting its price to stay below the higher
-        strike price by expiration. Remember, it's essential to assess risks and ensure this strategy aligns with your
-        investment goals and risk tolerance.
+        The goal of a bear put spread is to profit from a declining market while limiting potential losses. The maximum
+        profit is the difference between the strike prices minus the net premium paid, and it occurs if the underlying
+        asset's price is below the lower strike price at expiration. The maximum loss is limited to the net premium paid
+        for the spread.
+
+        This strategy allows you to benefit from a moderate decline in the underlying asset's price, and by using
+        options, it provides a defined risk-reward scenario.
+
+        Here's a brief summary of the key points:
+
+        * **Maximum Profit:** The difference between the strike prices minus the net premium paid.
+        * **Maximum Loss:** Limited to the net premium paid for the spread.
+        * **Break-even Point:** The underlying asset's price at which the total gains equal the total losses, and it is
+        calculated as the higher strike price minus the net premium paid.
 
         Returns
         -------
