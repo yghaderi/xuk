@@ -59,10 +59,10 @@ class Strategy:
     """
 
     def __init__(
-            self,
-            call: Optional[pl.DataFrame] = pl.DataFrame(),
-            put: Optional[pl.DataFrame] = pl.DataFrame(),
-            call_put: Optional[pl.DataFrame] = pl.DataFrame(),
+        self,
+        call: Optional[pl.DataFrame] = pl.DataFrame(),
+        put: Optional[pl.DataFrame] = pl.DataFrame(),
+        call_put: Optional[pl.DataFrame] = pl.DataFrame(),
     ) -> None:
         self.call = call if call.is_empty() else call.filter(pl.col("t") > 0)
         self.put = put if put.is_empty() else put.filter(pl.col("t") > 0)
@@ -172,7 +172,7 @@ class Strategy:
 
         Strategy_ = namedtuple("Strategy", "sell buy")
 
-        df_main = self.call if "put" in stg else self.put
+        df_main = self.call if "call" in stg else self.put
         df_main = df_main.filter(
             (pl.col("bid_price") > 0)
             & (pl.col("ask_price") > 0)
@@ -181,7 +181,9 @@ class Strategy:
         df_pairs = df_main.group_by(["ua_symbol", "t"]).agg(
             pl.col("bid_price").count().alias("count")
         )
-        df = df_main.join(df_pairs.filter(pl.col("count") > 1), on=["ua_symbol", "t"], how="inner")
+        df = df_main.join(
+            df_pairs.filter(pl.col("count") > 1), on=["ua_symbol", "t"], how="inner"
+        )
         groups = df.group_by(["ua_symbol", "t"])
 
         descending = True if stg.startswith("bull") else False
@@ -293,8 +295,12 @@ class Strategy:
             buy_at=pl.col("orderbook_price").map_elements(lambda x: x["buy"]),
         ).drop(["symbol", "k", "orderbook_price"])
         df_k = df_main.select(["symbol", "k"]).unique()
-        df_ = df_.join(df_k, left_on=["buy"], right_on=["symbol"], how="inner").rename({"k": "k_b"})
-        df_ = df_.join(df_k, left_on=["writing"], right_on=["symbol"], how="inner").rename({"k": "k_w"})
+        df_ = df_.join(df_k, left_on=["buy"], right_on=["symbol"], how="inner").rename(
+            {"k": "k_b"}
+        )
+        df_ = df_.join(
+            df_k, left_on=["writing"], right_on=["symbol"], how="inner"
+        ).rename({"k": "k_w"})
         return df_
 
     def bull_call_spread(self):

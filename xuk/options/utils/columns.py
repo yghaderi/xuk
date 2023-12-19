@@ -69,7 +69,8 @@ covered_call = ManipulationCols(
         "pct_cp",
         "pct_monthly_cp",
     ],
-    drop=None)
+    drop=None,
+)
 
 married_put = ManipulationCols(
     rename={
@@ -98,7 +99,8 @@ married_put = ManipulationCols(
         "pct_cp",
         "pct_monthly_cp",
     ],
-    drop=None)
+    drop=None,
+)
 
 bull_call_spread = ManipulationCols(
     rename=None,
@@ -118,28 +120,20 @@ bull_call_spread = ManipulationCols(
         "max_pot_profit",
         "current_profit",
     ],
-    drop=None)
+    drop=None,
+)
 
 bear_call_spread = ManipulationCols(
-    rename=None,
-    prefix=None,
-    suffix=None,
-    select=bull_call_spread.select,
-    drop=None)
+    rename=None, prefix=None, suffix=None, select=bull_call_spread.select, drop=None
+)
 
 bull_put_spread = ManipulationCols(
-    rename=None,
-    prefix=None,
-    suffix=None,
-    select=bull_call_spread.select,
-    drop=None)
+    rename=None, prefix=None, suffix=None, select=bull_call_spread.select, drop=None
+)
 
 bear_put_spread = ManipulationCols(
-    rename=None,
-    prefix=None,
-    suffix=None,
-    select=bull_call_spread.select,
-    drop=None)
+    rename=None, prefix=None, suffix=None, select=bull_call_spread.select, drop=None
+)
 
 strategy = Strategy(
     covered_call=covered_call,
@@ -147,9 +141,7 @@ strategy = Strategy(
     bull_call_spread=bull_call_spread,
     bear_call_spread=bear_call_spread,
     bull_put_spread=bull_put_spread,
-    bear_put_spread=bear_put_spread
+    bear_put_spread=bear_put_spread,
 )
 
-cols = Cols(
-    strategy=strategy
-)
+cols = Cols(strategy=strategy)
