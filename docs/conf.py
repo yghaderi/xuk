@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.abspath("../xuk"))
 project = 'xuk'
 copyright = '2023, Metafid'
 author = 'Yaghoub Ghaderi'
-release = '0.1.4'
+release = '0.1.14'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -60,3 +60,21 @@ add_module_names = False
 
 html_theme = "pydata_sphinx_theme"
 html_static_path = ["_static"]
+html_theme_options = {
+    "show_version_warning_banner": True,
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/yghaderi/xuk",
+            "icon": "fa-brands fa-github",
+            "type": "fontawesome",
+        },
+    ]
+    ,
+    "external_links": [
+        {
+            "name": "metafid",
+            "url": "https://metafid.com",
+        }
+    ]
+}

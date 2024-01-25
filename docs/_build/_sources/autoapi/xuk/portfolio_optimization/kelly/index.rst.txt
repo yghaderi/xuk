@@ -7,50 +7,115 @@
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+
+Functions
+~~~~~~~~~
 
 .. autoapisummary::
 
-   xuk.portfolio_optimization.kelly.Kelly
+   xuk.portfolio_optimization.kelly.calc_return
+   xuk.portfolio_optimization.kelly.return_params
+   xuk.portfolio_optimization.kelly.norm_integral
+   xuk.portfolio_optimization.kelly.norm_dev_integral
+   xuk.portfolio_optimization.kelly.get_kelly_share
+   xuk.portfolio_optimization.kelly.f_single_asset
+   xuk.portfolio_optimization.kelly.cov_return
+   xuk.portfolio_optimization.kelly.kelly_allocation
+   xuk.portfolio_optimization.kelly.normalize_kelly_allocation
+   xuk.portfolio_optimization.kelly.kelly_for_multi_asset
 
 
 
+Attributes
+~~~~~~~~~~
 
-.. py:class:: Kelly(df, time_frame: str, window: int)
+.. autoapisummary::
 
-
-   .. py:method:: calc_return()
-
-
-   .. py:method:: return_params()
-
-
-   .. py:method:: norm_integral(f, mean, std)
+   xuk.portfolio_optimization.kelly.Value
+   xuk.portfolio_optimization.kelly.y
 
 
-   .. py:method:: norm_dev_integral(f, mean, std)
+.. py:data:: Value
+
+   
+
+.. py:data:: y
+
+   
+
+.. py:function:: calc_return(df: polars.DataFrame, time_frame: str)
+
+   .. raw:: html
+
+       <div dir='rtl'>
+           بازده رو بر مبنایِ بازه‌یِ زمانیِ داده شده محاسبه می‌کنه
+       </div>
+
+   :param df:
+              * Columns:
+                  | date: polars.Date
+                  | close: polars.UInt64
+   :type df: polars.DataFrame
+   :param time_frame:
+   :type time_frame: str
+
+   :rtype: pl.DataFrame
 
 
-   .. py:method:: get_kelly_share(data)
+.. py:function:: return_params(df: polars.DataFrame, window: str)
 
 
-   .. py:method:: f_single_asset()
+.. py:function:: norm_integral(f, mean, std)
 
 
-   .. py:method:: cov_return()
+.. py:function:: norm_dev_integral(f, mean, std)
 
 
-   .. py:method:: kelly_allocation()
+.. py:function:: get_kelly_share(mean: float, std: float, leverage: float)
 
 
-   .. py:method:: kelly_portfolio_return(short_selling: bool = False)
+.. py:function:: f_single_asset(df: polars.DataFrame, leverage: float)
 
 
-   .. py:method:: equal_weight_portfolio_return()
+.. py:function:: cov_return(df: polars.DataFrame) -> polars.DataFrame
+
+   .. raw:: html
+
+       <div dir='rtl'>
+           کواریانسٍ همه‌یِ نماد‌ها رو محسابنه می‌کنه
+       </div>
+
+   :param df polars.DataFrame: بازدهٍ نمادها بدونٍ تاریخ
+
+   :rtype: pl.DataFrame
 
 
-   .. py:method:: benchmark_return()
+.. py:function:: kelly_allocation(df: polars.DataFrame, cr_df)
 
+   .. raw:: html
+
+       <div dir='rtl'>
+           وزنِ نمادها رو در سبد مشخص می‌کنه
+       </div>
+
+   :param df polars.DataFrame: بازدهٍ نمادها بدونٍ تاریخ
+
+   :rtype: pl.DataFrame
+
+
+.. py:function:: normalize_kelly_allocation(df: polars.DataFrame)
+
+   .. raw:: html
+
+       <div dir='rtl'>
+           وزنِ نمادهایِ سبد رو بر جمعِ کل وزنها تقسیم می‌کنه تا جمعِ وزن‌ها بشه 1
+       </div>
+
+   :param df polars.DataFrame: وزنِ هر نماد در سبد
+
+   :rtype: pl.DataFrame
+
+
+.. py:function:: kelly_for_multi_asset(df: polars.DataFrame, time_frame: str)
 
 

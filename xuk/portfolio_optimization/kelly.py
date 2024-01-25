@@ -17,6 +17,26 @@ solve(diff(y, f), f)
 
 
 def calc_return(df: pl.DataFrame, time_frame: str):
+    """
+    .. raw:: html
+
+        <div dir='rtl'>
+            بازده رو بر مبنایِ بازه‌یِ زمانیِ داده شده محاسبه می‌کنه
+        </div>
+
+    Parameters
+    ---------
+    df : polars.DataFrame
+        * Columns:
+            | date: polars.Date
+            | close: polars.UInt64
+
+    time_frame :str
+
+    Returns
+    -------
+    pl.DataFrame
+    """
     return (
         df.group_by_dynamic("date", every=time_frame)
         .agg(pl.exclude("date").last())
@@ -92,12 +112,12 @@ def cov_return(df: pl.DataFrame) -> pl.DataFrame:
     )
 
 
-def kelly_allocation(df, cr_df):
+def kelly_allocation(df: pl.DataFrame, cr_df):
     """
     .. raw:: html
 
         <div dir='rtl'>
-            وزنِ نمادها رو در سد مشخص می‌کنه
+            وزنِ نمادها رو در سبد مشخص می‌کنه
         </div>
 
     Parameters

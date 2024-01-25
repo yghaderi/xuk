@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../../../../" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>xuk.portfolio_optimization.kelly &#8212; xuk 0.1.4 documentation</title>
+    <title>xuk.portfolio_optimization.kelly &#8212; xuk 0.1.14 documentation</title>
   
   
   
@@ -18,26 +18,26 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
-<link href="../../../../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
-<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link href="../../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
-<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
-  <script src="../../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../../../../_static/documentation_options.js?v=f024b623"></script>
+    <script src="../../../../_static/documentation_options.js?v=468bc497"></script>
     <script src="../../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -56,10 +56,9 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -100,7 +99,7 @@
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
 <div class="bd-header__inner bd-page-width">
   <label class="sidebar-toggle primary-toggle" for="__primary">
     <span class="fa-solid fa-bars"></span>
@@ -110,6 +109,7 @@
   <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
+
   
 
 <a class="navbar-brand logo" href="../../../../index.html">
@@ -118,7 +118,8 @@
   
   
   
-    <p class="title logo__title">xuk 0.1.4 documentation</p>
+  
+    <p class="title logo__title">xuk 0.1.14 documentation</p>
   
 </a></div>
     
@@ -128,13 +129,8 @@
     
     <div class="me-auto navbar-header-items__center">
       
-        <div class="navbar-item"><nav class="navbar-nav">
-  <p class="sidebar-header-items__title"
-     role="heading"
-     aria-level="1"
-     aria-label="Site Navigation">
-    Site Navigation
-  </p>
+        <div class="navbar-item">
+<nav class="navbar-nav">
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item current active">
@@ -142,6 +138,13 @@
                         API Reference
                       </a>
                     </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://metafid.com">
+                    metafid
+                  </a>
+                </li>
                 
   </ul>
 </nav></div>
@@ -153,6 +156,7 @@
       
         <div class="navbar-item navbar-persistent--container">
           
+
  <script>
  document.write(`
    <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -166,6 +170,7 @@
       
       
         <div class="navbar-item">
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -176,12 +181,29 @@ document.write(`
 `);
 </script></div>
       
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/yghaderi/xuk" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
     </div>
     
   </div>
   
   
     <div class="navbar-persistent--mobile">
+
  <script>
  document.write(`
    <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -201,10 +223,13 @@ document.write(`
   
 </div>
 
-    </nav>
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -215,13 +240,8 @@ document.write(`
     
       <div class="sidebar-header-items__center">
         
-          <div class="navbar-item"><nav class="navbar-nav">
-  <p class="sidebar-header-items__title"
-     role="heading"
-     aria-level="1"
-     aria-label="Site Navigation">
-    Site Navigation
-  </p>
+          <div class="navbar-item">
+<nav class="navbar-nav">
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item current active">
@@ -229,6 +249,13 @@ document.write(`
                         API Reference
                       </a>
                     </li>
+                
+
+                <li class="nav-item">
+                  <a class="nav-link nav-external" href="https://metafid.com">
+                    metafid
+                  </a>
+                </li>
                 
   </ul>
 </nav></div>
@@ -240,6 +267,7 @@ document.write(`
       <div class="sidebar-header-items__end">
         
           <div class="navbar-item">
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -250,12 +278,29 @@ document.write(`
 `);
 </script></div>
         
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/yghaderi/xuk" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
       </div>
     
   </div>
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
@@ -348,80 +393,173 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section id="module-xuk.portfolio_optimization.kelly">
 <span id="xuk-portfolio-optimization-kelly"></span><h1><a class="reference internal" href="#module-xuk.portfolio_optimization.kelly" title="xuk.portfolio_optimization.kelly"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xuk.portfolio_optimization.kelly</span></code></a><a class="headerlink" href="#module-xuk.portfolio_optimization.kelly" title="Link to this heading">#</a></h1>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
-<section id="classes">
-<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h3>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h3>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#xuk.portfolio_optimization.kelly.Kelly" title="xuk.portfolio_optimization.kelly.Kelly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Kelly</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xuk.portfolio_optimization.kelly.calc_return" title="xuk.portfolio_optimization.kelly.calc_return"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calc_return</span></code></a>(df, time_frame)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#xuk.portfolio_optimization.kelly.return_params" title="xuk.portfolio_optimization.kelly.return_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">return_params</span></code></a>(df, window)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xuk.portfolio_optimization.kelly.norm_integral" title="xuk.portfolio_optimization.kelly.norm_integral"><code class="xref py py-obj docutils literal notranslate"><span class="pre">norm_integral</span></code></a>(f, mean, std)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#xuk.portfolio_optimization.kelly.norm_dev_integral" title="xuk.portfolio_optimization.kelly.norm_dev_integral"><code class="xref py py-obj docutils literal notranslate"><span class="pre">norm_dev_integral</span></code></a>(f, mean, std)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xuk.portfolio_optimization.kelly.get_kelly_share" title="xuk.portfolio_optimization.kelly.get_kelly_share"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_kelly_share</span></code></a>(mean, std, leverage)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#xuk.portfolio_optimization.kelly.f_single_asset" title="xuk.portfolio_optimization.kelly.f_single_asset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">f_single_asset</span></code></a>(df, leverage)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xuk.portfolio_optimization.kelly.cov_return" title="xuk.portfolio_optimization.kelly.cov_return"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cov_return</span></code></a>(→ polars.DataFrame)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#xuk.portfolio_optimization.kelly.kelly_allocation" title="xuk.portfolio_optimization.kelly.kelly_allocation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kelly_allocation</span></code></a>(df, cr_df)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xuk.portfolio_optimization.kelly.normalize_kelly_allocation" title="xuk.portfolio_optimization.kelly.normalize_kelly_allocation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normalize_kelly_allocation</span></code></a>(df)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#xuk.portfolio_optimization.kelly.kelly_for_multi_asset" title="xuk.portfolio_optimization.kelly.kelly_for_multi_asset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kelly_for_multi_asset</span></code></a>(df, time_frame)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
-<dl class="py class">
-<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.Kelly">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Kelly</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#Kelly"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.Kelly" title="Link to this definition">#</a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.Kelly.calc_return">
-<span class="sig-name descname"><span class="pre">calc_return</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#Kelly.calc_return"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.Kelly.calc_return" title="Link to this definition">#</a></dt>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h3>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#xuk.portfolio_optimization.kelly.Value" title="xuk.portfolio_optimization.kelly.Value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Value</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#xuk.portfolio_optimization.kelly.y" title="xuk.portfolio_optimization.kelly.y"><code class="xref py py-obj docutils literal notranslate"><span class="pre">y</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py data">
+<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.Value">
+<span class="sig-name descname"><span class="pre">Value</span></span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#Value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.Value" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.Kelly.return_params">
-<span class="sig-name descname"><span class="pre">return_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#Kelly.return_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.Kelly.return_params" title="Link to this definition">#</a></dt>
+<dl class="py data">
+<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.y">
+<span class="sig-name descname"><span class="pre">y</span></span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#y"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.y" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.Kelly.norm_integral">
-<span class="sig-name descname"><span class="pre">norm_integral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#Kelly.norm_integral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.Kelly.norm_integral" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.Kelly.norm_dev_integral">
-<span class="sig-name descname"><span class="pre">norm_dev_integral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#Kelly.norm_dev_integral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.Kelly.norm_dev_integral" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.Kelly.get_kelly_share">
-<span class="sig-name descname"><span class="pre">get_kelly_share</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#Kelly.get_kelly_share"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.Kelly.get_kelly_share" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.Kelly.f_single_asset">
-<span class="sig-name descname"><span class="pre">f_single_asset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#Kelly.f_single_asset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.Kelly.f_single_asset" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.Kelly.cov_return">
-<span class="sig-name descname"><span class="pre">cov_return</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#Kelly.cov_return"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.Kelly.cov_return" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.Kelly.kelly_allocation">
-<span class="sig-name descname"><span class="pre">kelly_allocation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#Kelly.kelly_allocation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.Kelly.kelly_allocation" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.Kelly.kelly_portfolio_return">
-<span class="sig-name descname"><span class="pre">kelly_portfolio_return</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">short_selling</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#Kelly.kelly_portfolio_return"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.Kelly.kelly_portfolio_return" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.Kelly.equal_weight_portfolio_return">
-<span class="sig-name descname"><span class="pre">equal_weight_portfolio_return</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#Kelly.equal_weight_portfolio_return"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.Kelly.equal_weight_portfolio_return" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.Kelly.benchmark_return">
-<span class="sig-name descname"><span class="pre">benchmark_return</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#Kelly.benchmark_return"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.Kelly.benchmark_return" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
+<dl class="py function">
+<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.calc_return">
+<span class="sig-name descname"><span class="pre">calc_return</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#calc_return"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.calc_return" title="Link to this definition">#</a></dt>
+<dd><div dir='rtl'>
+    بازده رو بر مبنایِ بازه‌یِ زمانیِ داده شده محاسبه می‌کنه
+</div><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>polars.DataFrame</em>) – <ul>
+<li><dl>
+<dt>Columns:</dt><dd><div class="line-block">
+<div class="line">date: polars.Date</div>
+<div class="line">close: polars.UInt64</div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</p></li>
+<li><p><strong>time_frame</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pl.DataFrame</p>
+</dd>
+</dl>
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.return_params">
+<span class="sig-name descname"><span class="pre">return_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#return_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.return_params" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.norm_integral">
+<span class="sig-name descname"><span class="pre">norm_integral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#norm_integral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.norm_integral" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.norm_dev_integral">
+<span class="sig-name descname"><span class="pre">norm_dev_integral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#norm_dev_integral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.norm_dev_integral" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.get_kelly_share">
+<span class="sig-name descname"><span class="pre">get_kelly_share</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leverage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#get_kelly_share"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.get_kelly_share" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.f_single_asset">
+<span class="sig-name descname"><span class="pre">f_single_asset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leverage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#f_single_asset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.f_single_asset" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.cov_return">
+<span class="sig-name descname"><span class="pre">cov_return</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">polars.DataFrame</span></span></span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#cov_return"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.cov_return" title="Link to this definition">#</a></dt>
+<dd><div dir='rtl'>
+    کواریانسٍ همه‌یِ نماد‌ها رو محسابنه می‌کنه
+</div><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>polars.DataFrame</strong> (<em>df</em>) – بازدهٍ نمادها بدونٍ تاریخ</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pl.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.kelly_allocation">
+<span class="sig-name descname"><span class="pre">kelly_allocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cr_df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#kelly_allocation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.kelly_allocation" title="Link to this definition">#</a></dt>
+<dd><div dir='rtl'>
+    وزنِ نمادها رو در سبد مشخص می‌کنه
+</div><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>polars.DataFrame</strong> (<em>df</em>) – بازدهٍ نمادها بدونٍ تاریخ</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pl.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.normalize_kelly_allocation">
+<span class="sig-name descname"><span class="pre">normalize_kelly_allocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#normalize_kelly_allocation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.normalize_kelly_allocation" title="Link to this definition">#</a></dt>
+<dd><div dir='rtl'>
+    وزنِ نمادهایِ سبد رو بر جمعِ کل وزنها تقسیم می‌کنه تا جمعِ وزن‌ها بشه 1
+</div><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>polars.DataFrame</strong> (<em>df</em>) – وزنِ هر نماد در سبد</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pl.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.kelly_for_multi_asset">
+<span class="sig-name descname"><span class="pre">kelly_for_multi_asset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#kelly_for_multi_asset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.kelly_for_multi_asset" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 </section>
 </section>
@@ -435,7 +573,7 @@ document.write(`
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="../index.html"
@@ -464,28 +602,30 @@ document.write(`
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
   <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.Kelly"><code class="docutils literal notranslate"><span class="pre">Kelly</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.Kelly.calc_return"><code class="docutils literal notranslate"><span class="pre">Kelly.calc_return()</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.Kelly.return_params"><code class="docutils literal notranslate"><span class="pre">Kelly.return_params()</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.Kelly.norm_integral"><code class="docutils literal notranslate"><span class="pre">Kelly.norm_integral()</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.Kelly.norm_dev_integral"><code class="docutils literal notranslate"><span class="pre">Kelly.norm_dev_integral()</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.Kelly.get_kelly_share"><code class="docutils literal notranslate"><span class="pre">Kelly.get_kelly_share()</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.Kelly.f_single_asset"><code class="docutils literal notranslate"><span class="pre">Kelly.f_single_asset()</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.Kelly.cov_return"><code class="docutils literal notranslate"><span class="pre">Kelly.cov_return()</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.Kelly.kelly_allocation"><code class="docutils literal notranslate"><span class="pre">Kelly.kelly_allocation()</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.Kelly.kelly_portfolio_return"><code class="docutils literal notranslate"><span class="pre">Kelly.kelly_portfolio_return()</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.Kelly.equal_weight_portfolio_return"><code class="docutils literal notranslate"><span class="pre">Kelly.equal_weight_portfolio_return()</span></code></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.Kelly.benchmark_return"><code class="docutils literal notranslate"><span class="pre">Kelly.benchmark_return()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.Value"><code class="docutils literal notranslate"><span class="pre">Value</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.y"><code class="docutils literal notranslate"><span class="pre">y</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.calc_return"><code class="docutils literal notranslate"><span class="pre">calc_return()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.return_params"><code class="docutils literal notranslate"><span class="pre">return_params()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.norm_integral"><code class="docutils literal notranslate"><span class="pre">norm_integral()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.norm_dev_integral"><code class="docutils literal notranslate"><span class="pre">norm_dev_integral()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.get_kelly_share"><code class="docutils literal notranslate"><span class="pre">get_kelly_share()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.f_single_asset"><code class="docutils literal notranslate"><span class="pre">f_single_asset()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.cov_return"><code class="docutils literal notranslate"><span class="pre">cov_return()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.kelly_allocation"><code class="docutils literal notranslate"><span class="pre">kelly_allocation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.normalize_kelly_allocation"><code class="docutils literal notranslate"><span class="pre">normalize_kelly_allocation()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#xuk.portfolio_optimization.kelly.kelly_for_multi_asset"><code class="docutils literal notranslate"><span class="pre">kelly_for_multi_asset()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -494,6 +634,7 @@ document.write(`
   </nav></div>
 
   <div class="sidebar-secondary-item">
+
   <div class="tocsection sourcelink">
     <a href="../../../../_sources/autoapi/xuk/portfolio_optimization/kelly/index.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
@@ -514,8 +655,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
-<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+  <script src="../../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -523,6 +664,7 @@ document.write(`
     <div class="footer-items__start">
       
         <div class="footer-item">
+
   <p class="copyright">
     
       © Copyright 2023, Metafid.
@@ -532,6 +674,7 @@ document.write(`
 </div>
       
         <div class="footer-item">
+
   <p class="sphinx-version">
     Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     <br/>
@@ -544,8 +687,9 @@ document.write(`
   
     <div class="footer-items__end">
       
-        <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.1.
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.2.
 </p></div>
       
     </div>
