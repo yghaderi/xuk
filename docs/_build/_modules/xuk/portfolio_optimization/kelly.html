@@ -387,11 +387,16 @@ document.write(`
 <span class="sd">            | date: polars.Date</span>
 <span class="sd">            | close: polars.UInt64</span>
 
-<span class="sd">    time_frame :str</span>
+<span class="sd">    time_frame: str</span>
+<span class="sd">        - 1d    (1 calendar day) تا اِن روز</span>
+<span class="sd">        - 1w    (1 calendar week) تا اِن هفته</span>
+<span class="sd">        - 1mo   (1 calendar month) تا اِن ماه</span>
+<span class="sd">        * `More Detail &lt;https://docs.pola.rs/py-polars/html/reference/dataframe/api/polars.DataFrame.group_by_dynamic\</span>
+<span class="sd">        .html#polars.DataFrame.group_by_dynamic&gt;`_.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    pl.DataFrame</span>
+<span class="sd">    polars.DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="n">df</span><span class="o">.</span><span class="n">group_by_dynamic</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="n">every</span><span class="o">=</span><span class="n">time_frame</span><span class="p">)</span>
@@ -405,6 +410,31 @@ document.write(`
 <div class="viewcode-block" id="return_params">
 <a class="viewcode-back" href="../../../autoapi/xuk/portfolio_optimization/kelly/index.html#xuk.portfolio_optimization.kelly.return_params">[docs]</a>
 <span class="k">def</span> <span class="nf">return_params</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">window</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    .. raw:: html</span>
+
+<span class="sd">        &lt;div dir=&#39;rtl&#39;&gt;</span>
+<span class="sd">            میانگین و انحرافِ استاندارد از میانگین رو بر مبنایِ بازه‌یِ داده‌-شده به صورت غلتان محاسبه می‌کنه.</span>
+<span class="sd">        &lt;/div&gt;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ---------</span>
+<span class="sd">    df : polars.DataFrame</span>
+<span class="sd">        * Columns:</span>
+<span class="sd">            | date: polars.Date</span>
+<span class="sd">            | close: polars.UInt64</span>
+
+<span class="sd">    window: str</span>
+<span class="sd">        - 1d    (1 calendar day) تا اِن روز</span>
+<span class="sd">        - 1w    (1 calendar week) تا اِن هفته</span>
+<span class="sd">        - 1mo   (1 calendar month) تا اِن ماه</span>
+<span class="sd">        * `More Detail &lt;https://docs.pola.rs/py-polars/html/reference/dataframe/api/polars.DataFrame.rolling.html\</span>
+<span class="sd">        #polars.DataFrame.rolling&gt;`_.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    polars.DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="n">window</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
         <span class="n">pl</span><span class="o">.</span><span class="n">exclude</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">suffix</span><span class="p">(</span><span class="s2">&quot;_mean&quot;</span><span class="p">),</span>
         <span class="n">pl</span><span class="o">.</span><span class="n">exclude</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">suffix</span><span class="p">(</span><span class="s2">&quot;_std&quot;</span><span class="p">),</span>

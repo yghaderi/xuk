@@ -477,11 +477,19 @@ document.write(`
 </li>
 </ul>
 </p></li>
-<li><p><strong>time_frame</strong> (<em>str</em>) – </p></li>
+<li><p><strong>time_frame</strong> (<em>str</em>) – <ul>
+<li><p>1d    (1 calendar day) تا اِن روز</p></li>
+<li><p>1w    (1 calendar week) تا اِن هفته</p></li>
+<li><p>1mo   (1 calendar month) تا اِن ماه</p></li>
+</ul>
+<ul>
+<li><p><a class="reference external" href="https://docs.pola.rs/py-polars/html/reference/dataframe/api/polars.DataFrame.group_by_dynamic.html#polars.DataFrame.group_by_dynamic">More Detail</a>.</p></li>
+</ul>
+</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>pl.DataFrame</p>
+<dd class="field-even"><p>polars.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -489,7 +497,38 @@ document.write(`
 <dl class="py function">
 <dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.return_params">
 <span class="sig-name descname"><span class="pre">return_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">polars.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/xuk/portfolio_optimization/kelly.html#return_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xuk.portfolio_optimization.kelly.return_params" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><div dir='rtl'>
+    میانگین و انحرافِ استاندارد از میانگین رو بر مبنایِ بازه‌یِ داده‌-شده به صورت غلتان محاسبه می‌کنه.
+</div><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>polars.DataFrame</em>) – <ul>
+<li><dl>
+<dt>Columns:</dt><dd><div class="line-block">
+<div class="line">date: polars.Date</div>
+<div class="line">close: polars.UInt64</div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</p></li>
+<li><p><strong>window</strong> (<em>str</em>) – <ul>
+<li><p>1d    (1 calendar day) تا اِن روز</p></li>
+<li><p>1w    (1 calendar week) تا اِن هفته</p></li>
+<li><p>1mo   (1 calendar month) تا اِن ماه</p></li>
+</ul>
+<ul>
+<li><p><a class="reference external" href="https://docs.pola.rs/py-polars/html/reference/dataframe/api/polars.DataFrame.rolling.html#polars.DataFrame.rolling">More Detail</a>.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>polars.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="xuk.portfolio_optimization.kelly.norm_integral">

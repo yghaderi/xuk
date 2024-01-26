@@ -16,7 +16,7 @@ y = p * log(1 + f) + (1 - p) * log(1 - f)
 solve(diff(y, f), f)
 
 
-def calc_return(df: pl.DataFrame, time_frame: str):
+def calc_return(df: pl.DataFrame, time_frame: str) -> pl.DataFrame:
     """
     .. raw:: html
 
@@ -31,11 +31,16 @@ def calc_return(df: pl.DataFrame, time_frame: str):
             | date: polars.Date
             | close: polars.UInt64
 
-    time_frame :str
+    time_frame: str
+        - 1d    (1 calendar day) تا اِن روز
+        - 1w    (1 calendar week) تا اِن هفته
+        - 1mo   (1 calendar month) تا اِن ماه
+        * `More Detail <https://docs.pola.rs/py-polars/html/reference/dataframe/api/polars.DataFrame.group_by_dynamic\
+        .html#polars.DataFrame.group_by_dynamic>`_.
 
     Returns
     -------
-    pl.DataFrame
+    polars.DataFrame
     """
     return (
         df.group_by_dynamic("date", every=time_frame)
@@ -45,14 +50,39 @@ def calc_return(df: pl.DataFrame, time_frame: str):
     )
 
 
-def return_params(df: pl.DataFrame, window: str):
+def return_params(df: pl.DataFrame, window: str) -> pl.DataFrame:
+    """
+    .. raw:: html
+
+        <div dir='rtl'>
+            میانگین و انحرافِ استاندارد از میانگین رو بر مبنایِ بازه‌یِ داده‌-شده به صورت غلتان محاسبه می‌کنه.
+        </div>
+
+    Parameters
+    ---------
+    df : polars.DataFrame
+        * Columns:
+            | date: polars.Date
+            | pct_return: polars.Float64
+
+    window: str
+        - 1d    (1 calendar day) تا اِن روز
+        - 1w    (1 calendar week) تا اِن هفته
+        - 1mo   (1 calendar month) تا اِن ماه
+        * `More Detail <https://docs.pola.rs/py-polars/html/reference/dataframe/api/polars.DataFrame.rolling.html\
+        #polars.DataFrame.rolling>`_.
+
+    Returns
+    -------
+    polars.DataFrame
+    """
     return df.rolling("date", period=window).agg(
         pl.exclude("date").mean().name.suffix("_mean"),
         pl.exclude("date").std().name.suffix("_std"),
     )
 
 
-def norm_integral(f, mean, std):
+def norm_integral(f, mean: float, std: float) -> float:
     val, er = quad(
         lambda s: np.log(1 + f * s) * norm.pdf(s, mean, std),
         mean - 3 * std,
@@ -61,7 +91,7 @@ def norm_integral(f, mean, std):
     return -val
 
 
-def norm_dev_integral(f, mean, std):
+def norm_dev_integral(f, mean: float, std: float) -> float:
     val, er = quad(
         lambda s: (s / (1 + f * s)) * norm.pdf(s, mean, std),
         mean - 3 * std,
@@ -70,7 +100,7 @@ def norm_dev_integral(f, mean, std):
     return val
 
 
-def get_kelly_share(mean: float, std: float, leverage: float):
+def get_kelly_share(mean: float, std: float, leverage: float) -> np.array:
     solution = minimize_scalar(
         norm_integral,
         args=(mean, std),
@@ -80,7 +110,7 @@ def get_kelly_share(mean: float, std: float, leverage: float):
     return solution.x
 
 
-def f_single_asset(df: pl.DataFrame, leverage: float):
+def f_single_asset(df: pl.DataFrame, leverage: float) -> pl.DataFrame:
     return df.with_columns(
         f=pl.struct(["mean", "std"]).map_elements(
             lambda x: get_kelly_share(x["mean"], x["std"], leverage)
@@ -112,7 +142,7 @@ def cov_return(df: pl.DataFrame) -> pl.DataFrame:
     )
 
 
-def kelly_allocation(df: pl.DataFrame, cr_df):
+def kelly_allocation(df: pl.DataFrame, cr_df) -> pl.DataFrame:
     """
     .. raw:: html
 

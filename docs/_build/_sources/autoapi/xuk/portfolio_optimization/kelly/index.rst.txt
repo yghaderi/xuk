@@ -57,12 +57,36 @@ Attributes
                   | close: polars.UInt64
    :type df: polars.DataFrame
    :param time_frame:
+                      - 1d    (1 calendar day) تا اِن روز
+                      - 1w    (1 calendar week) تا اِن هفته
+                      - 1mo   (1 calendar month) تا اِن ماه
+                      * `More Detail <https://docs.pola.rs/py-polars/html/reference/dataframe/api/polars.DataFrame.group_by_dynamic        .html#polars.DataFrame.group_by_dynamic>`_.
    :type time_frame: str
 
-   :rtype: pl.DataFrame
+   :rtype: polars.DataFrame
 
 
 .. py:function:: return_params(df: polars.DataFrame, window: str)
+
+   .. raw:: html
+
+       <div dir='rtl'>
+           میانگین و انحرافِ استاندارد از میانگین رو بر مبنایِ بازه‌یِ داده‌-شده به صورت غلتان محاسبه می‌کنه.
+       </div>
+
+   :param df:
+              * Columns:
+                  | date: polars.Date
+                  | close: polars.UInt64
+   :type df: polars.DataFrame
+   :param window:
+                  - 1d    (1 calendar day) تا اِن روز
+                  - 1w    (1 calendar week) تا اِن هفته
+                  - 1mo   (1 calendar month) تا اِن ماه
+                  * `More Detail <https://docs.pola.rs/py-polars/html/reference/dataframe/api/polars.DataFrame.rolling.html        #polars.DataFrame.rolling>`_.
+   :type window: str
+
+   :rtype: polars.DataFrame
 
 
 .. py:function:: norm_integral(f, mean, std)
