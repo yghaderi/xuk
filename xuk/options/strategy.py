@@ -1,7 +1,7 @@
 from collections import namedtuple
 from itertools import combinations
 from operator import add
-from typing import Optional
+from typing import Optional, Literal
 import polars as pl
 import numpy as np
 
@@ -19,15 +19,7 @@ class Strategy:
 
     Parameters
     ----------
-    call
-        polars.DataFrame with (ua:str, ua_ask_price:int, ua_bid_price:int, symbol:str, k:int,
-        t:int, bs:int, bid_price:int, ask_price:int) columns. Where ua: Underlying Asset, bs : Black-Scholes
-        price, t: Days to expiration date
-    put
-        polars.DataFrame with (ua:str, ua_ask_price:int, ua_bid_price:int, symbol:str, k:int,
-        t:int, bs:int, bid_price:int, ask_price:int) columns. Where ua: Underlying Asset, bs : Black-Scholes
-        price, t: Days to expiration date
-    call_put
+    data: polars.DataFrame
 
     Examples
     --------
@@ -58,15 +50,37 @@ class Strategy:
 
     """
 
-    def __init__(
-        self,
-        call: Optional[pl.DataFrame] = pl.DataFrame(),
-        put: Optional[pl.DataFrame] = pl.DataFrame(),
-        call_put: Optional[pl.DataFrame] = pl.DataFrame(),
-    ) -> None:
-        self.call = call if call.is_empty() else call.filter(pl.col("t") > 0)
-        self.put = put if put.is_empty() else put.filter(pl.col("t") > 0)
-        self.call_put = call_put
+    def __init__(self, data: pl.DataFrame) -> None:
+        self.base_cols = [
+            "ins_code_ua",
+            "symbol_ua",
+            "final_ua",
+            "y_final_ua",
+            "contract_size",
+            "begin_date",
+            "end_date",
+            "k",
+            "t",
+        ]
+        self.data = data
+        self.call = self._handle_call_and_put_data("_c")
+        self.put = self._handle_call_and_put_data("_p")
+
+    def _handle_call_and_put_data(self, option_type: Literal["_c", "_p"]) -> pl.DataFrame:
+        df = self.data.select(
+            [
+                *self.base_cols,
+                *[col for col in self.data.columns if col.endswith(option_type)],
+            ]
+        )
+        cols_ = []
+        for col in df.columns:
+            if col.endswith(option_type):
+                cols_.append(col[:len(col)-len(option_type)])
+            else:
+                cols_.append(col)
+        df.columns = cols_
+        return df
 
     def covered_call(self) -> pl.DataFrame:
         """
@@ -82,19 +96,19 @@ class Strategy:
         break_even, pct_break_even, max_pot_loss, max_pot_profit, pct_mpp, pct_monthly_cp, current_profit, pct_cp,
         pct_monthly_cp) columns.
         """
-        df = self.call.filter((pl.col("bid_price") > 0) & (pl.col("ua_ask_price") > 0))
+        df = self.call.filter((pl.col("bid_price") > 0) & (pl.col("final_ua") > 0))
 
         df = df.with_columns(
-            max_pot_profit=pl.col("k") - pl.col("ua_ask_price") + pl.col("bid_price"),
-            max_pot_loss=pl.col("bid_price") - pl.col("ua_ask_price"),
-            break_even=pl.col("ua_ask_price") - pl.col("bid_price"),
+            max_pot_profit=pl.col("k") - pl.col("final_ua") + pl.col("bid_price"),
+            max_pot_loss=pl.col("bid_price") - pl.col("final_ua"),
+            break_even=pl.col("final_ua") - pl.col("bid_price"),
         )
 
         df = df.with_columns(
             (
-                pl.struct(["ua_ask_price", "k", "bid_price"]).map_elements(
+                pl.struct(["final_ua", "k", "bid_price"]).map_elements(
                     lambda x: OptionPositionProfit(
-                        st=x["ua_ask_price"],
+                        st=x["final_ua"],
                         k=x["k"],
                         premium=x["bid_price"],
                     ).short_call()
@@ -102,14 +116,14 @@ class Strategy:
             ).alias("current_profit")
         )
         df = df.with_columns(
-            pct_break_even=(pl.col("break_even") / pl.col("ua_ask_price") - 1) * 100,
+            pct_break_even=(pl.col("break_even") / pl.col("final_ua") - 1) * 100,
             pct_mpp=pl.col("max_pot_profit") / pl.col("break_even") * 100,
             pct_cp=pl.col("current_profit") / pl.col("break_even") * 100,
         )
         df = df.with_columns(
             pct_monthly_mpp=pl.col("pct_mpp") / pl.col("t") * 30,
             pct_monthly_cp=pl.col("pct_cp") / pl.col("t") * 30,
-            pct_status=(pl.col("k") / pl.col("ua_final") - 1) * 100,
+            pct_status=(pl.col("k") / pl.col("final_ua") - 1) * 100,
         )
         df = manipulation_cols(df=df, columns=cols.strategy.covered_call)
         return df
@@ -126,19 +140,19 @@ class Strategy:
         -------
         polars.DataFrame
         """
-        df = self.put.filter((pl.col("ask_price") > 0) & (pl.col("ua_ask_price") > 0))
+        df = self.put.filter((pl.col("ask_price") > 0) & (pl.col("final_ua") > 0))
 
         df = df.with_columns(
             max_pot_profit=pl.lit(np.inf),
-            max_pot_loss=pl.col("k") - pl.col("ua_ask_price") - pl.col("ask_price"),
-            break_even=pl.col("ua_ask_price") + pl.col("ask_price"),
+            max_pot_loss=pl.col("k") - pl.col("final_ua") - pl.col("ask_price"),
+            break_even=pl.col("final_ua") + pl.col("ask_price"),
         )
 
         df = df.with_columns(
             (
-                pl.struct(["ua_ask_price", "k", "ask_price"]).map_elements(
+                pl.struct(["final_ua", "k", "ask_price"]).map_elements(
                     lambda x: OptionPositionProfit(
-                        st=x["ua_ask_price"],
+                        st=x["final_ua"],
                         k=x["k"],
                         premium=x["ask_price"],
                     ).long_put()
@@ -147,14 +161,14 @@ class Strategy:
         )
 
         df = df.with_columns(
-            pct_break_even=(pl.col("break_even") / pl.col("ua_ask_price") - 1) * 100,
+            pct_break_even=(pl.col("break_even") / pl.col("final_ua") - 1) * 100,
             pct_mpp=pl.lit(np.inf),
             pct_cp=pl.col("current_profit") / pl.col("break_even") * 100,
         )
         df = df.with_columns(
             pct_monthly_mpp=pl.lit(np.inf),
             pct_monthly_cp=pl.col("pct_cp") / pl.col("t") * 30,
-            pct_status=-(pl.col("k") / pl.col("ua_final") - 1) * 100,
+            pct_status=-(pl.col("k") / pl.col("final_ua") - 1) * 100,
         )
         df = manipulation_cols(df=df, columns=cols.strategy.married_put)
         return df
@@ -176,15 +190,14 @@ class Strategy:
         df_main = df_main.filter(
             (pl.col("bid_price") > 0)
             & (pl.col("ask_price") > 0)
-            & (pl.col("ob_level") == 1)
         )
-        df_pairs = df_main.group_by(["ua_symbol", "t"]).agg(
+        df_pairs = df_main.group_by(["symbol_ua", "t"]).agg(
             pl.col("bid_price").count().alias("count")
         )
         df = df_main.join(
-            df_pairs.filter(pl.col("count") > 1), on=["ua_symbol", "t"], how="inner"
+            df_pairs.filter(pl.col("count") > 1), on=["symbol_ua", "t"], how="inner"
         )
-        groups = df.group_by(["ua_symbol", "t"])
+        groups = df.group_by(["symbol_ua", "t"])
 
         descending = True if stg.startswith("bull") else False
         df_ = pl.DataFrame()
@@ -203,7 +216,7 @@ class Strategy:
                 )
             )
 
-            ua_final = data["ua_final"][0]
+            final_ua = data["final_ua"][0]
             max_pot_loss = 0
             max_pot_profit = 0
             current_profit = 0
@@ -215,13 +228,13 @@ class Strategy:
                     )
                     current_profit = []
                     for i in range(len(combo_k)):
-                        if all(s <= ua_final for s in combo_k[i]):
+                        if all(s <= final_ua for s in combo_k[i]):
                             current_profit.append(max_pot_profit[i])
-                        elif all(s >= ua_final for s in combo_k[i]):
+                        elif all(s >= final_ua for s in combo_k[i]):
                             current_profit.append(max_pot_loss[i])
                         else:
                             current_profit.append(
-                                ua_final - combo_k[i].buy + max_pot_loss[i]
+                                final_ua - combo_k[i].buy + max_pot_loss[i]
                             )
                 case "bear_call_spread":
                     max_pot_profit = [i.sell - i.buy for i in combo_orderbook_price]
@@ -230,13 +243,13 @@ class Strategy:
                     )
                     current_profit = []
                     for i in range(len(combo_k)):
-                        if all(s >= ua_final for s in combo_k[i]):
+                        if all(s >= final_ua for s in combo_k[i]):
                             current_profit.append(max_pot_profit[i])
-                        elif all(s <= ua_final for s in combo_k[i]):
+                        elif all(s <= final_ua for s in combo_k[i]):
                             current_profit.append(max_pot_loss[i])
                         else:
                             current_profit.append(
-                                -ua_final + combo_k[i].sell + max_pot_profit[i]
+                                -final_ua + combo_k[i].sell + max_pot_profit[i]
                             )
                 case "bull_put_spread":
                     max_pot_profit = [i.sell - i.buy for i in combo_orderbook_price]
@@ -245,13 +258,13 @@ class Strategy:
                     )
                     current_profit = []
                     for i in range(len(combo_k)):
-                        if all(s <= ua_final for s in combo_k[i]):
+                        if all(s <= final_ua for s in combo_k[i]):
                             current_profit.append(max_pot_profit[i])
-                        elif all(s >= ua_final for s in combo_k[i]):
+                        elif all(s >= final_ua for s in combo_k[i]):
                             current_profit.append(max_pot_loss[i])
                         else:
                             current_profit.append(
-                                ua_final - combo_k[i].sell + max_pot_profit[i]
+                                final_ua - combo_k[i].sell + max_pot_profit[i]
                             )
                 case "bear_put_spread":
                     max_pot_loss = [i.sell - i.buy for i in combo_orderbook_price]
@@ -261,13 +274,13 @@ class Strategy:
 
                     current_profit = []
                     for i in range(len(combo_k)):
-                        if all(s >= ua_final for s in combo_k[i]):
+                        if all(s >= final_ua for s in combo_k[i]):
                             current_profit.append(max_pot_profit[i])
-                        elif all(s <= ua_final for s in combo_k[i]):
+                        elif all(s <= final_ua for s in combo_k[i]):
                             current_profit.append(max_pot_loss[i])
                         else:
                             current_profit.append(
-                                -ua_final + combo_k[i].buy + max_pot_loss[i]
+                                -final_ua + combo_k[i].buy + max_pot_loss[i]
                             )
 
             df_ = pl.concat(
@@ -278,8 +291,8 @@ class Strategy:
                             "symbol": combo_option,
                             "k": combo_k,
                             "t": data["t"][0],
-                            "ua_symbol": data["ua_symbol"][0],
-                            "ua_final": data["ua_final"][0],
+                            "symbol_ua": data["symbol_ua"][0],
+                            "final_ua": data["final_ua"][0],
                             "orderbook_price": combo_orderbook_price,
                             "max_pot_loss": max_pot_loss,
                             "max_pot_profit": max_pot_profit,

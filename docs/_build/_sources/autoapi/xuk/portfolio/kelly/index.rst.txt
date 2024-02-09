@@ -1,0 +1,145 @@
+:py:mod:`xuk.portfolio.kelly`
+=============================
+
+.. py:module:: xuk.portfolio.kelly
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   xuk.portfolio.kelly.calc_return
+   xuk.portfolio.kelly.return_params
+   xuk.portfolio.kelly.norm_integral
+   xuk.portfolio.kelly.norm_dev_integral
+   xuk.portfolio.kelly.get_kelly_share
+   xuk.portfolio.kelly.f_single_asset
+   xuk.portfolio.kelly.cov_return
+   xuk.portfolio.kelly.kelly_allocation
+   xuk.portfolio.kelly.normalize_kelly_allocation
+   xuk.portfolio.kelly.kelly_for_multi_asset
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   xuk.portfolio.kelly.Value
+   xuk.portfolio.kelly.y
+
+
+.. py:data:: Value
+
+   
+
+.. py:data:: y
+
+   
+
+.. py:function:: calc_return(df: polars.DataFrame, time_frame: str) -> polars.DataFrame
+
+   .. raw:: html
+
+       <div dir='rtl'>
+           بازده رو بر مبنایِ بازه‌یِ زمانیِ داده شده محاسبه می‌کنه
+       </div>
+
+   :param df:
+              * Columns:
+                  | date: polars.Date
+                  | close: polars.UInt64
+   :type df: polars.DataFrame
+   :param time_frame:
+                      - 1d    (1 calendar day) تا اِن روز
+                      - 1w    (1 calendar week) تا اِن هفته
+                      - 1mo   (1 calendar month) تا اِن ماه
+                      * `More Detail <https://docs.pola.rs/py-polars/html/reference/dataframe/api/polars.DataFrame.group_by_dynamic        .html#polars.DataFrame.group_by_dynamic>`_.
+   :type time_frame: str
+
+   :rtype: polars.DataFrame
+
+
+.. py:function:: return_params(df: polars.DataFrame, window: str) -> polars.DataFrame
+
+   .. raw:: html
+
+       <div dir='rtl'>
+           میانگین و انحرافِ استاندارد از میانگین رو بر مبنایِ بازه‌یِ داده‌-شده به صورت غلتان محاسبه می‌کنه.
+       </div>
+
+   :param df:
+              * Columns:
+                  | date: polars.Date
+                  | pct_return: polars.Float64
+   :type df: polars.DataFrame
+   :param window:
+                  - 1d    (1 calendar day) تا اِن روز
+                  - 1w    (1 calendar week) تا اِن هفته
+                  - 1mo   (1 calendar month) تا اِن ماه
+                  * `More Detail <https://docs.pola.rs/py-polars/html/reference/dataframe/api/polars.DataFrame.rolling.html        #polars.DataFrame.rolling>`_.
+   :type window: str
+
+   :rtype: polars.DataFrame
+
+
+.. py:function:: norm_integral(f, mean: float, std: float) -> float
+
+
+.. py:function:: norm_dev_integral(f, mean: float, std: float) -> float
+
+
+.. py:function:: get_kelly_share(mean: float, std: float, leverage: float) -> numpy.array
+
+
+.. py:function:: f_single_asset(df: polars.DataFrame, leverage: float) -> polars.DataFrame
+
+
+.. py:function:: cov_return(df: polars.DataFrame) -> polars.DataFrame
+
+   .. raw:: html
+
+       <div dir='rtl'>
+           کواریانسٍ همه‌یِ نماد‌ها رو محسابنه می‌کنه
+       </div>
+
+   :param df polars.DataFrame: بازدهٍ نمادها بدونٍ تاریخ
+
+   :rtype: pl.DataFrame
+
+
+.. py:function:: kelly_allocation(df: polars.DataFrame, cr_df) -> polars.DataFrame
+
+   .. raw:: html
+
+       <div dir='rtl'>
+           وزنِ نمادها رو در سبد مشخص می‌کنه
+       </div>
+
+   :param df polars.DataFrame: بازدهٍ نمادها بدونٍ تاریخ
+
+   :rtype: pl.DataFrame
+
+
+.. py:function:: normalize_kelly_allocation(df: polars.DataFrame)
+
+   .. raw:: html
+
+       <div dir='rtl'>
+           وزنِ نمادهایِ سبد رو بر جمعِ کل وزنها تقسیم می‌کنه تا جمعِ وزن‌ها بشه 1
+       </div>
+
+   :param df polars.DataFrame: وزنِ هر نماد در سبد
+
+   :rtype: pl.DataFrame
+
+
+.. py:function:: kelly_for_multi_asset(df: polars.DataFrame, time_frame: str)
+
+

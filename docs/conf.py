@@ -13,18 +13,21 @@ sys.path.insert(0, os.path.abspath("../xuk"))
 project = 'xuk'
 copyright = '2023, Metafid'
 author = 'Yaghoub Ghaderi'
-release = '0.1.14'
+release = '0.1.14   '
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 extensions = [
+    # Sphinx extensions
     "sphinx.ext.napoleon",
     "sphinx.ext.autodoc",
     "sphinx.ext.coverage",
     "sphinx.ext.viewcode",
+    # Third-party extensions
     "autoapi.extension",
     "sphinx_copybutton",
     'sphinx-pydantic',
+    "sphinx_design",
 ]
 
 copybutton_prompt_text = ">>> "
